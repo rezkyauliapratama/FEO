@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/fragment_speed_reading">
+
+        <FrameLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_button"
+            android:paddingTop="@dimen/margin_xsmall"
+            >
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/colorBlueGrey_100"/>
+
+            <TextView
+                android:id="@+id/textview_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="@style/TextStyle.Large"
+                android:textSize="30sp"
+                android:fontFamily="sans-serif"
+                />
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/margin_large"
+            android:layout_above="@+id/layout_setting"
+            >
+
+            <ImageView
+                android:id="@+id/btn_previous"
+                android:layout_width="@dimen/btn_square_small"
+                android:layout_height="@dimen/btn_square_small"
+                android:layout_margin="@dimen/margin_small"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_icon_left_arrow"/>
+
+            <ImageView
+                android:id="@+id/btn_play"
+                android:layout_width="@dimen/btn_square_normal"
+                android:layout_height="@dimen/btn_square_normal"
+                android:layout_margin="@dimen/margin_xsmall"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_icon_play"/>
+
+            <ImageView
+                android:id="@+id/btn_next"
+                android:layout_width="@dimen/btn_square_small"
+                android:layout_height="@dimen/btn_square_small"
+                android:layout_margin="@dimen/margin_small"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_icon_right_arrow"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/margin_small"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/colorGrey_200"
+            >
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_wpm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:text="WPM : 2000"/>
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_nol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:text="Number of lines : 1"/>
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_gs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:text="Group Size : 1"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextStyle.Headline" parent="TextAppearance.AppCompat.Headline">
+
+    </style>
+
+    <style name="TextStyle.Display1" parent="TextAppearance.AppCompat.Display1">
+
+    </style>
+    <style name="TextStyle.Display2" parent="TextAppearance.AppCompat.Display2">
+
+    </style>
+    <style name="TextStyle.Display3" parent="TextAppearance.AppCompat.Display3">
+
+    </style>
+    <style name="TextStyle.Display4" parent="TextAppearance.AppCompat.Display4">
+
+    </style>
+    <style name="TextStyle.Large" parent="TextAppearance.AppCompat.Large">
+
+    </style>
+
+    <style name="TextStyle.Large.Inverse" parent="TextAppearance.AppCompat.Large.Inverse">
+
+    </style>
+
+    <style name="TextStyle.Medium" parent="TextAppearance.AppCompat.Medium">
+
+    </style>
+    <style name="TextStyle.Medium.Inverse" parent="TextAppearance.AppCompat.Medium.Inverse">
+
+    </style>
+    <style name="TextStyle.Small" parent="TextAppearance.AppCompat.Small">
+
+    </style>
+    <style name="TextStyle.Small.Inverse" parent="TextAppearance.AppCompat.Small.Inverse">
+    </style>
+
+    <style name="TextStyle.Notification.Medium" parent="TextStyle.Large">
+
+    </style>
+
+    <style name="TextStyle.AsButton" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+</resources>

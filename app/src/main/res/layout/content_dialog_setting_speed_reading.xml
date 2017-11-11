@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".controller.activity.SpeedReadingActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/dialog_setting_speed_reading"
+    >
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_large" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_small"
+        >
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/seekbar_wpm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dsb_min="10"
+            app:dsb_max="7000"
+            /><!-- set green color in the background of seek bar-->
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_titleWpm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_wpm"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_alignLeft="@+id/seekbar_wpm"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="@string/reading_speed_wpm"/>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_valueWpm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_wpm"
+            android:layout_alignTop="@+id/textview_titleWpm"
+            android:layout_alignRight="@id/seekbar_wpm"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="5000"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_xlarge" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_small"
+        >
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/seekbar_numberOfLines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dsb_min="1"
+            app:dsb_max="6"
+            android:progress="1"
+            /><!-- set green color in the background of seek bar-->
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_titleNumberOfLines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_numberOfLines"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_alignLeft="@+id/seekbar_numberOfLines"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="@string/number_of_lines"/>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_valueNumberOfLines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_numberOfLines"
+            android:layout_alignTop="@+id/textview_titleNumberOfLines"
+            android:layout_alignRight="@id/seekbar_numberOfLines"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="6"/>
+
+    </RelativeLayout>
+
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_xlarge" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_small"
+        >
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/seekbar_groupSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dsb_min="1"
+            app:dsb_max="6"
+            android:progress="1"
+            /><!-- set green color in the background of seek bar-->
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_titleGroupSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_groupSize"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_alignLeft="@+id/seekbar_groupSize"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="@string/group_size"/>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textview_valueGroupSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekbar_groupSize"
+            android:layout_alignTop="@+id/textview_titleGroupSize"
+            android:layout_alignRight="@id/seekbar_groupSize"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:text="6"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_large" />
+
+    <com.app.infideap.stylishwidget.view.AButton
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Button.Info.Fill"
+        android:text="@string/save"
+        />
+
+
+    </LinearLayout>
+</layout>

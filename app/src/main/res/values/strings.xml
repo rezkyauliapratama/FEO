@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">FEO</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="close">Close</string>
+    <string name="asecondago" formatted="false">a second ago</string>
+    <string name="aminuteago" formatted="false">a minute ago</string>
+    <string name="anhourago" formatted="false">an hour ago</string>
+    <string name="minutesago" formatted="false">%d minutes ago</string>
+    <string name="hoursago" formatted="false">%d hours ago</string>
+    <string name="secondsago" formatted="false">%d seconds ago</string>
+    <string name="yesterday" formatted="false">Yesterday</string>
+    <string name="daysago" formatted="false">%d days ago</string>
+    <string name="notification">Notification</string>
+    <string name="help">Help</string>
+    <string name="add">Add</string>
+    <string name="pastetext">Paste Text</string>
+    <string name="file">File TXT</string>
+    <string name="setting">Setting</string>
+    <string name="reading_speed_wpm">Reading speed (WPM)</string>
+    <string name="number_of_lines">Number of lines</string>
+    <string name="group_size">Group size</string>
+    <string name="save">Save</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="doyouwanttosaveitintolibrary">Do you want to save it into library ?</string>
+    <string name="no">No</string>
+    <string name="sorrythereisnowordsthatcanplay">Sorry, there is no words that can play</string>
+    <string name="sorryyoucannotaddnewlibrary">Sorry, you cannot add new library because your library was full</string>
+    <string name="pleaseinputyourtextinhere">Please input your text in here</string>
+    <string name="pleaseinputthetitleforthislibrary">Please input the title for this library</string>
+    <string name="speedreading">Speed Reading</string>
+    <string name="library">Library</string>
+</resources>
