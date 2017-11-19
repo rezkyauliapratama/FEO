@@ -156,7 +156,7 @@ public class Utils {
         List<String> words = new ArrayList<>();
         try {
 
-            String[] temp = text.split("\\s+");
+            String[] temp = text.trim().split("\\s+");
             for (String str : temp){
                 words.add(str);
             }
@@ -167,9 +167,9 @@ public class Utils {
         return words;
     }
 
-    public List<String> readTextFile(Context context,Uri uri) {
+    public String readTextFile(Context context,Uri uri) {
         InputStream inputStream = null;
-        List<String> words = new ArrayList<>();
+        String words = "";
         try {
             inputStream = context.getContentResolver().openInputStream(uri);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -177,11 +177,15 @@ public class Utils {
 
             String line;
             Timber.e("open text file - content"+"\n");
-            while ((line = reader.readLine()) != null) {
+            /*while ((line = reader.readLine()) != null) {
                 String[] temp = line.split("\\s+");
                 for (String str : temp){
                     words.add(str);
                 }
+            }*/
+
+            while ((line = reader.readLine()) != null) {
+                words = words+"\n"+line;
             }
             reader.close();
             inputStream.close();

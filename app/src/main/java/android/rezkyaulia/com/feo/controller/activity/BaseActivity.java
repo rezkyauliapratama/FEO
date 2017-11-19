@@ -101,6 +101,12 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.do_nothing, R.anim.slid_right);
     }
 
+    public void redirectToMainActivity() {
+
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
 
 
 

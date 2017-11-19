@@ -44,7 +44,7 @@ public class ALoadingView extends LottieAnimationView {
             getLayoutParams().width = size;
             getLayoutParams().height = size;
         }
-        setAnimation("animation/preloader.json");
+        setAnimation("animation/loading_animation.json");
         loop(true);
         playAnimation();
     }

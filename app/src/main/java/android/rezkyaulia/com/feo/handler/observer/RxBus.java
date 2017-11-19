@@ -1,10 +1,8 @@
-package android.rezkyaulia.com.feo.observer;
+package android.rezkyaulia.com.feo.handler.observer;
 
 import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.Contract;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;

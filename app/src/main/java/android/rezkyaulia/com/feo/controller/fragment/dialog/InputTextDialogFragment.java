@@ -20,14 +20,19 @@ import android.widget.EditText;
 public class InputTextDialogFragment extends DialogFragment {
     public final static String Dialog= "DIALOG";
     public final static int TARGET = 1;
+    public final static String ARG1 = "words";
 
     DialogInputTextBinding binding;
 
     private DialogListener mListener;
 
-    public static InputTextDialogFragment newInstance(){
+    private String mWords;
+
+    public static InputTextDialogFragment newInstance(String words){
         InputTextDialogFragment dialogFragment = new InputTextDialogFragment();
         Bundle args = new Bundle();
+        args.putString(ARG1, words);
+
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -36,7 +41,7 @@ public class InputTextDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            mWords = getArguments().getString(ARG1);
         }
     }
 
@@ -51,6 +56,10 @@ public class InputTextDialogFragment extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mListener = (DialogListener) getTargetFragment();
+
+        if (mWords != null)
+            binding.edittextContent.setText(mWords);
+
         binding.buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

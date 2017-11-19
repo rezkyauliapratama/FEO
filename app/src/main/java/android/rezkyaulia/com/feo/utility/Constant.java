@@ -34,7 +34,7 @@ public class Constant {
     public final String SHARE_LOCATION = "Share location";
     public final String ADD_SCHEDULE = "Add schedule";
 
-    public final String BASE_URL = "http://sayafit.cybereye-community.com/";
+    public final String BASE_URL = "http://156.67.216.158/feo/public/v1";
 
     public final String MEDIA_FOLDER = "/media/";
     public final String AUDIO_FOLDER = MEDIA_FOLDER + "audio/";

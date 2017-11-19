@@ -8,7 +8,7 @@ import android.rezkyaulia.com.feo.controller.adapter.LibraryRVAdapter;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryBinding;
-import android.rezkyaulia.com.feo.observer.RxBus;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -79,6 +79,7 @@ public class LibraryFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initData();
         initRecyclerview();
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -87,14 +88,8 @@ public class LibraryFragment extends BaseFragment {
             if (binding.swipeRefreshLayout != null) {
                 binding.swipeRefreshLayout.setRefreshing(true);
             }
-            List<LibraryTbl> libraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
-            mLibraryTbls.clear();
-            mLibraryTbls.addAll(libraryTbls);
 
-            Timber.e("mLibraryTbls : "+new Gson().toJson(mLibraryTbls));
-            if (mAdapter != null)
-                mAdapter.notifyDataSetChanged();
-
+            initData();
             binding.swipeRefreshLayout.setRefreshing(false);
 
             }
@@ -127,6 +122,12 @@ public class LibraryFragment extends BaseFragment {
         Timber.e("ON RESUME");
     }
 
+
+    @Override
+    public void update() {
+        super.update();
+        initData();
+    }
 
     private void initRecyclerview(){
         mLayoutManager = new GridLayoutManager(getContext(),2);
@@ -166,7 +167,17 @@ public class LibraryFragment extends BaseFragment {
     }
 
 
+    private void initData(){
+        List<LibraryTbl> libraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
+        if (mLibraryTbls != null){
+            mLibraryTbls.clear();
+            mLibraryTbls.addAll(libraryTbls);
+            Timber.e("mLibraryTbls : "+new Gson().toJson(mLibraryTbls));
+        }
 
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+    }
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name

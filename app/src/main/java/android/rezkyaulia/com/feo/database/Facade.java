@@ -25,6 +25,8 @@ public class Facade {
     }
 
     private ManageLibraryTbl manageLibraryTbl;
+    private ManageUserTbl manageUserTbl;
+
 
 
 
@@ -32,6 +34,7 @@ public class Facade {
         this.session = daoSession;
 
         manageLibraryTbl = new ManageLibraryTbl(this);
+        manageUserTbl = new ManageUserTbl(this);
 
 
     }
@@ -44,5 +47,8 @@ public class Facade {
         return manageLibraryTbl;
     }
 
+    public ManageUserTbl getManagerUserTbl() {
+        return manageUserTbl;
+    }
 
 }

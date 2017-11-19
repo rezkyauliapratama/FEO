@@ -14,8 +14,8 @@ import android.rezkyaulia.com.feo.controller.fragment.SpeedReadingFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySpeedReadingBinding;
-import android.rezkyaulia.com.feo.observer.RxBus;
-import android.rezkyaulia.com.feo.pojo.Words;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.Words;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -37,7 +37,9 @@ import timber.log.Timber;
  * Created by Rezky Aulia Pratama on 10/18/2017.
  */
 
-public class SpeedReadingActivity extends BaseActivity implements LibraryFragment.OnListFragmentInteractionListener {
+public class SpeedReadingActivity extends BaseActivity implements
+        LibraryFragment.OnListFragmentInteractionListener,
+        SpeedReadingFragment.OnFragmentListener{
     static final int READ_REQ = 1;
 
     ActivitySpeedReadingBinding binding;
@@ -124,9 +126,9 @@ public class SpeedReadingActivity extends BaseActivity implements LibraryFragmen
 
             if(requestCode == READ_REQ){
                 Timber.e("OnActivityResult");
-                List<String> words = Utils.getInstance().readTextFile(this,uri);
+                String words = Utils.getInstance().readTextFile(this,uri);
 
-                RxBus.getInstance().post(new Words(words));
+                RxBus.getInstance().post(words);
             }
         }
     }
@@ -140,6 +142,13 @@ public class SpeedReadingActivity extends BaseActivity implements LibraryFragmen
     protected void onDestroy() {
         super.onDestroy();
         Facade.getInstance().getDaoSession().clear();
+    }
+
+
+    @Override
+    public void onFinishInteraction() {
+        TabLayout.Tab tab = binding.content.tabLayout.getTabAt(1);
+        tab.select();
     }
 
     private void initTab(){
@@ -178,6 +187,7 @@ public class SpeedReadingActivity extends BaseActivity implements LibraryFragmen
                     binding.actionbarTitle.setText(getString(R.string.speedreading));
                 }else{
                     binding.actionbarTitle.setText(getString(R.string.library));
+                    fragment.update();
                 }
             }
 
@@ -238,7 +248,6 @@ public class SpeedReadingActivity extends BaseActivity implements LibraryFragmen
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
     }
-
 
 
 }

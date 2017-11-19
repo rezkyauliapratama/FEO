@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.feo.pojo;
+package android.rezkyaulia.com.feo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

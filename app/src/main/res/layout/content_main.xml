@@ -90,10 +90,12 @@
 
             <com.app.infideap.stylishwidget.view.ATextView
                 android:id="@+id/btn_speed_reading_normal"
-                style="@style/Button.Info.Fill"
+                style="@style/Button.Default.Fill"
                 android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
                 android:layout_height="wrap_content"
                 android:text="Play speed reading normal"
+                android:textColor="@color/colorWhite"
                 android:textAppearance="@style/TextStyle.Medium" />
 
             <android.support.v4.widget.Space
@@ -106,7 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Speed reading FEO"
-                android:textAppearance="@style/TextStyle.Medium" />
+                android:textAppearance="@style/TextStyle.Medium"
+                android:visibility="invisible"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
@@ -118,7 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Memory"
-                android:textAppearance="@style/TextStyle.Medium" />
+                android:textAppearance="@style/TextStyle.Medium"
+                android:visibility="invisible"/>
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.util.Log;
 
+import com.androidnetworking.AndroidNetworking;
 import com.app.infideap.stylishwidget.view.Stylish;
 
 
@@ -48,12 +49,15 @@ public class BaseApplication extends Application {
         Database db = helper.getWritableDb();
         DaoSession daoSession = new DaoMaster(db).newSession();
         Facade.init(daoSession);
+        AndroidNetworking.initialize(getApplicationContext());
 
         if (BuildConfig.DEBUG){
             Log.e("BaseApplication","is debug : "+BuildConfig.DEBUG);
             Timber.plant(new Timber.DebugTree());
             QueryBuilder.LOG_SQL = BuildConfig.DEBUG;
             QueryBuilder.LOG_VALUES = BuildConfig.DEBUG;
+            AndroidNetworking.enableLogging();
+
         }
     }
 }

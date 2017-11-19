@@ -1,13 +1,10 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
-import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
@@ -16,10 +13,10 @@ import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentSpeedReadingBinding;
-import android.rezkyaulia.com.feo.pojo.ReadableObj;
-import android.rezkyaulia.com.feo.pojo.Words;
+import android.rezkyaulia.com.feo.model.ReadableObj;
+import android.rezkyaulia.com.feo.model.Words;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
-import android.rezkyaulia.com.feo.observer.RxBus;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -67,6 +64,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     private int mWpm;
     private int mGs;
     private int mNol;
+
+    private OnFragmentListener mListener;
 
     public static SpeedReadingFragment newInstance() {
         SpeedReadingFragment fragment = new SpeedReadingFragment();
@@ -121,7 +120,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         int id = item.getItemId();
         if (id == R.id.action_add_text) {
             Timber.e("onoption add text");
-            showDialogInputText();
+            showDialogInputText(null);
         }
         return super.onOptionsItemSelected(item);
 
@@ -165,6 +164,23 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                 initData(mWords);
             }
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentListener) {
+            mListener = (OnFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     private void initButton(){
@@ -518,8 +534,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     }
 
-    private void showDialogInputText(){
-        InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance();
+    private void showDialogInputText(String s){
+        InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance(s);
         inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
         inputTextDialog.setTargetFragment(this,inputTextDialog.TARGET);
         inputTextDialog.show(getFragmentManager().beginTransaction(), InputTextDialogFragment.Dialog);
@@ -550,6 +566,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                             libraryTbl.setTitle(title);
                             libraryTbl.setAuthor("Rezky");
                             Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
+
                         }else{
                             Snackbar.make(binding.containerBody, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
 
@@ -577,7 +594,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             public void onClick(DialogInterface dialog, int whichButton) {
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
-
+                mListener.onFinishInteraction();
 
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton
@@ -593,9 +610,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     }
 
     private void initRX(){
-        RxBus.getInstance().observable(Words.class).subscribe(event -> {
+        RxBus.getInstance().observable(String.class).subscribe(event -> {
             Timber.e("String RXBUS : "+new Gson().toJson(event));
-            onEventListString(event.getStrings());
+            onEventListString(event);
         });
 
         RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
@@ -606,12 +623,14 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     }
 
 
-    public void onEventListString(List<String> strings) {
-        Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(strings));
+    public void onEventListString(String s) {
+        Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(s));
+        /*List<String> strings = Utils.getInstance().convertStringIntoList(s);
         mWords.clear();
         mWords.addAll(strings);
 
-        initData(mWords);
+        initData(mWords);*/
+        showDialogInputText(s);
     }
 
     public void onEventLibrary(LibraryTbl libraryTbl) {
@@ -626,5 +645,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         }
     }
 
+    public interface OnFragmentListener {
+        void onFinishInteraction();
+    }
 }
 
