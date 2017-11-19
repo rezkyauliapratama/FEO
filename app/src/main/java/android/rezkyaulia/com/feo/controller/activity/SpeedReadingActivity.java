@@ -1,41 +1,33 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.BaseFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.controller.fragment.SpeedReadingFragment;
-import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
+import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySpeedReadingBinding;
+import android.rezkyaulia.com.feo.observer.RxBus;
+import android.rezkyaulia.com.feo.pojo.Words;
 import android.rezkyaulia.com.feo.utility.Utils;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.app.infideap.stylishwidget.view.ATextView;
-import com.rezkyaulia.android.light_optimization_data.eventbus.EventBus;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +37,7 @@ import timber.log.Timber;
  * Created by Rezky Aulia Pratama on 10/18/2017.
  */
 
-public class SpeedReadingActivity extends BaseActivity {
+public class SpeedReadingActivity extends BaseActivity implements LibraryFragment.OnListFragmentInteractionListener {
     static final int READ_REQ = 1;
 
     ActivitySpeedReadingBinding binding;
@@ -63,6 +55,91 @@ public class SpeedReadingActivity extends BaseActivity {
 
         initTab();
         initViewPager();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_speed_reading, menu);
+        this.menu = menu;
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar rewardTbl clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        if (id == R.id.action_add_file) {
+            /*Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/pdf|text*//*");
+*/
+            String[] mimeTypes =
+                    {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
+                            "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
+                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
+                            "text/plain",
+                            "application/pdf",
+                            "application/zip"};
+
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
+                if (mimeTypes.length > 0) {
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                }
+            } else {
+                String mimeTypesStr = "";
+                for (String mimeType : mimeTypes) {
+                    mimeTypesStr += mimeType + "|";
+                }
+                intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
+            }
+            startActivityForResult(intent, READ_REQ);
+        }
+
+        //noinspection SimplifiableIfStatement
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+
+            }
+
+            if(requestCode == READ_REQ){
+                Timber.e("OnActivityResult");
+                List<String> words = Utils.getInstance().readTextFile(this,uri);
+
+                RxBus.getInstance().post(new Words(words));
+            }
+        }
+    }
+
+    @Override
+    public void onListFragmentInteraction(LibraryTbl libraryTbl) {
+     showAlertDialogLibrary(libraryTbl);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Facade.getInstance().getDaoSession().clear();
     }
 
     private void initTab(){
@@ -138,79 +215,30 @@ public class SpeedReadingActivity extends BaseActivity {
         binding.content.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.content.tabLayout));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_speed_reading, menu);
-        this.menu = menu;
+    private void showAlertDialogLibrary(final LibraryTbl libraryTbl){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Library"); //Set Alert dialog title here
+        alert.setMessage("Do you want to load this library ?"); //Message here
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //You will get as string input data in this variable.
+                // here we convert the input to a string and show in a toast.
+                RxBus.getInstance().post(libraryTbl);
+                binding.content.viewPager.setCurrentItem(0,true);
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar rewardTbl clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_add_file) {
-            /*Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("application/pdf|text*//*");
-*/
-            String[] mimeTypes =
-                    {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
-                            "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                            "text/plain",
-                            "application/pdf",
-                            "application/zip"};
-
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
-                if (mimeTypes.length > 0) {
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                }
-            } else {
-                String mimeTypesStr = "";
-                for (String mimeType : mimeTypes) {
-                    mimeTypesStr += mimeType + "|";
-                }
-                intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
-            }
-            startActivityForResult(intent, READ_REQ);
-        } else if (id == R.id.action_help) {
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-
-            Uri uri = null;
-            if (data != null) {
-                uri = data.getData();
+            } // End of onClick(DialogInterface dialog, int whichButton)
+        }); //End of alert.setPositiveButton
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+                dialog.cancel();
 
             }
-
-            if(requestCode == READ_REQ){
-                Timber.e("OnActivityResult");
-                List<String> words = Utils.getInstance().readTextFile(this,uri);
-                EventBus.getInstance().post(words);
-
-            }
-        }
+        }); //End of alert.setNegativeButton
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
     }
+
 
 
 }

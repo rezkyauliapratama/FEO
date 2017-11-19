@@ -1,5 +1,6 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
@@ -7,6 +8,7 @@ import android.rezkyaulia.com.feo.controller.adapter.LibraryRVAdapter;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryBinding;
+import android.rezkyaulia.com.feo.observer.RxBus;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,12 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.rezkyaulia.android.light_optimization_data.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observer;
 import timber.log.Timber;
 
 /**
@@ -33,6 +33,9 @@ public class LibraryFragment extends BaseFragment {
     private GridLayoutManager mLayoutManager;
     private LibraryRVAdapter mAdapter;
     private List<LibraryTbl> mLibraryTbls;
+    private OnListFragmentInteractionListener mListener;
+
+    private LibraryTbl mSelectedLibrary;
 
     public static LibraryFragment newInstance() {
         LibraryFragment fragment = new LibraryFragment();
@@ -49,6 +52,8 @@ public class LibraryFragment extends BaseFragment {
         setRetainInstance(true);
 
         mLibraryTbls = new ArrayList<>();
+        mLibraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
+        mSelectedLibrary = null;
 
     }
 
@@ -73,37 +78,100 @@ public class LibraryFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         initRecyclerview();
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (binding.swipeRefreshLayout != null) {
-                    binding.swipeRefreshLayout.setRefreshing(true);
-                }
+            if (binding.swipeRefreshLayout != null) {
+                binding.swipeRefreshLayout.setRefreshing(true);
+            }
+            List<LibraryTbl> libraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
+            mLibraryTbls.clear();
+            mLibraryTbls.addAll(libraryTbls);
 
-                mLibraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
-                Timber.e("mLibraryTbls : "+new Gson().toJson(mLibraryTbls));
-                binding.recyclerView.getAdapter().notifyDataSetChanged();
-                binding.swipeRefreshLayout.setRefreshing(false);
+            Timber.e("mLibraryTbls : "+new Gson().toJson(mLibraryTbls));
+            if (mAdapter != null)
+                mAdapter.notifyDataSetChanged();
+
+            binding.swipeRefreshLayout.setRefreshing(false);
 
             }
         });
+        initRX();
     }
 
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Timber.e("ON RESUME");
+    }
+
+
     private void initRecyclerview(){
-        mLibraryTbls = Facade.getInstance().getManageLibraryTbl().getAll();
-        Timber.e("Size libraryTbls : "+mLibraryTbls.size());
         mLayoutManager = new GridLayoutManager(getContext(),2);
         binding.recyclerView.setLayoutManager(mLayoutManager);
         if (mLibraryTbls != null){
-            mAdapter = new LibraryRVAdapter(getContext(),mLibraryTbls);
-            Timber.e("mAdapter.getcount : "+mAdapter.getItemCount());
+            mAdapter = new LibraryRVAdapter(getContext(),mLibraryTbls,mListener);
             binding.recyclerView.setAdapter(mAdapter);
         }
 
 
 
+    }
+
+    private void initRX(){
+        RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
+           onEventLibrary(libraryTbl);
+        });
+    }
+    public void onEventLibrary(LibraryTbl libraryTbl) {
+        Timber.e("OBSERVER LIB : "+new Gson().toJson(libraryTbl));
+        mSelectedLibrary = libraryTbl;
+
+        if (mLibraryTbls != null){
+            if (mLibraryTbls.size() > 0){
+                for (LibraryTbl item : mLibraryTbls){
+                    if (item.getId() == mSelectedLibrary.getId()){
+                        item.setReadFlag(1);
+                    }else{
+                        item.setReadFlag(0);
+                    }
+                }
+            }
+        }
+        if (mAdapter != null){
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+
+        void onListFragmentInteraction(LibraryTbl libraryTbl);
     }
 
 }

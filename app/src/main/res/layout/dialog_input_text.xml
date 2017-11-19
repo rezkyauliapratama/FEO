@@ -3,26 +3,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorWhite">
-            <EditText
-                android:id="@+id/edittext_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="20"
-                style="@style/Base.V12.Widget.AppCompat.EditText"
-                android:textColor="@color/colorBlack_1000"
-                android:hint="@string/pleaseinputyourtextinhere"
-                android:textColorHint="@color/colorGrey_500"
-                android:fontFamily="sans-serif"
-                />
+    android:layout_height="wrap_content">
 
-    <com.app.infideap.stylishwidget.view.AButton
-        android:id="@+id/button_ok"
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_normal" />
+
+    <com.app.infideap.stylishwidget.view.ATextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle.Medium"
+        android:text="@string/title"
+        android:textColor="@color/colorBlack_1000"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_xsmall"/>
+
+    <EditText
+        android:id="@+id/edittext_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Button.Info.Fill"
-        android:text="@string/ok"/>
+        android:gravity="start"
+        android:lines="1"
+        android:background="@drawable/border_edittext"
+        android:hint="@string/pleaseinputyourtextinhere"
+        android:textColor="@color/colorBlack_1000"
+        android:textColorHint="@color/colorGrey_500"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_normal" />
+
+    <com.app.infideap.stylishwidget.view.ATextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle.Medium"
+        android:text="@string/content"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack_1000"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_xsmall"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edittext_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="start"
+            android:background="@drawable/border_edittext"
+            android:textColor="@color/colorBlack_1000"
+            android:hint="@string/pleaseinputyourtextinhere"
+            android:textColorHint="@color/colorGrey_500"
+            android:fontFamily="sans-serif"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_above="@+id/layout_button"/>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+            <com.app.infideap.stylishwidget.view.AButton
+                android:id="@+id/button_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Button.Danger.Fill"
+                android:text="@string/cancel"/>
+            <com.app.infideap.stylishwidget.view.AButton
+                android:id="@+id/button_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Button.Info.Fill"
+                android:text="@string/ok"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
 </layout>

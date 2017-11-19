@@ -1,0 +1,33 @@
+<resources>
+    <dimen name="size_width_logo">320dp</dimen>
+    <dimen name="size_width_notification_logo">60dp</dimen>
+    <dimen name="size_width_redeem_logo">96dp</dimen>
+    <dimen name="size_width_reward_logo">30dp</dimen>
+
+    <dimen name="size_image_36dp">36dp</dimen>
+
+    <dimen name="space_small">10dp</dimen>
+    <dimen name="space_normal">20dp</dimen>
+
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_xlarge">28sp</dimen>
+
+    <dimen name="margin_xxsmall">6dp</dimen>
+    <dimen name="margin_xsmall">12dp</dimen>
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_xlarge">32dp</dimen>
+    <dimen name="margin_xxlarge">48dp</dimen>
+
+    <dimen name="height_list_normal">100dp</dimen>
+    <dimen name="height_toolbar">64dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="size_height_expendable_imageview">200dp</dimen>
+    <dimen name="selection_icon_size">100dp</dimen>
+
+    <dimen name="nav_profile_photo_size">72dp</dimen>
+
+</resources>

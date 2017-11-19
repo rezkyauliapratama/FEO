@@ -18,7 +18,7 @@ import timber.log.Timber;
 /**
  * Created by Rezky Aulia Pratama on 7/4/2017.
  */
-
+@SuppressWarnings({"unchecked", "unused"})
 public class HttpCore<T> {
     private OkHttpClient mClient;
     private String mURL ;

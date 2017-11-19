@@ -1,9 +1,13 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
@@ -13,7 +17,9 @@ import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentSpeedReadingBinding;
 import android.rezkyaulia.com.feo.pojo.ReadableObj;
+import android.rezkyaulia.com.feo.pojo.Words;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
+import android.rezkyaulia.com.feo.observer.RxBus;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -22,15 +28,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.google.gson.Gson;
-import com.rezkyaulia.android.light_optimization_data.eventbus.EventBus;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observer;
 import timber.log.Timber;
 
 import static java.lang.Thread.sleep;
@@ -45,6 +49,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    static final int READ_REQ = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -105,27 +110,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         super.onViewCreated(view, savedInstanceState);
 
 
-        EventBus.getInstance().observe().subscribe(new Observer<List<String>>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(List<String> strings) {
-                Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(strings));
-                mWords.clear();
-                mWords.addAll(strings);
-
-                initData(mWords);
-            }
-        });
-
+        initRX();
 
         initButton();
 
@@ -138,10 +123,12 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             Timber.e("onoption add text");
             showDialogInputText();
         }
-
         return super.onOptionsItemSelected(item);
 
     }
+
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -159,6 +146,25 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         super.onResume();
         Timber.e("ONRESUME");
         initPref();
+    }
+
+
+    @Override
+    public void onGetPreferences() {
+        initPref();
+        initData(mWords);
+    }
+
+    @Override
+    public void onGetTextDialog(String title,String content) {
+        saveIntoLibrary(title,content);
+        if (content != null){
+            if (content.length()>0){
+                mWords.clear();
+                mWords.addAll(Utils.getInstance().convertStringIntoList(content));
+                initData(mWords);
+            }
+        }
     }
 
     private void initButton(){
@@ -373,10 +379,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                 while(mStart){
 
                                     long wpmMilis = Utils.getInstance().getMilisWPM(mWpm);
-                                    if (mIndex>=mReadableWords.size()){
-                                        Timber.e("mIndex>=mReadableWords.size()");
-                                        mIndex = 0;
-                                    }
+
 
                                     final String word = mReadableWords.get(mIndex).getWord();
                                     final int length = mReadableWords.get(mIndex).getLenght();
@@ -397,9 +400,25 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                         }
                                     });
                                     mIndex++;
+
+
                                     Timber.e("WPM Milis : "+wpmMilis*length);
                                     Timber.e("===================================================================================================");
                                     Thread.sleep(wpmMilis*length);
+
+                                    if (mIndex>=mReadableWords.size()){
+                                        Timber.e("mIndex>=mReadableWords.size()");
+                                        mIndex = 0;
+
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                initToggle(!mStart);
+                                                showAlertDialogFinish();
+
+                                            }
+                                        });
+                                    }
 
                                 }
                             }else{
@@ -501,7 +520,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private void showDialogInputText(){
         InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance();
-        inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
+        inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
         inputTextDialog.setTargetFragment(this,inputTextDialog.TARGET);
         inputTextDialog.show(getFragmentManager().beginTransaction(), InputTextDialogFragment.Dialog);
     }
@@ -516,14 +535,25 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         binding.contentSpeedReading.textViewGs.setText(String.format("Group size : %s",mGs));
     }
 
-    private void saveIntoLibrary(final String content){
+    private void saveIntoLibrary(final String title, final String content){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        showAlertDialogTitle(content);
+                        ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
+
+                        if (manageLibraryTbl.size()  <= 20){
+                            LibraryTbl libraryTbl = new LibraryTbl();
+                            libraryTbl.setContent(content);
+                            libraryTbl.setTitle(title);
+                            libraryTbl.setAuthor("Rezky");
+                            Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
+                        }else{
+                            Snackbar.make(binding.containerBody, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
+
+                        }
 
                     }
                 })
@@ -538,37 +568,20 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         dialog.show();
     }
 
-    private void showAlertDialogTitle(final String content){
+
+    private void showAlertDialogFinish(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle(R.string.pleaseinputthetitleforthislibrary); //Set Alert dialog title here
-        alert.setMessage("Enter Your Name Here"); //Message here
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(getContext());
-        alert.setView(input);
-
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alert.setTitle("Well done, you finished it"); //Set Alert dialog title here
+        alert.setMessage("DO you want to load the words from library ?"); //Message here
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
-                String srt = input.getEditableText().toString();
-                ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
-
-                if (manageLibraryTbl.size()  <= 20){
-                    LibraryTbl libraryTbl = new LibraryTbl();
-                    libraryTbl.setContent(content);
-                    libraryTbl.setTitle(srt);
-                    libraryTbl.setAuthor("Rezky");
-                    Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
-                }else{
-                    Snackbar.make(binding.containerBody, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
-
-                }
 
 
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Canceled.
                 dialog.cancel();
@@ -579,23 +592,39 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         alertDialog.show();
     }
 
+    private void initRX(){
+        RxBus.getInstance().observable(Words.class).subscribe(event -> {
+            Timber.e("String RXBUS : "+new Gson().toJson(event));
+            onEventListString(event.getStrings());
+        });
 
-    @Override
-    public void onGetPreferences() {
-        initPref();
+        RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
+            Timber.e("LIBRARY RXBUS : "+new Gson().toJson(libraryTbl));
+            onEventLibrary(libraryTbl);
+
+        });
+    }
+
+
+    public void onEventListString(List<String> strings) {
+        Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(strings));
+        mWords.clear();
+        mWords.addAll(strings);
+
         initData(mWords);
     }
 
-    @Override
-    public void onGetTextDialog(String content) {
-        saveIntoLibrary(content);
-        if (content != null){
-            if (content.length()>0){
-                mWords.clear();
-                mWords.addAll(Utils.getInstance().convertStringIntoList(content));
-                initData(mWords);
-            }
+    public void onEventLibrary(LibraryTbl libraryTbl) {
+        Timber.e("OBSERVER Speed REading : " + new Gson().toJson(libraryTbl));
+        List<String> strings = Utils.getInstance().convertStringIntoList(libraryTbl.getContent());
+
+        if (strings != null) {
+            mWords.clear();
+            mWords.addAll(strings);
+
+            initData(mWords);
         }
     }
+
 }
 

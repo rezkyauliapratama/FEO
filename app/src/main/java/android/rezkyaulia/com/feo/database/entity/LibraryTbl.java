@@ -8,6 +8,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by Rezky Aulia Pratama on 11/9/2017.
@@ -28,6 +29,9 @@ public class LibraryTbl implements Parcelable {
 
     @Property(nameInDb = "Content")
     private String Content;
+
+    @Transient
+    private int ReadFlag;
 
     @Generated(hash = 2003093814)
     public LibraryTbl(Long id, Long LibraryId, String Title, String Author,
@@ -83,6 +87,13 @@ public class LibraryTbl implements Parcelable {
         this.Content = Content;
     }
 
+    public int getReadFlag() {
+        return ReadFlag;
+    }
+
+    public void setReadFlag(int readFlag) {
+        ReadFlag = readFlag;
+    }
 
     @Override
     public int describeContents() {

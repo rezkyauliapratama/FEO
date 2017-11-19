@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.databinding.DialogInputTextBinding;
+import android.rezkyaulia.com.feo.utility.AdjustingViewGlobalLayoutListener;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -53,15 +54,26 @@ public class InputTextDialogFragment extends DialogFragment {
         binding.buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String title = binding.edittextTitle.getText().toString();
                 String words = binding.edittextContent.getText().toString();
-                mListener.onGetTextDialog(words);
+                mListener.onGetTextDialog(title,words);
                 dismiss();
             }
         });
+
+        binding
+                .buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        /*AdjustingViewGlobalLayoutListener listen = new AdjustingViewGlobalLayoutListener(binding.edittextContent);
+        binding.layoutButton.getViewTreeObserver().addOnGlobalLayoutListener(listen);*/
     }
 
 
     public interface DialogListener {
-        void onGetTextDialog(String contents);
+        void onGetTextDialog(String title,String contents);
     }
 }

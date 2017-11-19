@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
 public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
     private Menu menu;
@@ -59,4 +60,9 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+/*
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void attachActivity(String string) {
+
+    }*/
 }

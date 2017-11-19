@@ -8,7 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+
 import java.util.List;
+
+import timber.log.Timber;
 
 
 /**
@@ -30,8 +33,29 @@ public class BaseFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+       /* if (isObserverFragment()){
+            EventBus.getDefault().register(this);
+            Timber.e("ON OBSERVER START");
+        }*/
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        /*if (isObserverFragment()){
+            EventBus.getDefault().unregister(this);
+            Timber.e("ON OBSERVER STOP");
+
+        }*/
+    }
 
 
+    private boolean isObserverFragment(){
+        return this instanceof SpeedReadingFragment || this instanceof LibraryFragment;
+    }
     protected void displayFragment(int id, Fragment fragment) {
         getChildFragmentManager().beginTransaction()
                 .replace(id, fragment).commitAllowingStateLoss();
@@ -46,9 +70,6 @@ public class BaseFragment extends Fragment {
                 .remove(fragment).commitAllowingStateLoss();
     }
 
-    protected List<Fragment> getFragments() {
-        return getChildFragmentManager().getFragments();
-    }
 
 
 

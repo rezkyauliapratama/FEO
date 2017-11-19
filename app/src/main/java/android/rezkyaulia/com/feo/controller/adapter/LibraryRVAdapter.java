@@ -2,6 +2,7 @@ package android.rezkyaulia.com.feo.controller.adapter;
 
 import android.content.Context;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.ListItemLibraryBinding;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Created by Rezky Aulia Pratama on 11/11/2017.
@@ -18,10 +23,12 @@ import java.util.List;
 public class LibraryRVAdapter extends RecyclerView.Adapter<LibraryRVAdapter.ViewHolder> {
     List<LibraryTbl> mItems;
     Context mContext;
+    LibraryFragment.OnListFragmentInteractionListener mListener;
 
-    public LibraryRVAdapter(Context mContext,List<LibraryTbl> mItems) {
+    public LibraryRVAdapter(Context mContext, List<LibraryTbl> mItems, LibraryFragment.OnListFragmentInteractionListener mListener) {
         this.mItems = mItems;
         this.mContext = mContext;
+        this.mListener = mListener;
     }
 
     @Override
@@ -36,6 +43,21 @@ public class LibraryRVAdapter extends RecyclerView.Adapter<LibraryRVAdapter.View
         final LibraryTbl item = mItems.get(position);
         holder.binding.textviewTitle.setText(item.getTitle());
         holder.binding.textviewAuthor.setText(item.getAuthor());
+
+        if (item.getReadFlag() == 1){
+            Timber.e("FLAG : "+new Gson().toJson(item));
+            holder.binding.cardview.setBackgroundColor(mContext.getResources().getColor(R.color.colorAmber_A100));
+        }else{
+            holder.binding.cardview.setBackgroundColor(mContext.getResources().getColor(R.color.colorWhite));
+
+        }
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Timber.e("Onclick : "+new Gson().toJson(item));
+                mListener.onListFragmentInteraction(item);
+            }
+        });
     }
 
     @Override

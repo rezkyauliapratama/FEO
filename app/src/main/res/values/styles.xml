@@ -19,4 +19,8 @@
     <style name="dialog" parent="android:Theme.DeviceDefault.Dialog.NoActionBar.MinWidth" >
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="dialog.light" parent="android:Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth" >
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

@@ -1,5 +1,7 @@
 package com.rezkyaulia.android.light_optimization_data.eventbus;
 
+import java.lang.reflect.Type;
+
 import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
@@ -8,28 +10,30 @@ import rx.subjects.Subject;
  * Created by Mutya Nayavashti on 02/01/2017.
  */
 
-public class EventBus<T> {
+public class EventBusRX<T> {
     private final Subject<T, T> subject;
 
-    private static EventBus mInstance;
+    private static EventBusRX mInstance;
+    private Type type;
 
-    public static EventBus getInstance() {
+    public static EventBusRX getInstance() {
         if (mInstance == null) {
-            mInstance = new EventBus();
+            mInstance = new EventBusRX();
         }
         return mInstance;
     }
 
-    public EventBus() {
+    public EventBusRX() {
         this(PublishSubject.<T>create());
     }
 
-    public EventBus(Subject<T, T> subject) {
+    public EventBusRX(Subject<T, T> subject) {
         this.subject = subject;
+        this.type = subject.getClass();
     }
 
     public <E extends T> void post(E event) {
-        subject.onNext(event);
+            subject.onNext(event);
     }
 
     public Observable<T> observe() {

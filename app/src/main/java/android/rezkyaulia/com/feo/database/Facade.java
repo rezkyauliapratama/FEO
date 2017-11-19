@@ -36,6 +36,10 @@ public class Facade {
 
     }
 
+    public DaoSession getDaoSession(){
+        return session;
+    }
+
     public ManageLibraryTbl getManageLibraryTbl() {
         return manageLibraryTbl;
     }

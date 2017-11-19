@@ -23,7 +23,7 @@
         <activity
             android:name=".controller.activity.SpeedReadingActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustResize|stateAlwaysHidden"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
     </application>
 
