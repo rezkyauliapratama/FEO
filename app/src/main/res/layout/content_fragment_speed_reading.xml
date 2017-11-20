@@ -30,6 +30,18 @@
                 android:fontFamily="sans-serif"
                 />
         </FrameLayout>
+        <EditText
+            android:id="@+id/edittext_answer"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layout_button"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/border_edittext"
+            android:gravity="center"
+            android:hint="Please input the text here ..."
+            android:textColor="@color/colorBlack_1000"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:id="@+id/layout_button"
             android:layout_width="wrap_content"
@@ -72,7 +84,7 @@
             android:padding="@dimen/margin_small"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="@color/colorGrey_200"
+            android:background="@color/colorPrimaryDark"
             >
             <com.app.infideap.stylishwidget.view.ATextView
                 android:id="@+id/textView_wpm"
@@ -81,7 +93,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:text="WPM : 2000"/>
+                android:text="WPM : 2000"
+                android:textColor="@color/colorWhite"/>
 
             <com.app.infideap.stylishwidget.view.ATextView
                 android:id="@+id/textView_nol"
@@ -90,7 +103,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:text="Number of lines : 1"/>
+                android:text="Number of lines : 1"
+                android:textColor="@color/colorWhite"/>
 
             <com.app.infideap.stylishwidget.view.ATextView
                 android:id="@+id/textView_gs"
@@ -99,7 +113,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:text="Group Size : 1"/>
+                android:text="Group Size : 1"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -49,11 +49,21 @@
             android:layout_alignParentRight="true"
             android:gravity="right"
             android:orientation="vertical">
-
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                app:lottie_progress="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/imageView_no_result"
+                app:lottie_scale="2"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="animation/trophy.json"
+                app:lottie_loop="false" />
+            <!--<ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_medal" />
+                android:src="@drawable/ic_medal" />-->
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
