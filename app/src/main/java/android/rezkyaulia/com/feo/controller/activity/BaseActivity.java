@@ -99,6 +99,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.do_nothing, R.anim.slid_right);
+
     }
 
     public void redirectToMainActivity() {

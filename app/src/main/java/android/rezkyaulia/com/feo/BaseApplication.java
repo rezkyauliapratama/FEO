@@ -1,6 +1,7 @@
 package android.rezkyaulia.com.feo;
 
 import android.app.Application;
+import android.content.Context;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.FacadeOpenHelper;
 import android.rezkyaulia.com.feo.database.entity.DaoMaster;
@@ -8,9 +9,12 @@ import android.rezkyaulia.com.feo.database.entity.DaoSession;
 import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.app.infideap.stylishwidget.view.Stylish;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 
 import org.greenrobot.greendao.database.Database;
@@ -24,6 +28,7 @@ import timber.log.Timber;
  */
 
 public class BaseApplication extends Application {
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -57,7 +62,23 @@ public class BaseApplication extends Application {
             QueryBuilder.LOG_SQL = BuildConfig.DEBUG;
             QueryBuilder.LOG_VALUES = BuildConfig.DEBUG;
             AndroidNetworking.enableLogging();
+        refWatcher = LeakCanary.install(this);
 
         }
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        BaseApplication application = (BaseApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Toast.makeText(this,"ONLOW MEMORY ",Toast.LENGTH_LONG).show();
+
+        Runtime.getRuntime().gc();
     }
 }

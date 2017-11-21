@@ -5,6 +5,7 @@ import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.ListItemLibraryBinding;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,13 @@ public class LibraryRVAdapter extends RecyclerView.Adapter<LibraryRVAdapter.View
 
         if (item.getReadFlag() == 1){
             Timber.e("FLAG : "+new Gson().toJson(item));
-            holder.binding.cardview.setBackgroundColor(mContext.getResources().getColor(R.color.colorAmber_A100));
+            holder.binding.cardview.setBackgroundColor(ContextCompat.getColor(mContext, (R.color.colorGrey_100)));
+            holder.binding.lottieview.setVisibility(View.VISIBLE);
+            holder.binding.lottieview.playAnimation();
         }else{
-            holder.binding.cardview.setBackgroundColor(mContext.getResources().getColor(R.color.colorWhite));
+            holder.binding.cardview.setBackgroundColor(ContextCompat.getColor(mContext, (R.color.colorWhite)));
 
+            holder.binding.lottieview.setVisibility(View.GONE);
         }
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

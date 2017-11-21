@@ -1,12 +1,15 @@
 package android.rezkyaulia.com.feo.handler.observer;
 
 import android.support.annotation.NonNull;
+import android.widget.ImageButton;
 
 import org.jetbrains.annotations.Contract;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
+import timber.log.Timber;
 
 
 /**
@@ -36,6 +39,7 @@ public class RxBus implements EventBusInterface {
     public void post(@NonNull Object event) {
         if (this.mBusSubject.hasObservers()) {
             this.mBusSubject.onNext(event);
+
         }
     }
 
@@ -46,6 +50,8 @@ public class RxBus implements EventBusInterface {
                 .filter(eventClass::isInstance) // We're only interested in a specific event class
                 .cast(eventClass); // Cast it for easier usage
     }
+
+
 
 
 }

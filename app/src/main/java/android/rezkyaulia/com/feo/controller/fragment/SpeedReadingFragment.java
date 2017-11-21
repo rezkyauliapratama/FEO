@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.SpeedReadingSettingDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
@@ -20,6 +21,7 @@ import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,6 +34,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 import static java.lang.Thread.sleep;
@@ -41,11 +48,12 @@ import static java.lang.Thread.sleep;
  */
 
 public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSettingDialogFragment.DialogListener
-                                                                    ,InputTextDialogFragment.DialogListener{
+                                                                    ,InputTextDialogFragment.DialogListener
+                                                                    ,InputAnswerDialogFragment.DialogListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARGS1 = "ARG1";
+    private static final String ARGS2 = "ARG2";
     static final int READ_REQ = 1;
 
     // TODO: Rename and change types of parameters
@@ -64,14 +72,20 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     private int mWpm;
     private int mGs;
     private int mNol;
-
+    private boolean mIsQuiz = false;
     private OnFragmentListener mListener;
+    
+    private Context mContext;
+    private FragmentManager fragmentManager;
 
-    public static SpeedReadingFragment newInstance() {
+    private Disposable disposableString;
+    private Disposable disposableLibraryTbl;
+
+    public static SpeedReadingFragment newInstance(boolean b) {
         SpeedReadingFragment fragment = new SpeedReadingFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, category);
-        fragment.setArguments(args);*/
+        Bundle args = new Bundle();
+        args.putBoolean(ARGS1, b);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -80,6 +94,15 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        Timber.e("ON CREATE");
+
+        if (getArguments() != null) {
+            mIsQuiz = getArguments().getBoolean(ARGS1);
+        }
+
+        fragmentManager = getFragmentManager();
+        mContext = getContext();
+
         mWords = new ArrayList<>();
         mReadableWords = new ArrayList<>();
         mIndex = 0;
@@ -97,6 +120,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             movies = savedInstanceState.getParcelableArrayList(EXTRA2);
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
             mPage = savedInstanceState.getInt(EXTRA3);*/
+           /* int test = savedInstanceState.getInt("tes", 0);
+            Timber.e("savedinstancestate value : "+test);*/
         }
 
 
@@ -137,6 +162,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         /*outState.putString(EXTRA1, mCategory);
         outState.putParcelableArrayList(EXTRA2, new ArrayList<MovieAbstract>(movies));
         outState.putInt(EXTRA3, mPage);*/
+//        outState.putInt("tes", 3);
         super.onSaveInstanceState(outState);
     }
 
@@ -183,6 +209,19 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         mListener = null;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (disposableLibraryTbl != null){
+            Timber.e("disposableLibraryTbl != null");
+            if (!disposableLibraryTbl.isDisposed()) {
+                Timber.e("!disposableLibraryTbl.isDisposed()");
+
+                disposableLibraryTbl.dispose();
+            }
+        }
+    }
+
     private void initButton(){
         binding.contentSpeedReading.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,11 +261,14 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         mStart = start;
         Drawable drawable = null;
         if (mStart){
-            drawable = getResources().getDrawable(R.drawable.ic_icon_pause_round);
+            drawable = mContext.getResources().getDrawable(R.drawable.ic_icon_pause_round);
             binding.contentSpeedReading.layoutSetting.setEnabled(false);
         }else{
-            drawable = getResources().getDrawable(R.drawable.ic_icon_play);
+            drawable = mContext.getResources().getDrawable(R.drawable.ic_icon_play);
             binding.contentSpeedReading.layoutSetting.setEnabled(true);
+
+            if (mIsQuiz)
+            showDialogInputAnswer();
 
         }
         binding.contentSpeedReading.btnPlay.setImageDrawable(drawable);
@@ -236,7 +278,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     private void initData(List<String> words){
         if (words != null){
             if (words.size() > 0){
-                Timber.e("initdata word.Size : "+words.size()+" | mNol : "+mNol+" | mGS : "+mGs);
+//                Timber.e("initdata word.Size : "+words.size()+" | mNol : "+mNol+" | mGS : "+mGs);
                 mReadableWords.clear();
                 int pointer = 0;
                 while(pointer<words.size()){
@@ -244,15 +286,15 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                     int lenght=0;
 
                     for (int i = 0; i<mNol ; i++) {
-                        Timber.e("For mNol");
+//                        Timber.e("For mNol");
                         for (int j = 0; j < mGs; j++) {
-                            Timber.e("for mGS");
+//                            Timber.e("for mGS");
                             if (pointer < words.size()) {
                                 temp = temp + " " + words.get(pointer);
                             }else{
                                 break;
                             }
-                            Timber.e("pointer : "+pointer);
+//                            Timber.e("pointer : "+pointer);
                             pointer++;
                             lenght++;
 
@@ -264,17 +306,17 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
                     }
                     mReadableWords.add(new ReadableObj(temp,lenght));
-                    Timber.e("==============================================================");
+//                    Timber.e("==============================================================");
                 }
 
-                Timber.e("start index : "+mIndex+" | MDIVIDED : "+mDivided);
+//                Timber.e("start index : "+mIndex+" | MDIVIDED : "+mDivided);
 
                 int dimension = mGs * mNol;
                 int divided = mDivided / dimension;
                 mIndex = divided;
                 mDivided=divided*dimension;
 
-                Timber.e("start divided : "+divided+" | dimension : "+dimension+" | mIndex : "+mIndex+" | MDIVIDED : "+mDivided);
+//                Timber.e("start divided : "+divided+" | dimension : "+dimension+" | mIndex : "+mIndex+" | MDIVIDED : "+mDivided);
 
                 if (mIndex>=words.size())
                     mIndex = 0;
@@ -381,11 +423,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private void playWords(){
         if (mReadableWords != null){
-            Timber.e("mwords != null");
+//            Timber.e("mwords != null");
             if (mReadableWords.size() > 0){
-                Timber.e("mReadableWords.Size : "+mReadableWords.size());
+//                Timber.e("mReadableWords.Size : "+mReadableWords.size());
 
-                Timber.e("mStart : "+mStart);
+//                Timber.e("mStart : "+mStart);
                 Thread thread = new Thread() {
                     @Override
                     public void run() {
@@ -396,6 +438,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
                                     long wpmMilis = Utils.getInstance().getMilisWPM(mWpm);
 
+                                    if (mIndex >= mReadableWords.size())
+                                        mIndex = 0;
 
                                     final String word = mReadableWords.get(mIndex).getWord();
                                     final int length = mReadableWords.get(mIndex).getLenght();
@@ -408,7 +452,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                         mDivided = 0;
                                     }
 
-                                    Timber.e("mIndex : "+mIndex+" | word : "+word+" | lenght : "+length);
+//                                    Timber.e("mIndex : "+mIndex+" | word : "+word+" | lenght : "+length);
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -418,12 +462,12 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                     mIndex++;
 
 
-                                    Timber.e("WPM Milis : "+wpmMilis*length);
-                                    Timber.e("===================================================================================================");
+//                                    Timber.e("WPM Milis : "+wpmMilis*length);
+//                                    Timber.e("===================================================================================================");
                                     Thread.sleep(wpmMilis*length);
 
                                     if (mIndex>=mReadableWords.size()){
-                                        Timber.e("mIndex>=mReadableWords.size()");
+//                                        Timber.e("mIndex>=mReadableWords.size()");
                                         mIndex = 0;
 
                                         getActivity().runOnUiThread(new Runnable() {
@@ -443,6 +487,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                             }
 
                         } catch (InterruptedException e) {
+                            Timber.e("ERROR : "+e.getMessage());
+                        }catch (Exception e){
                             Timber.e("ERROR : "+e.getMessage());
                         }
                     }
@@ -470,7 +516,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                    final String tempWord = mReadableWords.get(mIndex).getWord();
                    final int lenght = mReadableWords.get(mIndex).getLenght();
 
-                   Timber.e("start mDivided : "+mDivided);
+//                   Timber.e("start mDivided : "+mDivided);
 
                    mDivided = (mIndex * dimension)+lenght;
 
@@ -478,7 +524,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                        mDivided = 0;
                    }
 
-                   Timber.e("end mDivided : "+mDivided);
+//                   Timber.e("end mDivided : "+mDivided);
 
                    getActivity().runOnUiThread(new Runnable() {
                        @Override
@@ -503,7 +549,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                     final String tempWord = mReadableWords.get(mIndex).getWord();
                     final int lenght = mReadableWords.get(mIndex).getLenght();
 
-                    Timber.e("start mDivided : "+mDivided);
+//                    Timber.e("start mDivided : "+mDivided);
 
                     mDivided = (mIndex * dimension)+lenght;
 
@@ -511,7 +557,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                         mDivided = 0;
                     }
 
-                    Timber.e("end mDivided : "+mDivided);
+//                    Timber.e("end mDivided : "+mDivided);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -530,7 +576,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         SpeedReadingSettingDialogFragment settingDialogFragment = SpeedReadingSettingDialogFragment.newInstance();
         settingDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
         settingDialogFragment.setTargetFragment(this,settingDialogFragment.TARGET);
-        settingDialogFragment.show(getFragmentManager().beginTransaction(),SpeedReadingSettingDialogFragment.Dialog);
+        settingDialogFragment.show(fragmentManager.beginTransaction(),SpeedReadingSettingDialogFragment.Dialog);
 
     }
 
@@ -538,7 +584,15 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance(s);
         inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
         inputTextDialog.setTargetFragment(this,inputTextDialog.TARGET);
-        inputTextDialog.show(getFragmentManager().beginTransaction(), InputTextDialogFragment.Dialog);
+        inputTextDialog.show(fragmentManager.beginTransaction(), InputTextDialogFragment.Dialog);
+    }
+
+    private void showDialogInputAnswer(){
+        InputAnswerDialogFragment inputAnswerDialog = InputAnswerDialogFragment.newInstance();
+        inputAnswerDialog.setCancelable(false);
+        inputAnswerDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
+        inputAnswerDialog.setTargetFragment(this,inputAnswerDialog.TARGET);
+        inputAnswerDialog.show(fragmentManager.beginTransaction(), InputAnswerDialogFragment.Dialog);
     }
 
     private void initPref(){
@@ -552,7 +606,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     }
 
     private void saveIntoLibrary(final String title, final String content){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -587,7 +641,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
 
     private void showAlertDialogFinish(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
         alert.setTitle("Well done, you finished it"); //Set Alert dialog title here
         alert.setMessage("DO you want to load the words from library ?"); //Message here
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -609,27 +663,26 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         alertDialog.show();
     }
 
+    private Disposable disposable;
     private void initRX(){
-        RxBus.getInstance().observable(String.class).subscribe(event -> {
-            Timber.e("String RXBUS : "+new Gson().toJson(event));
-            onEventListString(event);
+
+        disposableString = RxBus.getInstance().observable(String.class).subscribe(s -> {
+            Timber.e("String RXBUS : "+new Gson().toJson(s));
+            onEventListString(s);
         });
 
-        RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
-            Timber.e("LIBRARY RXBUS : "+new Gson().toJson(libraryTbl));
-            onEventLibrary(libraryTbl);
-
-        });
+        disposableLibraryTbl = RxBus.getInstance().observable(LibraryTbl.class)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(libraryTbl -> {
+                    Timber.e("LIBRARY RXBUS : "+new Gson().toJson(libraryTbl));
+                    onEventLibrary(libraryTbl);
+                });
     }
 
 
     public void onEventListString(String s) {
         Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(s));
-        /*List<String> strings = Utils.getInstance().convertStringIntoList(s);
-        mWords.clear();
-        mWords.addAll(strings);
-
-        initData(mWords);*/
         showDialogInputText(s);
     }
 
@@ -643,6 +696,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
             initData(mWords);
         }
+    }
+
+    @Override
+    public void onGetAnswerDialog(String title) {
+
     }
 
     public interface OnFragmentListener {
