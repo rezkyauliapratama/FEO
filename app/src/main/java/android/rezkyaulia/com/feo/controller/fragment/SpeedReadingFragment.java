@@ -13,11 +13,13 @@ import android.rezkyaulia.com.feo.controller.fragment.dialog.SpeedReadingSetting
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentSpeedReadingBinding;
 import android.rezkyaulia.com.feo.model.ReadableObj;
 import android.rezkyaulia.com.feo.model.Words;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.utility.TimeUtility;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -31,6 +33,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +42,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.internal.Util;
 import timber.log.Timber;
 
 import static java.lang.Thread.sleep;
@@ -80,6 +84,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private Disposable disposableString;
     private Disposable disposableLibraryTbl;
+
+    private Thread mThreadPlay;
 
     public static SpeedReadingFragment newInstance(boolean b) {
         SpeedReadingFragment fragment = new SpeedReadingFragment();
@@ -177,6 +183,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     @Override
     public void onGetPreferences() {
         initPref();
+
+
         initData(mWords);
     }
 
@@ -212,6 +220,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        killThread();
         if (disposableLibraryTbl != null){
             Timber.e("disposableLibraryTbl != null");
             if (!disposableLibraryTbl.isDisposed()) {
@@ -222,13 +232,30 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         }
     }
 
+    private void killThread(){
+        if (mThreadPlay != null){
+            Timber.e("mThreadPlay != null");
+            if (mThreadPlay.isAlive()){
+                Timber.e("mThreadPlay.isAlive()");
+                mThreadPlay.interrupt();
+                mThreadPlay = null;
+            }
+
+        }
+    }
     private void initButton(){
         binding.contentSpeedReading.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mWords.size()>0)
+                binding.contentSpeedReading.textviewContent.setVisibility(View.VISIBLE);
+                if (mWords.size()>0) {
                     initToggle(!mStart);
-                else
+
+                    if (!mStart){
+                        if (mIsQuiz && mIndex != 0)
+                            showDialogInputAnswer();
+                    }
+                }else
                     Snackbar.make(binding.containerBody, R.string.sorrythereisnowordsthatcanplay,Snackbar.LENGTH_LONG).show();
             }
         });
@@ -267,15 +294,17 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             drawable = mContext.getResources().getDrawable(R.drawable.ic_icon_play);
             binding.contentSpeedReading.layoutSetting.setEnabled(true);
 
-            if (mIsQuiz)
-            showDialogInputAnswer();
+            killThread();
 
         }
+        binding.contentSpeedReading.lottieviewCheck.setVisibility(View.GONE);
         binding.contentSpeedReading.btnPlay.setImageDrawable(drawable);
         playWords();
     }
 
     private void initData(List<String> words){
+        initToggle(false);
+
         if (words != null){
             if (words.size() > 0){
 //                Timber.e("initdata word.Size : "+words.size()+" | mNol : "+mNol+" | mGS : "+mGs);
@@ -324,7 +353,6 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                 if (mReadableWords.size()>0)
                     binding.contentSpeedReading.textviewContent.setText(mReadableWords.get(mIndex).getWord());
 
-                initToggle(false);
 
             }
         }
@@ -428,7 +456,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 //                Timber.e("mReadableWords.Size : "+mReadableWords.size());
 
 //                Timber.e("mStart : "+mStart);
-                Thread thread = new Thread() {
+                mThreadPlay = new Thread() {
                     @Override
                     public void run() {
                         try {
@@ -438,8 +466,6 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
                                     long wpmMilis = Utils.getInstance().getMilisWPM(mWpm);
 
-                                    if (mIndex >= mReadableWords.size())
-                                        mIndex = 0;
 
                                     final String word = mReadableWords.get(mIndex).getWord();
                                     final int length = mReadableWords.get(mIndex).getLenght();
@@ -459,15 +485,15 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                             binding.contentSpeedReading.textviewContent.setText(word);
                                         }
                                     });
-                                    mIndex++;
 
 
 //                                    Timber.e("WPM Milis : "+wpmMilis*length);
 //                                    Timber.e("===================================================================================================");
                                     Thread.sleep(wpmMilis*length);
+                                    mIndex++;
+                                    Timber.e("MINDEX ++ : "+mIndex+" | mReadableWords.size():"+mReadableWords.size());
 
                                     if (mIndex>=mReadableWords.size()){
-//                                        Timber.e("mIndex>=mReadableWords.size()");
                                         mIndex = 0;
 
                                         getActivity().runOnUiThread(new Runnable() {
@@ -481,11 +507,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                     }
 
                                 }
-                            }else{
+                            }/*else{
                                 if (mIndex>0)
                                     mIndex--;
                             }
-
+*/
                         } catch (InterruptedException e) {
                             Timber.e("ERROR : "+e.getMessage());
                         }catch (Exception e){
@@ -494,7 +520,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                     }
                 };
 
-                thread.start();
+                mThreadPlay.start();
 
             }
         }
@@ -502,6 +528,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private void nextWords(boolean isNext){
         int dimension = mGs * mNol;
+        binding.contentSpeedReading.textviewContent.setVisibility(View.VISIBLE);
+        binding.contentSpeedReading.lottieviewCheck.setVisibility(View.GONE);
 
         if (isNext){
            if (mReadableWords != null){
@@ -609,31 +637,24 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
 
-                        if (manageLibraryTbl.size()  <= 20){
-                            LibraryTbl libraryTbl = new LibraryTbl();
-                            libraryTbl.setContent(content);
-                            libraryTbl.setTitle(title);
-                            libraryTbl.setAuthor("Rezky");
-                            Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
+                    if (manageLibraryTbl.size()  <= 20){
+                        Timber.e("manageLibraryTbl.size()  <= 20");
+                        LibraryTbl libraryTbl = new LibraryTbl();
+                        libraryTbl.setContent(content);
+                        libraryTbl.setTitle(title);
+                        libraryTbl.setAuthor("Rezky");
+                        Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
 
-                        }else{
-                            Snackbar.make(binding.containerBody, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
-
-                        }
+                    }else{
+                        Snackbar.make(binding.containerBody, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
 
                     }
+
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -693,16 +714,49 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         if (strings != null) {
             mWords.clear();
             mWords.addAll(strings);
-
             initData(mWords);
         }
     }
 
     @Override
-    public void onGetAnswerDialog(String title) {
-
+    public void onGetAnswerDialog(String answer) {
+        Timber.e("onGetANswerDialog :"+mIndex+ " | mReadableWords:"+mReadableWords.size());
+        if (mIndex > 0 && mIndex < mReadableWords.size()){
+            Timber.e("mIndex > 0 && mIndex < mReadableWords.size()");
+            if (answer != null){
+                String correctAns = mReadableWords.get(mIndex-1).getWord().trim();
+                Timber.e("correctAns :"+correctAns.toLowerCase()+" | ans :"+answer.trim().toLowerCase());
+                if (answer.trim().toLowerCase().equals(correctAns.toLowerCase())){
+                    checkAnswer(true);
+                }else{
+                    checkAnswer(false);
+                }
+            }else{
+                checkAnswer(false);
+            }
+        }
     }
 
+    private void checkAnswer(boolean b){
+        Timber.e("CHECK ANSWER : "+b);
+        ScoreTbl scoreTbl = new ScoreTbl();
+        scoreTbl.setUserId(userTbl.getUserId());
+        scoreTbl.setCreatedDate(Utils.getInstance().time().getDateTimeString());
+        if (b){
+            scoreTbl.setScore(pref.getWPM());
+            binding.contentSpeedReading.lottieviewCheck.setAnimation("animation/check.json");
+        }else{
+            scoreTbl.setScore(0);
+            binding.contentSpeedReading.lottieviewCheck.setAnimation("animation/x_pop.json");
+
+        }
+
+        binding.contentSpeedReading.textviewContent.setVisibility(View.GONE);
+        binding.contentSpeedReading.lottieviewCheck.setVisibility(View.VISIBLE);
+        binding.contentSpeedReading.lottieviewCheck.loop(false);
+        binding.contentSpeedReading.lottieviewCheck.playAnimation();
+        Facade.getInstance().getManageScoreTbl().add(scoreTbl);
+    }
     public interface OnFragmentListener {
         void onFinishInteraction();
     }

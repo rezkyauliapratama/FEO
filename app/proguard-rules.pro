@@ -32,3 +32,10 @@
 ## Only required if you use AsyncExecutor
 #-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
 #    <init>(java.lang.Throwable);
+
+# Parcel library
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keep class org.parceler.Parceler$$Parcels

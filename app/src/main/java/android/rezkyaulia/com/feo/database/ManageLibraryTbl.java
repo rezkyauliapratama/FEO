@@ -22,7 +22,7 @@ public class ManageLibraryTbl {
     }
 
     public long add(LibraryTbl object) {
-        return dao.insertOrReplace(object);
+        return dao.insert(object);
     }
 
     public void add(List<LibraryTbl> object) {

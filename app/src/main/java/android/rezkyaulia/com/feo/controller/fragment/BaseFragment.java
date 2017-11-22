@@ -3,6 +3,8 @@ package android.rezkyaulia.com.feo.controller.fragment;
 
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,12 +26,14 @@ public class BaseFragment extends Fragment {
 
     protected PreferencesManager pref;
 
+    protected UserTbl userTbl;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         pref = PreferencesManager.getInstance();
-
+        userTbl = Facade.getInstance().getManagerUserTbl().get();
 
     }
 

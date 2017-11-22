@@ -54,7 +54,18 @@ public class InputAnswerDialogFragment extends DialogFragment {
 
     private void initButton(){
         binding.buttonCancel.setOnClickListener(v -> {
+            mListener.onGetAnswerDialog(null);
             dismiss();
+        });
+
+        binding.buttonAnswer.setOnClickListener(v -> {
+            String s = binding.exittextDialog.getText().toString();
+            if (!s.isEmpty()){
+                mListener.onGetAnswerDialog(s);
+                dismiss();
+            }else{
+                binding.exittextDialog.setError("Please fill the answer");
+            }
         });
     }
 
