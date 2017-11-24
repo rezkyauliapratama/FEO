@@ -56,6 +56,7 @@ public class SpeedReadingActivity extends BaseActivity implements
     BaseFragment fragment;
     Menu menu;
 
+    private String mGuid;
     LfPagerAdapter adapter;
     boolean mIsQuiz = false;
     @Override
@@ -72,6 +73,8 @@ public class SpeedReadingActivity extends BaseActivity implements
             Timber.e("GET INTENT != null : "+mIsQuiz);
 
         }
+
+        mGuid = Utils.getInstance().getUniqueID(this);
         initViewPager();
         initTab();
 
@@ -175,6 +178,18 @@ public class SpeedReadingActivity extends BaseActivity implements
         tab.select();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mIsQuiz){
+            Intent intent = new Intent(this,SummarySpeedReadingActivity.class);
+            intent.putExtra(SummarySpeedReadingActivity.ARGS1,mGuid);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
     private void initTab(){
         TabLayout.Tab[] tabs = {
                 binding.content.tabLayout.newTab().setText("Speed Reading"),
@@ -229,7 +244,7 @@ public class SpeedReadingActivity extends BaseActivity implements
 
     private void initViewPager(){
         Timber.e("INITVIEWPAGER");
-        fragments.add(SpeedReadingFragment.newInstance(mIsQuiz));
+        fragments.add(SpeedReadingFragment.newInstance(mGuid,mIsQuiz));
         fragments.add(LibraryFragment.newInstance());
 
         fragment = fragments.get(0);

@@ -77,6 +77,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     private int mGs;
     private int mNol;
     private boolean mIsQuiz = false;
+    private String mGuid = "";
     private OnFragmentListener mListener;
     
     private Context mContext;
@@ -87,10 +88,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private Thread mThreadPlay;
 
-    public static SpeedReadingFragment newInstance(boolean b) {
+    public static SpeedReadingFragment newInstance(String guid,boolean b) {
         SpeedReadingFragment fragment = new SpeedReadingFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARGS1, b);
+        args.putString(ARGS2, guid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,6 +106,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
         if (getArguments() != null) {
             mIsQuiz = getArguments().getBoolean(ARGS1);
+            mGuid= getArguments().getString(ARGS2);
         }
 
         fragmentManager = getFragmentManager();
@@ -282,6 +285,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             }
         });
     }
+
 
     private void initToggle(boolean start){
         Timber.e("inittoggle");
@@ -722,25 +726,28 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     public void onGetAnswerDialog(String answer) {
         Timber.e("onGetANswerDialog :"+mIndex+ " | mReadableWords:"+mReadableWords.size());
         if (mIndex > 0 && mIndex < mReadableWords.size()){
+            String correctAns = mReadableWords.get(mIndex-1).getWord().trim();
             Timber.e("mIndex > 0 && mIndex < mReadableWords.size()");
             if (answer != null){
-                String correctAns = mReadableWords.get(mIndex-1).getWord().trim();
                 Timber.e("correctAns :"+correctAns.toLowerCase()+" | ans :"+answer.trim().toLowerCase());
                 if (answer.trim().toLowerCase().equals(correctAns.toLowerCase())){
-                    checkAnswer(true);
+                    checkAnswer(true,correctAns,answer);
                 }else{
-                    checkAnswer(false);
+                    checkAnswer(false,correctAns,answer);
                 }
             }else{
-                checkAnswer(false);
+                checkAnswer(false,correctAns,answer);
             }
         }
     }
 
-    private void checkAnswer(boolean b){
+    private void checkAnswer(boolean b,String correctAnswer, String answer){
         Timber.e("CHECK ANSWER : "+b);
         ScoreTbl scoreTbl = new ScoreTbl();
         scoreTbl.setUserId(userTbl.getUserId());
+        scoreTbl.setGuid(mGuid);
+        scoreTbl.setAnswer(answer);
+        scoreTbl.setCorrectAnswer(correctAnswer);
         scoreTbl.setCreatedDate(Utils.getInstance().time().getDateTimeString());
         if (b){
             scoreTbl.setScore(pref.getWPM());

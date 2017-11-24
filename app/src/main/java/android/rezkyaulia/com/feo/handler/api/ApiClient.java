@@ -1,5 +1,9 @@
 package android.rezkyaulia.com.feo.handler.api;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import org.jetbrains.annotations.Contract;
 
 /**
@@ -9,6 +13,7 @@ import org.jetbrains.annotations.Contract;
 public class ApiClient {
     // Static member class member that holds only one instance of the
     // SingletonExample class
+    private Context mContext;
     private static class SingletonHolder{
         public static ApiClient singletonInstance =
                 new ApiClient();
@@ -27,6 +32,12 @@ public class ApiClient {
     private final UserApi user;
     public UserApi user() {
         return user;
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

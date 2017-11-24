@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_summary_speed_reading"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:id="@+id/layout_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                app:lottie_progress="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/imageView_no_result"
+                app:lottie_scale="3"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="animation/trophy.json"
+                app:lottie_loop="false" />
+            <!--<ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_medal" />-->
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_small" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlue_900"
+                android:text="Your best score : 7000 WPM" />
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_normal"
+            android:layout_below="@id/layout_information">
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_titleScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_xxsmall"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"
+                android:text="Your high score: "
+                />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_valueScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/textview_titleScore"
+                android:layout_marginRight="@dimen/margin_xxsmall"
+                android:text="1000"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"
+                android:textStyle="bold" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_titleWpm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textview_valueScore"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"
+                android:text="wpm"
+                />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:text="22/11/2017 13:30"
+                />
+        </RelativeLayout>
+
+        <include layout="@layout/list_item_summary" android:id="@+id/layout_header_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_header_rv"
+            android:layout_above="@+id/button_finish"
+            />
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/button_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            style="@style/Button.Success.Fill"
+            android:text="@string/finish"/>
+    </RelativeLayout>
+</layout>
+

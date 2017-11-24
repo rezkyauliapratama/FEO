@@ -1,12 +1,21 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -39,6 +48,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        checkAppPermission();
         /*if (isObserveActivity()){
             Timber.e("ON START OBS ACT");
 
@@ -108,7 +118,48 @@ public class BaseActivity extends AppCompatActivity {
         finish();
     }
 
+    public void checkAppPermission() {
 
+        final List<String> permissions = new ArrayList<>();
+        boolean showMessage = readPhoneState(permissions);
 
+//        AppPermissions.getInstance().checkAppPermission(this, permissions);
+
+        if (permissions.size() > 0) {
+            final String strings[] = new String[permissions.size()];
+
+            if (showMessage) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setMessage(R.string.permissionrequestmessage)
+                        .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(BaseActivity.this,
+                                        permissions.toArray(strings),
+                                        Constant.getInstance().PERMISSION_REQUEST);
+                            }
+                        });
+                builder.create().show();
+            } else
+                ActivityCompat.requestPermissions(this,
+                        permissions.toArray(strings),
+                        Constant.getInstance().PERMISSION_REQUEST);
+        }
+
+    }
+
+    private boolean readPhoneState(List<String> permissions) {
+        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.READ_PHONE_STATE);
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_PHONE_STATE)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

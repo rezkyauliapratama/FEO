@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.rezkyaulia.com.feo.R;
 import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,8 +30,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
@@ -240,6 +243,38 @@ public class Utils {
         }
         return tempWord;
 
+    }
+
+    public String getUniqueID(Context context) {
+        return getUniqueID(context, "");
+//        return uuid.fromString(String.valueOf(deviceId.hashCode())).toString();
+    }
+
+
+    public String getUniqueID(Context context, String i) {
+        final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+        final String tmDevice, tmSerial, androidId;
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(context.getContentResolver(),
+                android.provider.Settings.Secure.ANDROID_ID);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        String deviceId = deviceUuid.toString() + System.currentTimeMillis() + i;// + '-' + getDate().replace(' ', '-');
+//        try {
+//            return new String(encrypt(generateKey(), deviceId.getBytes()),"UTF-8");
+//        } catch (Exception e) {
+//
+//            return deviceId;
+//        }
+
+
+        return UUID.nameUUIDFromBytes(deviceId.getBytes()).toString();
+//        return uuid.fromString(String.valueOf(deviceId.hashCode())).toString();
     }
 
 }

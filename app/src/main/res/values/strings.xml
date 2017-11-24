@@ -24,7 +24,6 @@
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="doyouwanttosaveitintolibrary">Do you want to save it into library ?</string>
-    <string name="no">No</string>
     <string name="sorrythereisnowordsthatcanplay">Sorry, there is no words that can play</string>
     <string name="sorryyoucannotaddnewlibrary">Sorry, you cannot add new library because your library was full</string>
     <string name="pleaseinputyourtextinhere">Please input your text in here</string>
@@ -39,5 +38,12 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgetpassword">Forget password ?</string>
+    <string name="finish">Finish</string>
+    <string name="got_it">Got it</string>
+    <string name="permissionrequestmessage" formatted="false">Need to activate several permission in order to use this app</string>
+    <string name="no">No</string>
     <string name="your_answer">Your answer</string>
+    <string name="correct_answer">Correct answer</string>
+    <string name="wpm">WPM</string>
+
 </resources>
