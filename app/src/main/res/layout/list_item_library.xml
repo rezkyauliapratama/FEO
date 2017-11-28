@@ -16,6 +16,7 @@
                 android:layout_margin="@dimen/margin_xxsmall"
                 android:background="@color/colorBlue_100">
 
+
                 <com.app.infideap.stylishwidget.view.ATextView
                     android:id="@+id/textview_title"
                     android:layout_width="wrap_content"

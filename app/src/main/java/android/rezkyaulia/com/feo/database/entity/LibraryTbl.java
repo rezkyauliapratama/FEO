@@ -27,19 +27,24 @@ public class LibraryTbl implements Parcelable {
     @Property(nameInDb = "Author")
     private String Author;
 
+    @Property(nameInDb = "Genre")
+    private String Genre;
+
+
     @Property(nameInDb = "Content")
     private String Content;
 
     @Transient
     private int ReadFlag;
 
-    @Generated(hash = 2003093814)
+    @Generated(hash = 2035319310)
     public LibraryTbl(Long id, Long LibraryId, String Title, String Author,
-            String Content) {
+            String Genre, String Content) {
         this.id = id;
         this.LibraryId = LibraryId;
         this.Title = Title;
         this.Author = Author;
+        this.Genre = Genre;
         this.Content = Content;
     }
 
@@ -95,6 +100,15 @@ public class LibraryTbl implements Parcelable {
         ReadFlag = readFlag;
     }
 
+    public String getGenre() {
+        return Genre;
+    }
+
+    public void setGenre(String genre) {
+        Genre = genre;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,7 +120,9 @@ public class LibraryTbl implements Parcelable {
         dest.writeValue(this.LibraryId);
         dest.writeString(this.Title);
         dest.writeString(this.Author);
+        dest.writeString(this.Genre);
         dest.writeString(this.Content);
+        dest.writeInt(this.ReadFlag);
     }
 
     protected LibraryTbl(Parcel in) {
@@ -114,7 +130,9 @@ public class LibraryTbl implements Parcelable {
         this.LibraryId = (Long) in.readValue(Long.class.getClassLoader());
         this.Title = in.readString();
         this.Author = in.readString();
+        this.Genre = in.readString();
         this.Content = in.readString();
+        this.ReadFlag = in.readInt();
     }
 
     public static final Creator<LibraryTbl> CREATOR = new Creator<LibraryTbl>() {

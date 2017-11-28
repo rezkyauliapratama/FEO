@@ -1,10 +1,12 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.adapter.LibraryRVAdapter;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryBinding;
@@ -136,15 +138,16 @@ public class LibraryFragment extends BaseFragment {
             binding.recyclerView.setAdapter(mAdapter);
         }
 
-
-
     }
+
+
 
     private void initRX(){
         RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
            onEventLibrary(libraryTbl);
         });
     }
+
     public void onEventLibrary(LibraryTbl libraryTbl) {
         Timber.e("OBSERVER LIB : "+new Gson().toJson(libraryTbl));
         mSelectedLibrary = libraryTbl;

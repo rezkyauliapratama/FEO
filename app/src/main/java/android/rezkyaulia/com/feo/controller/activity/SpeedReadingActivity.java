@@ -1,31 +1,32 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.rezkyaulia.com.feo.BaseApplication;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.BaseFragment;
+import android.rezkyaulia.com.feo.controller.fragment.LibraryDetailFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.controller.fragment.SpeedReadingFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySpeedReadingBinding;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.utility.Utils;
-import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,6 @@ import android.widget.LinearLayout;
 
 import com.app.infideap.stylishwidget.view.ATextView;
 import com.google.gson.Gson;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,8 @@ import timber.log.Timber;
 
 public class SpeedReadingActivity extends BaseActivity implements
         LibraryFragment.OnListFragmentInteractionListener,
-        SpeedReadingFragment.OnFragmentListener{
+        SpeedReadingFragment.OnFragmentListener,
+        LibraryDetailFragment.OnFragmentListener {
 
     static final int READ_REQ = 1;
     public static final String ARGS1 = "ARGS1";
@@ -54,6 +55,7 @@ public class SpeedReadingActivity extends BaseActivity implements
     ActivitySpeedReadingBinding binding;
     List<BaseFragment> fragments;
     BaseFragment fragment;
+    LibraryDetailFragment libraryDetailFragment;
     Menu menu;
 
     private String mGuid;
@@ -75,8 +77,13 @@ public class SpeedReadingActivity extends BaseActivity implements
         }
 
         mGuid = Utils.getInstance().getUniqueID(this);
+
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         initViewPager();
         initTab();
+
+        libraryDetailFragment = LibraryDetailFragment.newInstance();
+        displayFragment(binding.navView.getId(),libraryDetailFragment);
 
     }
 
@@ -160,7 +167,10 @@ public class SpeedReadingActivity extends BaseActivity implements
 
     @Override
     public void onListFragmentInteraction(LibraryTbl libraryTbl) {
-     showAlertDialogLibrary(libraryTbl);
+//     showAlertDialogLibrary(libraryTbl);
+        binding.drawerLayout.openDrawer(binding.navView);
+        if (libraryDetailFragment != null)
+            libraryDetailFragment.onInitData(libraryTbl);
     }
 
     @Override
@@ -181,14 +191,19 @@ public class SpeedReadingActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mIsQuiz){
+        ArrayList <ScoreTbl> mScoreTbls = new ArrayList<>();
+        mScoreTbls.addAll(Facade.getInstance().getManageScoreTbl().getbyGuid(mGuid));
+
+        if (mIsQuiz & mScoreTbls.size() > 0){
             Intent intent = new Intent(this,SummarySpeedReadingActivity.class);
             intent.putExtra(SummarySpeedReadingActivity.ARGS1,mGuid);
+            intent.putParcelableArrayListExtra(SummarySpeedReadingActivity.ARGS2,mScoreTbls);
             startActivity(intent);
             finish();
         }
 
     }
+
 
     private void initTab(){
         TabLayout.Tab[] tabs = {
@@ -264,21 +279,10 @@ public class SpeedReadingActivity extends BaseActivity implements
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
                 Timber.e("LIBRARY TBL : "+new Gson().toJson(libraryTbl));
+                RxBus.getInstance().post(libraryTbl);
+                binding.content.viewPager.setCurrentItem(0,true);
 
-             /*   runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {*/
-                            RxBus.getInstance().post(libraryTbl);
-                            binding.content.viewPager.setCurrentItem(0,true);
-
-
-
-/*
-                    }
-                });
-*/
-
-
+                binding.drawerLayout.closeDrawer(binding.navView);
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -290,6 +294,20 @@ public class SpeedReadingActivity extends BaseActivity implements
         }); //End of alert.setNegativeButton
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onSpeedReadingInteraction(LibraryTbl libraryTbl) {
+        showAlertDialogLibrary(libraryTbl);
+
+    }
+
+    @Override
+    public void onEditLibraryInteraction(LibraryTbl libraryTbl) {
+        if (libraryDetailFragment != null){
+            libraryDetailFragment.showDialogInputText(libraryTbl);
+            binding.drawerLayout.closeDrawer(binding.navView);
+        }
     }
 
     protected class LfPagerAdapter extends FragmentStatePagerAdapter {

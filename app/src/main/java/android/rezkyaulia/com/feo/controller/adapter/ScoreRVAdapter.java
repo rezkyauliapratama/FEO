@@ -35,7 +35,13 @@ public class ScoreRVAdapter extends RecyclerView.Adapter<ScoreRVAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         ScoreTbl item = mItems.get(position);
 
-        holder.binding.textViewNumber.setText(String.valueOf(position+1));
+//        holder.binding.textViewNumber.setText(String.valueOf(position+1));
+        if (item.getScore() == 0)
+            holder.binding.imageViewResult.setAnimation("animation/x_pop.json");
+        else
+            holder.binding.imageViewResult.setAnimation("animation/check.json");
+
+
         holder.binding.textViewCorrectAnswer.setText(item.getCorrectAnswer());
         holder.binding.textViewYourAnswer.setText(item.getAnswer());
         holder.binding.textViewWpm.setText(String.valueOf(item.getScore()));

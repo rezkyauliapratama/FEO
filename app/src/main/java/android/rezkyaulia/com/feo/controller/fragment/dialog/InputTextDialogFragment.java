@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.DialogInputTextBinding;
 import android.rezkyaulia.com.feo.utility.AdjustingViewGlobalLayoutListener;
 import android.support.v4.app.DialogFragment;
@@ -21,18 +22,21 @@ public class InputTextDialogFragment extends DialogFragment {
     public final static String Dialog= "DIALOG";
     public final static int TARGET = 1;
     public final static String ARG1 = "words";
+    public final static String ARG2 = "issave";
 
     DialogInputTextBinding binding;
 
     private DialogListener mListener;
 
-    private String mWords;
+    private LibraryTbl mLibraryTbl;
 
-    public static InputTextDialogFragment newInstance(String words){
+    private boolean isSave;
+
+    public static InputTextDialogFragment newInstance(LibraryTbl libraryTbl, boolean b){
         InputTextDialogFragment dialogFragment = new InputTextDialogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG1, words);
-
+        args.putParcelable(ARG1, libraryTbl);
+        args.putBoolean(ARG2, b);
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -41,7 +45,8 @@ public class InputTextDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mWords = getArguments().getString(ARG1);
+            mLibraryTbl = (LibraryTbl) getArguments().getParcelable(ARG1);
+            isSave = getArguments().getBoolean(ARG2);
         }
     }
 
@@ -57,15 +62,38 @@ public class InputTextDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         mListener = (DialogListener) getTargetFragment();
 
-        if (mWords != null)
-            binding.edittextContent.setText(mWords);
+        if (mLibraryTbl != null){
+            if (mLibraryTbl.getContent() != null)
+                binding.edittextContent.setText(mLibraryTbl.getContent());
+
+            if (mLibraryTbl.getTitle() != null)
+                binding.edittextTitle.setText(mLibraryTbl.getTitle());
+
+            if (mLibraryTbl.getAuthor() != null)
+                binding.edittextAuthor.setText(mLibraryTbl.getAuthor());
+
+            if (mLibraryTbl.getGenre() != null)
+                binding.edittextAuthor.setText(mLibraryTbl.getGenre());
+
+        }
 
         binding.buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = binding.edittextTitle.getText().toString();
                 String words = binding.edittextContent.getText().toString();
-                mListener.onGetTextDialog(title,words);
+                String genre = binding.edittextGenre.getText().toString();
+                String author = binding.edittextAuthor.getText().toString();
+
+                if (mLibraryTbl == null){
+                    mLibraryTbl = new LibraryTbl();
+                }
+                mLibraryTbl.setContent(words);
+                mLibraryTbl.setTitle(title);
+                mLibraryTbl.setGenre(genre);
+                mLibraryTbl.setAuthor(author);
+
+                mListener.onGetTextDialog(mLibraryTbl, isSave);
                 dismiss();
             }
         });
@@ -83,6 +111,6 @@ public class InputTextDialogFragment extends DialogFragment {
 
 
     public interface DialogListener {
-        void onGetTextDialog(String title,String contents);
+        void onGetTextDialog(LibraryTbl libraryTbl, boolean b);
     }
 }

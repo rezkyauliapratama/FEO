@@ -192,12 +192,12 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     }
 
     @Override
-    public void onGetTextDialog(String title,String content) {
-        saveIntoLibrary(title,content);
-        if (content != null){
-            if (content.length()>0){
+    public void onGetTextDialog(LibraryTbl libraryTbl,boolean b) {
+        saveIntoLibrary(libraryTbl);
+        if (libraryTbl.getContent() != null){
+            if (libraryTbl.getContent().length()>0){
                 mWords.clear();
-                mWords.addAll(Utils.getInstance().convertStringIntoList(content));
+                mWords.addAll(Utils.getInstance().convertStringIntoList(libraryTbl.getContent()));
                 initData(mWords);
             }
         }
@@ -605,15 +605,15 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
 
     private void showDialogSetting(){
-        SpeedReadingSettingDialogFragment settingDialogFragment = SpeedReadingSettingDialogFragment.newInstance();
+        SpeedReadingSettingDialogFragment settingDialogFragment = SpeedReadingSettingDialogFragment.newInstance(mIsQuiz);
         settingDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
         settingDialogFragment.setTargetFragment(this,settingDialogFragment.TARGET);
         settingDialogFragment.show(fragmentManager.beginTransaction(),SpeedReadingSettingDialogFragment.Dialog);
 
     }
 
-    private void showDialogInputText(String s){
-        InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance(s);
+    private void showDialogInputText(LibraryTbl libraryTbl){
+        InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance(libraryTbl,true);
         inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
         inputTextDialog.setTargetFragment(this,inputTextDialog.TARGET);
         inputTextDialog.show(fragmentManager.beginTransaction(), InputTextDialogFragment.Dialog);
@@ -629,15 +629,21 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private void initPref(){
         mWpm = PreferencesManager.getInstance().getWPM();
-        mNol = PreferencesManager.getInstance().getNOL();
-        mGs = PreferencesManager.getInstance().getGS();
+        if (!mIsQuiz){
+            mNol = PreferencesManager.getInstance().getNOL();
+            mGs = PreferencesManager.getInstance().getGS();
+        }else{
+            mNol = 1;
+            mGs = 1;
+        }
+
 
         binding.contentSpeedReading.textViewWpm.setText(String.format("WPM : %s",mWpm));
         binding.contentSpeedReading.textViewNol.setText(String.format("Number of lines : %s",mNol));
         binding.contentSpeedReading.textViewGs.setText(String.format("Group size : %s",mGs));
     }
 
-    private void saveIntoLibrary(final String title, final String content){
+    private void saveIntoLibrary(LibraryTbl libraryTbl){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
@@ -646,10 +652,6 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
                     if (manageLibraryTbl.size()  <= 20){
                         Timber.e("manageLibraryTbl.size()  <= 20");
-                        LibraryTbl libraryTbl = new LibraryTbl();
-                        libraryTbl.setContent(content);
-                        libraryTbl.setTitle(title);
-                        libraryTbl.setAuthor("Rezky");
                         Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
 
                     }else{
@@ -708,7 +710,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     public void onEventListString(String s) {
         Timber.e("LIST OBSERVER STRING : "+new Gson().toJson(s));
-        showDialogInputText(s);
+        LibraryTbl libraryTbl = new LibraryTbl();
+        libraryTbl.setContent(s);
+        showDialogInputText(libraryTbl);
     }
 
     public void onEventLibrary(LibraryTbl libraryTbl) {

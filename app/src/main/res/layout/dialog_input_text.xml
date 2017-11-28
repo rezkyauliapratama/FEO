@@ -43,6 +43,68 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextStyle.Medium"
+        android:text="@string/author"
+        android:textColor="@color/colorBlack_1000"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_xsmall"/>
+
+    <EditText
+        android:id="@+id/edittext_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:lines="1"
+        android:background="@drawable/border_edittext"
+        android:hint="@string/pleaseinputyourtextinhere"
+        android:textColor="@color/colorBlack_1000"
+        android:textColorHint="@color/colorGrey_500"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_normal" />
+
+
+    <com.app.infideap.stylishwidget.view.ATextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle.Medium"
+        android:text="@string/genre"
+        android:textColor="@color/colorBlack_1000"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_xsmall"/>
+
+    <EditText
+        android:id="@+id/edittext_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:lines="1"
+        android:background="@drawable/border_edittext"
+        android:hint="@string/pleaseinputyourtextinhere"
+        android:textColor="@color/colorBlack_1000"
+        android:textColorHint="@color/colorGrey_500"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_normal" />
+
+
+    <com.app.infideap.stylishwidget.view.ATextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextStyle.Medium"
         android:text="@string/content"
         android:textStyle="bold"
         android:textColor="@color/colorBlack_1000"

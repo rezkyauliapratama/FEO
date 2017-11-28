@@ -38,6 +38,10 @@ public class ManageScoreTbl {
         return dao.queryBuilder().where(ScoreTblDao.Properties.Id.eq(id)).unique();
     }
 
+    public ScoreTbl getHighScore(String guid) {
+        return dao.queryBuilder().where(ScoreTblDao.Properties.Guid.eq(guid)).orderDesc(ScoreTblDao.Properties.Score).limit(1).unique();
+    }
+
     public List<ScoreTbl> getbyGuid(String guid) {
         return dao.queryBuilder().where(ScoreTblDao.Properties.Guid.eq(guid)).list();
     }

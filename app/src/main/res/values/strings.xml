@@ -45,5 +45,9 @@
     <string name="your_answer">Your answer</string>
     <string name="correct_answer">Correct answer</string>
     <string name="wpm">WPM</string>
+    <string name="highscore">High score : % WPM</string>
+    <string name="result">Result</string>
+    <string name="author">Author</string>
+    <string name="genre">Genre</string>
 
 </resources>

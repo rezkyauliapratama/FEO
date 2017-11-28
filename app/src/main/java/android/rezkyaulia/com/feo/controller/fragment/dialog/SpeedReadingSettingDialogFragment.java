@@ -22,6 +22,7 @@ import timber.log.Timber;
 
 public class SpeedReadingSettingDialogFragment extends DialogFragment {
     public final static String Dialog= "DIALOG";
+    public final static String ARGS1 = "args1";
     public final static int TARGET = 1;
 
     ContentDialogSettingSpeedReadingBinding binding;
@@ -30,11 +31,14 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
     private int mNol;
     private int mGs;
 
+    private boolean mIsQuiz;
+
     private DialogListener mListener;
 
-    public static SpeedReadingSettingDialogFragment newInstance(){
+    public static SpeedReadingSettingDialogFragment newInstance(boolean b){
         SpeedReadingSettingDialogFragment dialogFragment = new SpeedReadingSettingDialogFragment();
         Bundle args = new Bundle();
+        args.putBoolean(ARGS1, b);
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -43,7 +47,7 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            mIsQuiz = getArguments().getBoolean(ARGS1);
         }
     }
 
@@ -70,8 +74,17 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
 
     private void initData(){
         mWpm = PreferencesManager.getInstance().getWPM();
-        mGs = PreferencesManager.getInstance().getGS();
-        mNol = PreferencesManager.getInstance().getNOL();
+        if (!mIsQuiz){
+            mGs = PreferencesManager.getInstance().getGS();
+            mNol = PreferencesManager.getInstance().getNOL();
+        }else{
+            mGs = 1;
+            mNol = 1;
+
+            binding.seekbarGroupSize.setEnabled(false);
+            binding.seekbarNumberOfLines.setEnabled(false);
+        }
+
 
         binding.seekbarGroupSize.setProgress(mGs);
         binding.seekbarNumberOfLines.setProgress(mNol);
@@ -87,9 +100,14 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                PreferencesManager.getInstance().setWPM(mWpm);
-               PreferencesManager.getInstance().setGS(mGs);
-               PreferencesManager.getInstance().setNOL(mNol);
+
+               if (!mIsQuiz){
+                   PreferencesManager.getInstance().setGS(mGs);
+                   PreferencesManager.getInstance().setNOL(mNol);
+               }
+
                mListener.onGetPreferences();
                dismiss();
             }

@@ -38,13 +38,10 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        binding.contentMain.btnSpeedReadingFeo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SpeedReadingActivity.class);
-                intent.putExtra(SpeedReadingActivity.ARGS1,true);
-                startActivity(intent);
-            }
+        binding.contentMain.btnSpeedReadingFeo.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,SpeedReadingActivity.class);
+            intent.putExtra(SpeedReadingActivity.ARGS1,true);
+            startActivity(intent);
         });
 
     }

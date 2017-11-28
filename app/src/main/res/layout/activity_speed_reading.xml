@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusableInTouchMode="true">
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
         >
+
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
@@ -61,6 +71,21 @@
             android:visibility="gone">
 
         </com.app.infideap.stylishwidget.view.MessageBox>
+
+
+
+
+
     </android.support.design.widget.CoordinatorLayout>
 
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="false">
+
+
+        </android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>
 </layout>

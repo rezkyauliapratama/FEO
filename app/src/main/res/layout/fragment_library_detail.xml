@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        >
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.rezkyaulia.com.feo.view.AToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorWhite"
+            app:popupTheme="@style/AppTheme.AppBarOverlay">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+                <ImageView
+                    android:id="@+id/imageView_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close_black_24dp"/>
+
+
+                <ImageView
+                    android:id="@+id/imageView_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_normal"/>
+
+                <ImageView
+                    android:id="@+id/imageView_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_black_24dp"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:layout_toLeftOf="@+id/imageView_delete"/>
+            </RelativeLayout>
+        </android.rezkyaulia.com.feo.view.AToolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/primaryLightColor"
+                android:layout_margin="@dimen/margin_normal">
+
+                <TableLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/margin_normal">
+                    <TableRow>
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text="@string/title"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"/>
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text=":"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_title"
+                            android:text="your title"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+                    </TableRow>
+
+                    <TableRow>
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text="@string/genre"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            android:padding="@dimen/margin_xsmall" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text=":"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_genre"
+                            android:text="your title"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+                    </TableRow>
+
+                    <TableRow>
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text="@string/author"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:text=":"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_author"
+                            android:text="your title"
+                            android:padding="@dimen/margin_xsmall"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:textColor="@color/colorWhite"
+                            />
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layout_header"
+                android:layout_above="@id/layout_button"
+                >
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginBottom="@dimen/margin_normal"
+                        app:cardBackgroundColor="@color/secondaryLightColor">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack_1000"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="@dimen/margin_normal"
+                            android:layout_marginRight="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:textAppearance="@style/TextStyle.Medium"
+                            android:text="@string/content"/>
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/margin_small"
+                            android:layout_margin="@dimen/margin_small"
+                            android:background="@drawable/layerlist_round"
+                            android:textColor="@color/colorBlack_1000"
+                            android:textAppearance="@style/TextStyle.Medium"/>
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/layout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/button_spreeder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Button.Success.Fill"
+                    android:text="@string/speedreading"/>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
