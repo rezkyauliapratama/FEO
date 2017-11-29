@@ -11,9 +11,10 @@
             android:id="@+id/exittext_dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:inputType="text"
-            android:background="@drawable/border_edittext"/>
+            android:padding="@dimen/margin_normal"
+            style="@style/Base.V7.Widget.AppCompat.EditText"
+            android:background="@color/colorWhite"/>
 
         <android.support.v4.widget.Space
             android:layout_width="wrap_content"

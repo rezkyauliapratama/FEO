@@ -49,5 +49,6 @@
     <string name="result">Result</string>
     <string name="author">Author</string>
     <string name="genre">Genre</string>
+    <string name="memory">Memory</string>
 
 </resources>

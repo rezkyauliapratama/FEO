@@ -8,13 +8,19 @@ import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.adapter.LibraryRVAdapter;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryBinding;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.Events;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,7 +35,7 @@ import timber.log.Timber;
  * Created by Rezky Aulia Pratama on 11/11/2017.
  */
 
-public class LibraryFragment extends BaseFragment {
+public class LibraryFragment extends BaseFragment implements InputTextDialogFragment.DialogListener {
 
     FragmentLibraryBinding binding;
     private GridLayoutManager mLayoutManager;
@@ -130,6 +136,25 @@ public class LibraryFragment extends BaseFragment {
         initData();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add_text) {
+            Timber.e("onoption add text");
+            showDialogInputText(null);
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void showDialogInputText(LibraryTbl libraryTbl){
+        InputTextDialogFragment inputTextDialog = InputTextDialogFragment.newInstance(libraryTbl,false);
+        inputTextDialog.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
+        inputTextDialog.setTargetFragment(this,inputTextDialog.TARGET);
+        inputTextDialog.show(getFragmentManager().beginTransaction(), InputTextDialogFragment.Dialog);
+    }
+
+
     private void initRecyclerview(){
         mLayoutManager = new GridLayoutManager(getContext(),2);
         binding.recyclerView.setLayoutManager(mLayoutManager);
@@ -146,6 +171,14 @@ public class LibraryFragment extends BaseFragment {
         RxBus.getInstance().observable(LibraryTbl.class).subscribe(libraryTbl -> {
            onEventLibrary(libraryTbl);
         });
+
+        RxBus.getInstance().observable(new Events<>(LibraryTbl.class).getClass()).subscribe(events->{
+            if (events.getTypeParameterClass() == LibraryTbl.class){
+                initData();
+            }
+        });
+
+
     }
 
     public void onEventLibrary(LibraryTbl libraryTbl) {
@@ -179,6 +212,34 @@ public class LibraryFragment extends BaseFragment {
 
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGetTextDialog(LibraryTbl libraryTbl, boolean b) {
+        saveIntoLibrary(libraryTbl);
+    }
+
+    private void saveIntoLibrary(LibraryTbl libraryTbl){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setMessage(R.string.doyouwanttosaveitintolibrary)
+
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
+
+                    if (manageLibraryTbl.size()  <= 20){
+                        Timber.e("manageLibraryTbl.size()  <= 20");
+                        Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
+                        initData();
+                    }else{
+                        Snackbar.make(binding.recyclerView, R.string.sorryyoucannotaddnewlibrary,Snackbar.LENGTH_LONG).show();
+
+                    }
+
+                })
+                .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public interface OnListFragmentInteractionListener {

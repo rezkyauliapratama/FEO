@@ -19,6 +19,7 @@ import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySpeedReadingBinding;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.Events;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -296,6 +297,32 @@ public class SpeedReadingActivity extends BaseActivity implements
         alertDialog.show();
     }
 
+    private void showAlertDialogDeleteLibrary(final LibraryTbl libraryTbl){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Library"); //Set Alert dialog title here
+        alert.setMessage("Do you want to delete this library ?"); //Message here
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //You will get as string input data in this variable.
+                // here we convert the input to a string and show in a toast.
+                Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
+
+                Timber.e("onDeleteLibraryInteraction");
+                RxBus.getInstance().post(new Events<>(LibraryTbl.class));
+                binding.drawerLayout.closeDrawer(binding.navView);
+            } // End of onClick(DialogInterface dialog, int whichButton)
+        }); //End of alert.setPositiveButton
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+                dialog.cancel();
+
+            }
+        }); //End of alert.setNegativeButton
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onSpeedReadingInteraction(LibraryTbl libraryTbl) {
         showAlertDialogLibrary(libraryTbl);
@@ -308,6 +335,12 @@ public class SpeedReadingActivity extends BaseActivity implements
             libraryDetailFragment.showDialogInputText(libraryTbl);
             binding.drawerLayout.closeDrawer(binding.navView);
         }
+    }
+
+    @Override
+    public void onDeleteLibraryInteraction(LibraryTbl libraryTbl) {
+        showAlertDialogDeleteLibrary(libraryTbl);
+
     }
 
     protected class LfPagerAdapter extends FragmentStatePagerAdapter {

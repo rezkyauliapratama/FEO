@@ -44,6 +44,11 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
 
+        binding.contentMain.btnSpeedReadingMemory.setOnClickListener(v->{
+            Intent intent = new Intent(MainActivity.this,MemoryActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     @Override

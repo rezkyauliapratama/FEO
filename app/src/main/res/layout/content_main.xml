@@ -130,8 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Memory"
-                android:textAppearance="@style/TextStyle.Medium"
-                android:visibility="invisible"/>
+                android:textAppearance="@style/TextStyle.Medium"/>
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

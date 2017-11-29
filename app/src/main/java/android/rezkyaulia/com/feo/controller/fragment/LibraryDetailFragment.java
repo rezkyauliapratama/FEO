@@ -110,6 +110,13 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
                 mListener.onEditLibraryInteraction(mLibraryTbl);
             }
         });
+
+        binding.imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onDeleteLibraryInteraction(mLibraryTbl);
+            }
+        });
     }
 
     public void showDialogInputText(LibraryTbl libraryTbl){
@@ -151,6 +158,7 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
     public interface OnFragmentListener {
         void onSpeedReadingInteraction(LibraryTbl libraryTbl);
         void onEditLibraryInteraction(LibraryTbl libraryTbl);
+        void onDeleteLibraryInteraction(LibraryTbl libraryTbl);
     }
 
 }

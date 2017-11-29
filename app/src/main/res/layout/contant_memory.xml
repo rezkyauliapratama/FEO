@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_memory"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/secondaryLightColor"
+            android:padding="@dimen/margin_small">
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/seekbar_wpm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dsb_max="7000"
+                app:dsb_min="10" /><!-- set green color in the background of seek bar-->
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_titleWpm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/seekbar_wpm"
+                android:layout_below="@id/seekbar_wpm"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:text="@string/reading_speed_wpm"
+                android:textAppearance="@style/TextStyle.Medium" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textview_valueWpm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/seekbar_wpm"
+                android:layout_alignTop="@+id/textview_titleWpm"
+                android:layout_below="@id/seekbar_wpm"
+                android:text="5000"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_normal"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_edit_black_24dp"
+            />
+    </LinearLayout>
+</layout>
+
