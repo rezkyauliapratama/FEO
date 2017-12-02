@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.adapter.ScoreRVAdapter;
+import android.rezkyaulia.com.feo.controller.service.PushScoreService;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySummarySpeedReadingBinding;
@@ -14,6 +15,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
 
 import java.text.Format;
 import java.util.ArrayList;
@@ -62,6 +69,7 @@ public class SummarySpeedReadingActivity extends BaseActivity {
 
         initView();
         initRecyclerview();
+        initJobDispatcher();
 
     }
 
@@ -91,6 +99,22 @@ public class SummarySpeedReadingActivity extends BaseActivity {
             mAdapter = new ScoreRVAdapter(this,mScoreTbls);
             binding.content.recyclerView.setAdapter(mAdapter);
         }
+    }
+
+    private void initJobDispatcher(){
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job myJob = dispatcher.newJobBuilder()
+                .setLifetime(Lifetime.FOREVER)
+                .setService(PushScoreService.class) // the JobService that will be called
+                .setTag("my-unique-tag")
+                .setReplaceCurrent(true)
+                .setRecurring(true)
+                // Run between 30 - 60 seconds from now.
+                .setTrigger(Trigger.executionWindow(5, 10))// uniquely identifies the job
+                .build();
+
+        Timber.e("initJobDispatcher");
+        dispatcher.mustSchedule(myJob);
     }
 
 }

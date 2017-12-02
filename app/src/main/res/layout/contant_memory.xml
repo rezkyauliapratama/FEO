@@ -17,7 +17,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@color/secondaryLightColor"
-            android:padding="@dimen/margin_small">
+            android:padding="@dimen/margin_xsmall">
 
             <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                 android:id="@+id/seekbar_wpm"
@@ -49,14 +49,32 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
+        <FrameLayout
+            android:id="@+id/layout_body"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/margin_normal"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_edit_black_24dp"
-            />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_normal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_edit_black_24dp"
+                />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_answer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:textAppearance="@style/TextStyle.Headline"
+                android:text="Your answer is ? "
+                android:visibility="gone"
+                />
+        </FrameLayout>
     </LinearLayout>
 </layout>
 

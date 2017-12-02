@@ -246,6 +246,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
         }
     }
+
+
     private void initButton(){
         binding.contentSpeedReading.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,7 +15,9 @@
         android:id="@+id/container_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
         android:orientation="horizontal"
         android:padding="@dimen/margin_normal">
 
@@ -37,9 +39,9 @@
                 android:id="@+id/ATextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Rezky Aulia Pratama"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:textColor="@color/colorBlack_1000"
-                android:text="Rezky Aulia Pratama" />
+                android:textColor="@color/colorBlack_1000" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,17 +51,18 @@
             android:layout_alignParentRight="true"
             android:gravity="right"
             android:orientation="vertical">
+
             <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/imageView_no_result"
                 android:layout_width="96dp"
                 android:layout_height="wrap_content"
-                app:lottie_progress="1"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:id="@+id/imageView_no_result"
-                app:lottie_scale="2"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="animation/trophy.json"
-                app:lottie_loop="false" />
+                app:lottie_loop="false"
+                app:lottie_progress="1"
+                app:lottie_scale="2" />
             <!--<ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
@@ -72,9 +75,9 @@
             <com.app.infideap.stylishwidget.view.ATextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="7000 WPM"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:textColor="@color/colorBlack_1000"
-                android:text="7000 WPM" />
+                android:textColor="@color/colorBlack_1000" />
         </LinearLayout>
     </RelativeLayout>
 

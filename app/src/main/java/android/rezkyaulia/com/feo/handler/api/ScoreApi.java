@@ -29,9 +29,11 @@ public class ScoreApi {
     public ANRequest bulk(final List<ScoreTbl> scores){
         Timber.e("PATH : "+path.concat("/bulk"));
         Timber.e("SCORES : "+new Gson().toJson(scores));
+        Timber.e("HEADER : "+new Gson().toJson(ApiClient.getInstance().getHeader()));
         return AndroidNetworking.post(path.concat("/bulk"))
                 .addStringBody(new Gson().toJson(scores)) // posting java object
-                .setPriority(Priority.MEDIUM)
+                .addHeaders(ApiClient.getInstance().getHeader())
+                .setPriority(Priority.HIGH)
                 .build();
     }
 

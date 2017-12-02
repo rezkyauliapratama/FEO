@@ -34,6 +34,11 @@ public class ManageScoreTbl {
         return dao.queryBuilder().list();
     }
 
+    public List<ScoreTbl> getAllEmptyScoreId() {
+        return dao.queryBuilder().where(ScoreTblDao.Properties.ScoreId.isNull()).list();
+    }
+
+
     public ScoreTbl get(long id) {
         return dao.queryBuilder().where(ScoreTblDao.Properties.Id.eq(id)).unique();
     }
