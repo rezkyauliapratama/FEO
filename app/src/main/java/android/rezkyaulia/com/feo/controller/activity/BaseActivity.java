@@ -88,6 +88,19 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+
+    public void displayFragmentMemory(int id, Fragment fragment) {
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+                    .replace(id, fragment)
+                    .commitAllowingStateLoss();
+        } catch (Exception e) {
+
+        }
+
+    }
+
     public void removeFragment(int id, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }

@@ -50,5 +50,6 @@
     <string name="author">Author</string>
     <string name="genre">Genre</string>
     <string name="memory">Memory</string>
+    <string name="image_speed_images_minute">image speed (images / minute)</string>
 
 </resources>

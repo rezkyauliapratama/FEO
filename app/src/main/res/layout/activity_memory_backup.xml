@@ -8,7 +8,6 @@
             android:fitsSystemWindows="false"
             >
 
-
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appBar"
                 android:layout_width="match_parent"
@@ -22,11 +21,11 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/colorWhite"
                     app:popupTheme="@style/AppTheme.AppBarOverlay">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
-
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -46,7 +45,7 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <include android:id="@+id/layout_content" layout="@layout/contant_memory"/>
+            <include android:id="@+id/layout_content" layout="@layout/contant_memory_backup"/>
 
             <FrameLayout
                 android:id="@+id/layout_overlay"
@@ -63,6 +62,16 @@
                 android:visibility="gone">
 
             </com.app.infideap.stylishwidget.view.MessageBox>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:backgroundTint="@color/colorBlack_1000"
+                android:src="@android:drawable/ic_menu_search"
+                android:visibility="gone"/>
 
 
         </android.support.design.widget.CoordinatorLayout>
