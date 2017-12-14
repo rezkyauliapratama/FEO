@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        >
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_normal"
+            android:paddingTop="@dimen/margin_normal"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/textView_signIn"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/linearLayout">
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register"
+                    android:textAppearance="@style/TextStyle.Large"
+                    android:textColor="@color/colorBlack_1000"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_small" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your account"
+                    android:textColor="@color/colorBlack_1000"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    />
+
+                <include layout="@layout/content_register_account" android:id="@+id/container_account"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"
+                    />
+
+                <include layout="@layout/content_register_information" android:id="@+id/container_information"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/button_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Button.Info.Fill"
+                    android:text="@string/save"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/textView_signIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_small"
+            android:gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:layout_alignParentBottom="true"
+            android:text="Already have an account ? Sign in here"
+            android:textAppearance="@style/TextStyle.Small"
+            android:textColor="@color/colorWhite"/>
+
+        <FrameLayout
+            android:visibility="gone"
+            android:id="@+id/layout_progress"
+            android:background="@color/colorWhiteTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.rezkyaulia.com.feo.view.ALoadingView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</layout>

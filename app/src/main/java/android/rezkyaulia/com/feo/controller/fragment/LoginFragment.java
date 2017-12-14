@@ -6,9 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
-import android.rezkyaulia.com.feo.controller.activity.LoginActivity;
 import android.rezkyaulia.com.feo.database.Facade;
-import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLoginBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
@@ -17,7 +15,6 @@ import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import timber.log.Timber;
 
@@ -103,6 +98,13 @@ public class LoginFragment extends BaseFragment {
         initSignIn();
 
         signIn();
+
+        binding.textViewRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onRegisterInteraction();
+            }
+        });
     }
 
 
@@ -186,7 +188,7 @@ public class LoginFragment extends BaseFragment {
                                                 Thread.sleep(6000);
                                                 getActivity().runOnUiThread(() -> {
                                                     binding.layoutProgress.setVisibility(View.GONE);
-                                                    mListener.onLoginSuccessfull();
+                                                    mListener.onLoginSuccessfullInteraction();
                                                 });
                                             } catch (InterruptedException e) {
                                                 Timber.e("ERROR : "+e.getMessage());
@@ -289,7 +291,8 @@ public class LoginFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
 
-        void onLoginSuccessfull();
+        void onLoginSuccessfullInteraction();
+        void onRegisterInteraction();
     }
 
 

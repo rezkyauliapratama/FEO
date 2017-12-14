@@ -55,5 +55,13 @@
     <string name="background">Background</string>
     <string name="black">Black</string>
     <string name="white">White</string>
+    <string name="don_t_have_an_account_sign_up_here">Don\'t have an account ? Sign up here</string>
+    <string name="welcome">Welcome</string>
+    <string name="full_name">Full name</string>
+    <string name="retype_password">Retype password</string>
+    <string name="register">Register</string>
+    <string name="school_name">School name</string>
+    <string name="class_name">Class name</string>
+    <string name="information">Information</string>
 
 </resources>

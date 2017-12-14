@@ -17,7 +17,8 @@
                 android:paddingRight="@dimen/margin_normal"
                 android:paddingTop="@dimen/margin_normal"
                 android:layout_margin="@dimen/margin_xlarge"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                android:id="@+id/linearLayout">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -97,8 +98,9 @@
                     android:id="@+id/button_googleSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    />
+                    android:layout_alignBottom="@+id/linearLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="17dp" />
             </LinearLayout>
 
 
@@ -113,6 +115,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </FrameLayout>
+
+
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_small"
+                android:gravity="center_horizontal"
+                android:layout_alignParentBottom="true"
+                android:text="@string/don_t_have_an_account_sign_up_here"
+                android:textAppearance="@style/TextStyle.Small"
+                android:textColor="@color/colorWhite"/>
         </RelativeLayout>
 
 </layout>
