@@ -11,11 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 
-import java.util.List;
-
-import timber.log.Timber;
-
-
 /**
  * Created by Shiburagi on 16/06/2016.
  */

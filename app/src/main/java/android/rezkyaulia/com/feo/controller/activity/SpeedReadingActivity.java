@@ -1,7 +1,6 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,7 +12,6 @@ import android.rezkyaulia.com.feo.controller.fragment.BaseFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryDetailFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.controller.fragment.SpeedReadingFragment;
-import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;

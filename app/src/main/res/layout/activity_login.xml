@@ -8,7 +8,10 @@
         android:fitsSystemWindows="true">
 
 
-        <include layout="@layout/content_login" android:id="@+id/content" />
+        <FrameLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
     </android.support.design.widget.CoordinatorLayout>

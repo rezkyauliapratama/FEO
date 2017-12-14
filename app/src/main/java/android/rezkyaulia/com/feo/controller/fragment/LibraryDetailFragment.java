@@ -5,14 +5,15 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
-import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryDetailBinding;
+import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,15 +65,16 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initButton();
-    }
+        initView();
+            initButton();
+        }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentListener) {
-            mListener = (OnFragmentListener) context;
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            if (context instanceof OnFragmentListener) {
+                mListener = (OnFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -149,6 +151,14 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
         dialog.show();
     }
 
+    void initView(){
+        if (PreferencesManager.getInstance().isBlack()){
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+        }else{
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+
+        }
+    }
 
     @Override
     public void onGetTextDialog(LibraryTbl libraryTbl, boolean b) {

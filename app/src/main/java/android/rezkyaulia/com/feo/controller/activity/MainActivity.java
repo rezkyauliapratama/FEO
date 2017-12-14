@@ -1,14 +1,20 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.ViewSettingDialogFragment;
+import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity {
@@ -69,8 +75,18 @@ public class MainActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
+        if (id == R.id.action_setting){
+            Timber.e("Action Setting");
+            showDialogInputText();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void showDialogInputText(){
+        ViewSettingDialogFragment viewSettingDialogFragment = ViewSettingDialogFragment.newInstance();
+        viewSettingDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
+        viewSettingDialogFragment.show(getFragmentManager().beginTransaction(), ViewSettingDialogFragment.Dialog);
     }
 
 /*

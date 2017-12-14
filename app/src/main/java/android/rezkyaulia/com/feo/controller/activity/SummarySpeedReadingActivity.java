@@ -11,9 +11,7 @@ import android.rezkyaulia.com.feo.databinding.ActivitySummarySpeedReadingBinding
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.utility.TimeUtility;
 import android.rezkyaulia.com.feo.utility.Utils;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -22,17 +20,10 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 
-import java.text.Format;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import okhttp3.internal.Util;
 import timber.log.Timber;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Rezky Aulia Pratama on 11/23/2017.

@@ -3,7 +3,6 @@ package android.rezkyaulia.com.feo;
 import android.app.Application;
 import android.content.Context;
 import android.rezkyaulia.com.feo.database.Facade;
-import android.rezkyaulia.com.feo.database.FacadeOpenHelper;
 import android.rezkyaulia.com.feo.database.entity.DaoMaster;
 import android.rezkyaulia.com.feo.database.entity.DaoSession;
 import android.rezkyaulia.com.feo.utility.Constant;
@@ -18,7 +17,6 @@ import com.squareup.leakcanary.RefWatcher;
 
 
 import org.greenrobot.greendao.database.Database;
-import org.greenrobot.greendao.database.DatabaseOpenHelper;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import timber.log.Timber;
@@ -44,7 +42,7 @@ public class BaseApplication extends Application {
         );
 
         Stylish.getInstance().setFontScale(
-                PreferencesManager.getInstance().getFontSize()
+                1f
         );
 
         Timber.e(Stylish.getInstance().getFontScale()+"");
@@ -62,14 +60,8 @@ public class BaseApplication extends Application {
             QueryBuilder.LOG_SQL = BuildConfig.DEBUG;
             QueryBuilder.LOG_VALUES = BuildConfig.DEBUG;
             AndroidNetworking.enableLogging();
-        refWatcher = LeakCanary.install(this);
 
         }
-    }
-
-    public static RefWatcher getRefWatcher(Context context) {
-        BaseApplication application = (BaseApplication) context.getApplicationContext();
-        return application.refWatcher;
     }
 
 

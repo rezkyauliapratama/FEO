@@ -25,7 +25,7 @@
                 android:id="@+id/seekbar_wpm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:dsb_max="1000"
+                app:dsb_max="300"
                 app:dsb_min="10" /><!-- set green color in the background of seek bar-->
 
             <com.app.infideap.stylishwidget.view.ATextView

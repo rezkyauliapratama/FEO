@@ -6,8 +6,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Build;
@@ -19,20 +17,17 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.Contract;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -170,7 +165,7 @@ public class Utils {
         return words;
     }
 
-    public String readTextFile(Context context,Uri uri) {
+    public String readTextFile(Context context, Uri uri) {
         InputStream inputStream = null;
         String words = "";
         try {
@@ -206,7 +201,7 @@ public class Utils {
         return wpmMilis;
     }
 
-    public String getWords(int mIndex,int pointWord,int mNol, int mGs, List<String> mWords){
+    public String getWords(int mIndex, int pointWord, int mNol, int mGs, List<String> mWords){
         String tempWord = "";
 
         if (pointWord == mIndex && mWords != null){

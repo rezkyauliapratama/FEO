@@ -51,5 +51,9 @@
     <string name="genre">Genre</string>
     <string name="memory">Memory</string>
     <string name="image_speed_images_minute">image speed (images / minute)</string>
+    <string name="font_size">Font size</string>
+    <string name="background">Background</string>
+    <string name="black">Black</string>
+    <string name="white">White</string>
 
 </resources>

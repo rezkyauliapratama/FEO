@@ -1,18 +1,14 @@
 package android.rezkyaulia.com.feo.controller.fragment.dialog;
 
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.DialogInputTextBinding;
-import android.rezkyaulia.com.feo.utility.AdjustingViewGlobalLayoutListener;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 /**
  * Created by Rezky Aulia Pratama on 11/9/2017.

@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
@@ -16,14 +17,14 @@ import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentSpeedReadingBinding;
 import android.rezkyaulia.com.feo.model.ReadableObj;
-import android.rezkyaulia.com.feo.model.Words;
+import android.rezkyaulia.com.feo.utility.DimensionConverter;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
-import android.rezkyaulia.com.feo.utility.TimeUtility;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,16 +34,12 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.internal.Util;
 import timber.log.Timber;
 
 import static java.lang.Thread.sleep;
@@ -146,6 +143,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         initRX();
 
         initButton();
+
+        setViewBasedOnSetting();
+
 
     }
 
@@ -770,6 +770,31 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         binding.contentSpeedReading.lottieviewCheck.playAnimation();
         Facade.getInstance().getManageScoreTbl().add(scoreTbl);
     }
+
+    private void setViewBasedOnSetting(){
+        if (PreferencesManager.getInstance().isBlack()){
+            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+
+            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        }else{
+            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+
+            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+        }
+
+        int spFont = DimensionConverter.getInstance().stringToDimensionPixelSize(((int)PreferencesManager.getInstance().getFontSize())+"sp", getContext().getResources().getDisplayMetrics());
+        Timber.e("PreferencesManager.getInstance().getFontSize() : "+PreferencesManager.getInstance().getFontSize()+" | spFont : "+spFont);
+
+        binding.contentSpeedReading.textviewContent.setTextSize(spFont);
+
+    }
+
     public interface OnFragmentListener {
         void onFinishInteraction();
     }

@@ -17,8 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * Created by Rezky Aulia Pratama on 10/18/2017.
  */

@@ -4,6 +4,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/layout_body"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/fragment_speed_reading">
 
@@ -41,9 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:textAppearance="@style/TextStyle.Large"
-                android:textSize="30sp" />
+                android:gravity="center"/>
         </FrameLayout>
 
 

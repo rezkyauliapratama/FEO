@@ -83,7 +83,7 @@ public class TimeUtility {
         return getDateTimeString(calendar);
     }
 
-    public  String getDateTimeString(DatePicker datePicker, TimePicker timePicker) {
+    public String getDateTimeString(DatePicker datePicker, TimePicker timePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
@@ -111,7 +111,7 @@ public class TimeUtility {
     }
 
 
-    public  String getDateTimeString(Calendar calendar) {
+    public String getDateTimeString(Calendar calendar) {
 
         return getDateTimeString(calendar.getTime());
     }

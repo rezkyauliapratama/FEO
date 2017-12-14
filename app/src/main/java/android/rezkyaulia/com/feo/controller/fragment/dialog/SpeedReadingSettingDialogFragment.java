@@ -4,9 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.databinding.ContentDialogSettingSpeedReadingBinding;
-import android.rezkyaulia.com.feo.databinding.DialogSettingSpeedReadingBinding;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +91,8 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
         binding.textviewValueWpm.setText(String.valueOf(mWpm));
         binding.textviewValueGroupSize.setText(String.valueOf(mGs));
         binding.textviewValueNumberOfLines.setText(String.valueOf(mNol));
+
+
 
     }
 

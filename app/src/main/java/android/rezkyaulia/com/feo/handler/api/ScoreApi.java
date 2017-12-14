@@ -1,7 +1,6 @@
 package android.rezkyaulia.com.feo.handler.api;
 
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
-import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.model.api.ApiResponse;
 import android.rezkyaulia.com.feo.utility.Constant;
 

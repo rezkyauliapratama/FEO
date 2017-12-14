@@ -10,12 +10,14 @@ import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFrag
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.ManageLibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
-import android.rezkyaulia.com.feo.database.entity.UserTbl;
+import android.rezkyaulia.com.feo.databinding.ContentDialogSettingViewBinding;
 import android.rezkyaulia.com.feo.databinding.FragmentLibraryBinding;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.model.Events;
+import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -86,6 +88,7 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initView();
         initData();
         initRecyclerview();
 
@@ -242,6 +245,14 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
         dialog.show();
     }
 
+    void initView(){
+        if (PreferencesManager.getInstance().isBlack()){
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+        }else{
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+
+        }
+    }
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
 

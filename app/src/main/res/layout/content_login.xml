@@ -9,7 +9,7 @@
         android:background="@color/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.app.truevox.recruiterapp.controller.ui.activity.LoginActivity"
-        tools:showIn="@layout/activity_login">
+        tools:showIn="@layout/fragment_login">
 
 
                             <LinearLayout
@@ -92,6 +92,17 @@
                                     android:text="@string/forgetpassword"
                                     android:textAppearance="@style/TextStyle.Small"
                                     android:textColor="@color/colorWhite" />
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/margin_normal" />
+
+                                <com.google.android.gms.common.SignInButton
+                                    android:id="@+id/button_googleSignIn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    />
                             </LinearLayout>
 
 

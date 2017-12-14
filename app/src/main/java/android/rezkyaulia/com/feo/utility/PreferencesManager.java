@@ -14,6 +14,7 @@ public class PreferencesManager {
     private static final String WPM_KEY = "WPM_KEY";
     private static final String NOL_KEY = "NOL_KEY";
     private static final String GS_KEY = "GS_KEY";
+    private static final String BACKGROUND_KEY = "BACKGROUND_KEY";
 
 
     private static PreferencesManager instance;
@@ -53,7 +54,7 @@ public class PreferencesManager {
         editor.apply();
     }
     public float getFontSize() {
-        return preference.getFloat(FONT_SIZE_KEY, 1.0f);
+        return preference.getFloat(FONT_SIZE_KEY, 12.0f);
     }
 
     public void setWPM(int scale) {
@@ -82,5 +83,17 @@ public class PreferencesManager {
     public int getGS() {
         return preference.getInt(GS_KEY, 1);
     }
+
+    public void setBlack(boolean b) {
+        SecurePreferences.Editor editor = preference.edit();
+        editor.putBoolean(BACKGROUND_KEY, b);
+        editor.apply();
+    }
+    public boolean isBlack() {
+        return preference.getBoolean(BACKGROUND_KEY,true);
+    }
+
+
+
 
 }

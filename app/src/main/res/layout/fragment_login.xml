@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_content_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_normal"
+                android:paddingLeft="@dimen/margin_normal"
+                android:paddingRight="@dimen/margin_normal"
+                android:paddingTop="@dimen/margin_normal"
+                android:layout_margin="@dimen/margin_xlarge"
+                android:layout_centerInParent="true">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="@dimen/size_width_logo"
+                        android:scaleType="fitCenter"
+                        android:tint="@color/colorWhite" />
+                    <ImageView
+                        android:id="@+id/imageView_dattel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="@dimen/size_width_logo"
+                        android:scaleType="fitCenter"
+                        android:tint="@color/colorWhite" />
+                </FrameLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_normal" />
+
+                <com.app.infideap.stylishwidget.view.AEditText
+                    android:id="@+id/edittext_username"
+                    style="@style/EditText.RoundBorder.Transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="24"
+                    android:hint="@string/username"
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textStyle="bold" />
+
+                <com.app.infideap.stylishwidget.view.AEditText
+                    android:id="@+id/edittext_pin"
+                    style="@style/EditText.RoundBorder.Transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="24"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textStyle="bold" />
+
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/space_small" />
+
+                <com.app.infideap.stylishwidget.view.AButton
+                    android:id="@+id/button"
+                    style="@style/Button.Default.Outline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textAppearance="@style/TextStyle.Medium" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_ForgetPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/forgetpassword"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:textColor="@color/colorWhite" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/button_googleSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    />
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/layout_progress"
+                android:background="@color/colorWhiteTransparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.rezkyaulia.com.feo.view.ALoadingView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </RelativeLayout>
+
+</layout>
