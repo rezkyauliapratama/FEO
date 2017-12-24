@@ -55,6 +55,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_small" />
 
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/school_address"
+                android:textAppearance="@style/TextStyle.Medium"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_xsmall" />
+
+            <com.app.infideap.stylishwidget.view.AEditText
+                android:id="@+id/editText_schoolAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditText.RoundBorder"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_small" />
+
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home address"
+                android:textAppearance="@style/TextStyle.Medium"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_xsmall" />
+
+            <com.app.infideap.stylishwidget.view.AEditText
+                android:id="@+id/editText_homeAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditText.RoundBorder"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_small" />
+
         </LinearLayout>
 
 

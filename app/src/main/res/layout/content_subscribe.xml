@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
+        tools:context="android.rezkyaulia.com.feo.controller.activity.MainActivity"
+        tools:showIn="@layout/activity_subscribe"
+        android:padding="@dimen/margin_large"
+        android:background="@color/colorWhite">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_avatar" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_small" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_xsmall">
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/textView_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rezky Aulia Pratama"
+                        android:textAppearance="@style/TextStyle.Medium"
+                        android:textColor="@color/colorBlack_1000" />
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/textView_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rezky Aulia Pratama"
+                        android:textAppearance="@style/TextStyle.Medium"
+                        android:textColor="@color/colorBlack_1000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_small" />
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/please_subscribe_to_get_full_access_into_feo"
+            android:textStyle="normal"
+            android:textAppearance="@style/TextStyle.Large"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_small" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

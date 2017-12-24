@@ -32,6 +32,15 @@ public class UserApi {
                 .build();
     }
 
+    public ANRequest post(final UserTbl user){
+        Timber.e("PATH : "+path.concat("/login"));
+        Timber.e("USER : "+new Gson().toJson(user));
+        return AndroidNetworking.post(path)
+                .addStringBody(new Gson().toJson(user)) // posting java object
+                .setPriority(Priority.MEDIUM)
+                .build();
+    }
+
     public class Response extends ApiResponse<UserTbl> {
     }
 }

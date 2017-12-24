@@ -59,6 +59,8 @@
 
     <dimen name="size_image_normal">36dp</dimen>
     <dimen name="size_image_small">24dp</dimen>
+    <dimen name="size_image_xlarge">94dp</dimen>
+    <dimen name="size_image_xxlarge">124dp</dimen>
 
 
     <dimen name="btn_square_small">36dp</dimen>

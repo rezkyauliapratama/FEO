@@ -2,8 +2,8 @@ package android.rezkyaulia.com.feo.controller.adapter;
 
 import android.content.Context;
 import android.rezkyaulia.com.feo.R;
-import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
-import android.rezkyaulia.com.feo.databinding.ListItemSummaryBinding;
+import android.rezkyaulia.com.feo.database.entity.PlanTbl;
+import android.rezkyaulia.com.feo.databinding.ListItemPlanBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,50 +11,50 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
- * Created by Rezky Aulia Pratama on 11/23/2017.
+ * Created by Rezky Aulia Pratama on 12/23/2017.
  */
 
-public class ScoreRVAdapter extends RecyclerView.Adapter<ScoreRVAdapter.ViewHolder> {
+public class SubscribeRBAdapter extends RecyclerView.Adapter<SubscribeRBAdapter.ViewHolder> {
     Context mContext;
-    List<ScoreTbl> mItems;
-
+    List<PlanTbl> mItems;
 
     private int lastPosition = -1;
     private int animationCount = 0;
 
-    public ScoreRVAdapter(Context mContext, List<ScoreTbl> mItems) {
+    public SubscribeRBAdapter(Context mContext, List<PlanTbl> mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SubscribeRBAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_summary, parent, false);
-        return new ScoreRVAdapter.ViewHolder(view);
+                .inflate(R.layout.list_item_plan, parent, false);
+        return new SubscribeRBAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        ScoreTbl item = mItems.get(position);
+    public void onBindViewHolder(SubscribeRBAdapter.ViewHolder holder, int position) {
+        PlanTbl item = mItems.get(position);
 
-//        holder.binding.textViewNumber.setText(String.valueOf(position+1));
-        if (item.getScore() == 0)
-            holder.binding.imageViewResult.setAnimation("animation/x_pop.json");
-        else
-            holder.binding.imageViewResult.setAnimation("animation/check.json");
+        holder.binding.textviewTitle.setText(item.getPlanName());
+        holder.binding.textviewPrice.setText("Price : "+item.getPrice());
 
 
-        holder.binding.textViewCorrectAnswer.setText(item.getCorrectAnswer());
-        holder.binding.textViewYourAnswer.setText(item.getAnswer());
-        holder.binding.textViewWpm.setText(String.valueOf(item.getScore()));
+        Glide.with(mContext)
+                .load(item.getImageName())
+                .asBitmap()
+                .error(R.drawable.ic_error_sing)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(holder.binding.imageView);
+
+        holder.binding.textViewDesc.setText(item.getPlanDesc());
 
         setAnimation(holder.binding.getRoot(),position);
 
@@ -62,14 +62,18 @@ public class ScoreRVAdapter extends RecyclerView.Adapter<ScoreRVAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        if (mItems == null){
+            return 0;
+        }else{
+            return mItems.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ListItemSummaryBinding binding;
+        ListItemPlanBinding binding;
         public ViewHolder(View itemView) {
             super(itemView);
-            binding = ListItemSummaryBinding.bind(itemView);
+            binding = ListItemPlanBinding.bind(itemView);
 
         }
     }
@@ -116,5 +120,4 @@ public class ScoreRVAdapter extends RecyclerView.Adapter<ScoreRVAdapter.ViewHold
         holder.binding.getRoot().setVisibility(View.VISIBLE);
         holder.binding.getRoot().clearAnimation();
     }
-
 }

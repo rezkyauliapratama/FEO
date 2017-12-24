@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.support.v4.app.ActivityCompat;
@@ -124,9 +126,21 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void redirectToMainActivity() {
+        List<UserTbl >userTbls = Facade.getInstance().getManagerUserTbl().getAll();
+        if (userTbls.size()==1){
+            UserTbl userTbl = userTbls.get(0);
+            if (userTbl.getUserId() != null){
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }else{
+                startActivity(new Intent(this,SubscribeActivity.class));
+                finish();
+            }
 
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        }else{
+            Facade.getInstance().getManagerUserTbl().removeAll();
+        }
+
     }
 
     public void checkAppPermission() {

@@ -35,6 +35,7 @@ public class HttpResponse {
     public final String STATUS_OK = "200";
     public final String UNAUTHORIZED = "401";
     public final String CREATED = "201";
+    public final String NOT_FOUND = "404";
     public final String UPLOADED = "201";
     public final String DELETED = "201";
 

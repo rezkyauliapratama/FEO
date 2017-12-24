@@ -65,4 +65,12 @@ public class ApiResponse<T>   {
     public void setApiList(List<T> apiList) {
         ApiList = apiList;
     }
+
+    public T getApiValue() {
+        return ApiValue;
+    }
+
+    public void setApiValue(T apiValue) {
+        ApiValue = apiValue;
+    }
 }

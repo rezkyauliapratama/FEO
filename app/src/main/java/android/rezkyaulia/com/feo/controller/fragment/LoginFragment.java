@@ -11,6 +11,7 @@ import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLoginBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
 import android.rezkyaulia.com.feo.handler.api.UserApi;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.gson.Gson;
 
+import io.reactivex.Observer;
 import timber.log.Timber;
 
 /**
@@ -105,6 +107,20 @@ public class LoginFragment extends BaseFragment {
                 mListener.onRegisterInteraction();
             }
         });
+
+
+        RxBus.getInstance().observable(UserApi.Response.class).subscribe( event ->{
+            Timber.e("setAccount : "+new Gson().toJson(event));
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    binding.edittextUsername.setText(event.getApiValue().getUsername());
+                    binding.edittextPin.setText(event.getApiValue().getPassword());
+
+                }
+            });
+
+        });
     }
 
 
@@ -164,7 +180,7 @@ public class LoginFragment extends BaseFragment {
 
     private void postlogin(String email, String password){
         UserTbl userTbl = new UserTbl();
-        userTbl.setEmail(email);
+        userTbl.setUsername(email);
         userTbl.setPassword(password);
 
         binding.layoutProgress.setVisibility(View.VISIBLE);
@@ -175,9 +191,9 @@ public class LoginFragment extends BaseFragment {
                     @Override
                     public void onResponse(UserApi.Response response) {
                         if (response != null){
-                            if (HttpResponse.getInstance().success(response)){
-                                Timber.e("RESPONSE : "+new Gson().toJson(response));
+                            Timber.e("RESPONSE : "+new Gson().toJson(response));
 
+                            if (HttpResponse.getInstance().success(response)){
                                 long id = Facade.getInstance().getManagerUserTbl().add(response.ApiValue);
                                 if (id>0) {
 
@@ -199,8 +215,11 @@ public class LoginFragment extends BaseFragment {
                                 }else
                                     Snackbar.make(binding.layoutContentMain,"An error expected",Snackbar.LENGTH_LONG).show();
 
-                            }else{
-                                Snackbar.make(binding.layoutContentMain,"Please check email / password",Snackbar.LENGTH_LONG).show();
+                            }else if (response.ApiStatus.equalsIgnoreCase(HttpResponse.getInstance().NOT_FOUND)){
+                                mListener.onSubscribeInteraction(userTbl);
+                            }
+                            else{
+                                Snackbar.make(binding.layoutContentMain,response.getApiMessage(),Snackbar.LENGTH_LONG).show();
                                 binding.layoutProgress.setVisibility(View.GONE);
 
                             }
@@ -292,6 +311,7 @@ public class LoginFragment extends BaseFragment {
         // TODO: Update argument type and name
 
         void onLoginSuccessfullInteraction();
+        void onSubscribeInteraction(UserTbl userTbl);
         void onRegisterInteraction();
     }
 

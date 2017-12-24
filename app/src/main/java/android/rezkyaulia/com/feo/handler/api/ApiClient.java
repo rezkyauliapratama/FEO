@@ -25,6 +25,7 @@ public class ApiClient {
     private ApiClient() {
         user = new UserApi(this);
         score = new ScoreApi(this);
+        plan = new PlanApi(this);
     }
 
     // Providing Global point of access
@@ -42,6 +43,12 @@ public class ApiClient {
     public ScoreApi score(){
         return score;
     }
+
+    private final PlanApi plan;
+    public PlanApi plan(){
+        return plan;
+    }
+
 
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
