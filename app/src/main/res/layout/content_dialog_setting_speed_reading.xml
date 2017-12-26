@@ -19,20 +19,54 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_small"
         >
-        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
-            android:id="@+id/seekbar_wpm"
+
+        <LinearLayout
+            android:id="@+id/layout_reading_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dsb_min="10"
-            app:dsb_max="7000"
-            /><!-- set green color in the background of seek bar-->
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/button_back_wpm"
+                android:layout_width="@dimen/size_image_small"
+                android:layout_height="@dimen/size_image_small"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_icon_left_arrow"
+                android:tint="@color/colorWhite"
+                android:layout_marginRight="@dimen/margin_small"
+                />
+
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:layout_weight="1"
+                android:id="@+id/seekbar_wpm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dsb_min="10"
+                app:dsb_max="7000"
+                /><!-- set green color in the background of seek bar-->
+
+
+            <ImageView
+                android:id="@+id/button_next_wpm"
+                android:layout_width="@dimen/size_image_small"
+                android:layout_height="@dimen/size_image_small"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_icon_right_arrow"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:tint="@color/colorWhite"
+                />
+
+        </LinearLayout>
+
         <com.app.infideap.stylishwidget.view.ATextView
             android:id="@+id/textview_titleWpm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/seekbar_wpm"
+            android:layout_below="@id/layout_reading_speed"
             android:layout_marginTop="@dimen/margin_small"
-            android:layout_alignLeft="@+id/seekbar_wpm"
+            android:layout_alignLeft="@+id/layout_reading_speed"
             android:textAppearance="@style/TextStyle.Medium"
             android:text="@string/reading_speed_wpm"/>
 
@@ -40,9 +74,9 @@
             android:id="@+id/textview_valueWpm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/seekbar_wpm"
+            android:layout_below="@id/layout_reading_speed"
             android:layout_alignTop="@+id/textview_titleWpm"
-            android:layout_alignRight="@id/seekbar_wpm"
+            android:layout_alignRight="@id/layout_reading_speed"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:textAppearance="@style/TextStyle.Medium"

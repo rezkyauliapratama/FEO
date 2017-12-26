@@ -19,6 +19,7 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,12 +74,20 @@ public class SummarySpeedReadingActivity extends BaseActivity {
 
         binding.content.textviewDate.setText(Utils.getInstance().time().getUserFriendlyDateTimeString());
 
+        Timber.e("GUID : "+mGuid);
        if (mGuid != null){
            ScoreTbl scoreTbl = Facade.getInstance().getManageScoreTbl().getHighScore(mGuid);
+           Timber.e("new SCORETBL HIGH : "+new Gson().toJson(scoreTbl));
            if (scoreTbl != null)
                binding.content.textviewValueScore.setText(String.valueOf(scoreTbl.getScore()));
        }
 
+        int bestScore = 0;
+        ScoreTbl scoreTbl = Facade.getInstance().getManageScoreTbl().getHighScore();
+        if (scoreTbl != null)
+            bestScore = scoreTbl.getScore();
+
+        binding.content.textViewBestScore.setText("Your best score : "+bestScore+" WPM");
        binding.content.buttonFinish.setOnClickListener(v -> finish());
 
     }

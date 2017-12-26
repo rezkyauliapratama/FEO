@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
@@ -34,6 +37,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +88,13 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     private Disposable disposableLibraryTbl;
 
     private Thread mThreadPlay;
+
+    private SoundPool mSound;
+    private int mSoundId;
+    private int mPlaySoundId;
+
+    MediaPlayer mp ;
+
 
     public static SpeedReadingFragment newInstance(String guid,boolean b) {
         SpeedReadingFragment fragment = new SpeedReadingFragment();
@@ -144,6 +155,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
         initButton();
 
+        initSound();
+
         setViewBasedOnSetting();
 
 
@@ -196,8 +209,14 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         saveIntoLibrary(libraryTbl);
         if (libraryTbl.getContent() != null){
             if (libraryTbl.getContent().length()>0){
+                Timber.e("onGEtTextDIalog : "+new Gson().toJson(libraryTbl));
                 mWords.clear();
                 mWords.addAll(Utils.getInstance().convertStringIntoList(libraryTbl.getContent()));
+
+                mIndex = 0;
+                binding.contentSpeedReading.textviewContent.setText("");
+                mDivided = 0;
+
                 initData(mWords);
             }
         }
@@ -224,6 +243,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     public void onDestroy() {
         super.onDestroy();
 
+        mSound.release();
+        mPlaySoundId = 0;
+        mSound = null;
         killThread();
         if (disposableLibraryTbl != null){
             Timber.e("disposableLibraryTbl != null");
@@ -235,6 +257,12 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         }
     }
 
+    void initSound(){
+        mSound = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        mSoundId = mSound.load(getContext(),R.raw.tick,1);
+
+
+    }
     private void killThread(){
         if (mThreadPlay != null){
             Timber.e("mThreadPlay != null");
@@ -293,13 +321,17 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         Timber.e("inittoggle");
         mStart = start;
         Drawable drawable = null;
+                mp = MediaPlayer.create(getContext(),R.raw.tick);
+
         if (mStart){
+            initSound();
             drawable = mContext.getResources().getDrawable(R.drawable.ic_icon_pause_round);
             binding.contentSpeedReading.layoutSetting.setEnabled(false);
         }else{
             drawable = mContext.getResources().getDrawable(R.drawable.ic_icon_play);
             binding.contentSpeedReading.layoutSetting.setEnabled(true);
-
+            mPlaySoundId = 0;
+            mSound.release();
             killThread();
 
         }
@@ -312,6 +344,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         initToggle(false);
 
         if (words != null){
+            Timber.e("initData words = "+new Gson().toJson(words));
             if (words.size() > 0){
 //                Timber.e("initdata word.Size : "+words.size()+" | mNol : "+mNol+" | mGS : "+mGs);
                 mReadableWords.clear();
@@ -344,14 +377,14 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 //                    Timber.e("==============================================================");
                 }
 
-//                Timber.e("start index : "+mIndex+" | MDIVIDED : "+mDivided);
+                Timber.e("start index : "+mIndex+" | MDIVIDED : "+mDivided);
 
                 int dimension = mGs * mNol;
                 int divided = mDivided / dimension;
                 mIndex = divided;
                 mDivided=divided*dimension;
 
-//                Timber.e("start divided : "+divided+" | dimension : "+dimension+" | mIndex : "+mIndex+" | MDIVIDED : "+mDivided);
+                Timber.e("start divided : "+divided+" | dimension : "+dimension+" | mIndex : "+mIndex+" | MDIVIDED : "+mDivided);
 
                 if (mIndex>=words.size())
                     mIndex = 0;
@@ -488,7 +521,17 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+
+
+                                            Timber.e("Play Sound ID : "+mPlaySoundId);
+
                                             binding.contentSpeedReading.textviewContent.setText(word);
+                                            mSound.stop(mPlaySoundId);
+                                            mPlaySoundId  = mSound.play(mSoundId,1,1,1,0,2);
+
+
+
+
                                         }
                                     });
 
@@ -498,6 +541,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                     Thread.sleep(wpmMilis*length);
                                     mIndex++;
                                     Timber.e("MINDEX ++ : "+mIndex+" | mReadableWords.size():"+mReadableWords.size());
+                                    mSound.pause(mPlaySoundId);
 
                                     if (mIndex>=mReadableWords.size()){
                                         mIndex = 0;
@@ -513,6 +557,10 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                                     }
 
                                 }
+
+
+
+
                             }/*else{
                                 if (mIndex>0)
                                     mIndex--;

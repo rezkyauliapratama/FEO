@@ -18,7 +18,7 @@ public class PlanTbl {
     @Property(nameInDb = "PlanName")
     private String PlanName;
 
-    @Property(nameInDb = "PricePerMonth")
+    @Property(nameInDb = "Price")
     private int Price;
 
     @Property(nameInDb = "TotalMonth")

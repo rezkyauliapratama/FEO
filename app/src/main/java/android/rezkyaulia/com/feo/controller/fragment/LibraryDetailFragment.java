@@ -119,6 +119,13 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
                 mListener.onDeleteLibraryInteraction(mLibraryTbl);
             }
         });
+
+        binding.imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClose();
+            }
+        });
     }
 
     public void showDialogInputText(LibraryTbl libraryTbl){
@@ -152,12 +159,12 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
     }
 
     void initView(){
-        if (PreferencesManager.getInstance().isBlack()){
+     /*   if (PreferencesManager.getInstance().isBlack()){
             binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
         }else{
             binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
 
-        }
+        }*/
     }
 
     @Override
@@ -169,6 +176,7 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
         void onSpeedReadingInteraction(LibraryTbl libraryTbl);
         void onEditLibraryInteraction(LibraryTbl libraryTbl);
         void onDeleteLibraryInteraction(LibraryTbl libraryTbl);
+        void onClose();
     }
 
 }

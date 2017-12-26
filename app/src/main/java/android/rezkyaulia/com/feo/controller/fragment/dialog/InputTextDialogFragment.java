@@ -6,9 +6,12 @@ import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.DialogInputTextBinding;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import timber.log.Timber;
 
 /**
  * Created by Rezky Aulia Pratama on 11/9/2017.
@@ -81,16 +84,39 @@ public class InputTextDialogFragment extends DialogFragment {
                 String genre = binding.edittextGenre.getText().toString();
                 String author = binding.edittextAuthor.getText().toString();
 
-                if (mLibraryTbl == null){
-                    mLibraryTbl = new LibraryTbl();
-                }
-                mLibraryTbl.setContent(words);
-                mLibraryTbl.setTitle(title);
-                mLibraryTbl.setGenre(genre);
-                mLibraryTbl.setAuthor(author);
+                boolean b = true;
 
-                mListener.onGetTextDialog(mLibraryTbl, isSave);
-                dismiss();
+                if (title.isEmpty()){
+                    b = false;
+                    binding.edittextTitle.setError(getString(R.string.please_fill_in_here));
+                }else{
+                    b = true;
+                }
+
+                if (author.isEmpty()){
+                    b = false;
+                    binding.edittextAuthor.setError(getString(R.string.please_fill_in_here));
+                }else{
+                    b = true;
+                }
+
+
+                Timber.e("B " +b);
+                if (b){
+                    if (mLibraryTbl == null){
+                        mLibraryTbl = new LibraryTbl();
+
+                    }
+
+                    mLibraryTbl.setContent(words);
+                    mLibraryTbl.setTitle(title);
+                    mLibraryTbl.setGenre(genre);
+                    mLibraryTbl.setAuthor(author);
+
+                    mListener.onGetTextDialog(mLibraryTbl, isSave);
+                    dismiss();
+                }
+
             }
         });
 

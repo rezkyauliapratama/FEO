@@ -11,7 +11,7 @@
     <item
         android:id="@+id/action_setting"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_icon_add_queue"
+        android:icon="@drawable/ic_nut_icon"
         android:title="@string/notification"
         app:showAsAction="always" />
 

@@ -15,6 +15,7 @@ import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityLoginBinding;
 import android.rezkyaulia.com.feo.handler.api.UserApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -61,7 +62,11 @@ public class LoginActivity extends BaseActivity implements
 
     @Override
     public void onLoginSuccessfullInteraction() {
+        PreferencesManager.getInstance().setWPM(60);
+        PreferencesManager.getInstance().setNOL(1);
+        PreferencesManager.getInstance().setGS(1);
         redirectToMainActivity();
+
     }
 
     @Override

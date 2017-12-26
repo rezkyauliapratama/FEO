@@ -112,8 +112,35 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
                dismiss();
             }
         });
-    }
 
+        binding.buttonNextWpm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mWpm < binding.seekbarWpm.getMax()){
+                    mWpm = mWpm + 10;
+                    binding.seekbarWpm.setProgress(mWpm);
+                    binding.seekbarWpm.setIndicatorFormatter(String.format("%s", mWpm));
+                    binding.textviewValueWpm.setText(String.valueOf(mWpm));
+                }
+
+
+            }
+        });
+
+        binding.buttonBackWpm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mWpm>0){
+                    mWpm = mWpm - 10;
+                    binding.seekbarWpm.setProgress(mWpm);
+                    binding.seekbarWpm.setIndicatorFormatter(String.format("%s", mWpm));
+                    binding.textviewValueWpm.setText(String.valueOf(mWpm));
+
+                }
+
+            }
+        });
+    }
 
     private void initSeekbar(){
         final int stepSize = 10;
@@ -121,16 +148,16 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
             int value= 10;
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
-                if (value<1000){
+//                if (value<1000){
                     this.value = ((int)Math.round(value/stepSize))*stepSize;
                     seekBar.setProgress(this.value);
                     seekBar.setIndicatorFormatter(String.format("%s", this.value));
-                }else{
+                /*}else{
                     this.value = ((int)Math.round(value/(stepSize*stepSize)))*(stepSize*stepSize);
                     seekBar.setProgress(this.value);
                     seekBar.setIndicatorFormatter(String.format("%s", this.value));
                 }
-
+*/
             }
 
             @Override

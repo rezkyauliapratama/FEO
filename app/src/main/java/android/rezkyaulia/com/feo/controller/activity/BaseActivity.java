@@ -36,11 +36,16 @@ public class BaseActivity extends AppCompatActivity {
 
     private long lastLockDialogShow;
 
+    Facade facade;
+    UserTbl userTbl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pref = PreferencesManager.getInstance();
 
+        facade = Facade.getInstance();
+        userTbl = facade.getManagerUserTbl().get();
 
 
     }

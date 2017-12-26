@@ -8,43 +8,48 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="android.rezkyaulia.com.feo.controller.activity.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="@color/colorGrey_100">
+    android:background="@color/colorWhite">
 
 
     <RelativeLayout
         android:id="@+id/container_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
         android:orientation="horizontal"
         android:padding="@dimen/margin_normal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/layout_trophy"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_avatar" />
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rezky Aulia Pratama"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000" />
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_small" />
 
             <com.app.infideap.stylishwidget.view.ATextView
-                android:id="@+id/ATextView"
+                android:id="@+id/button_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rezky Aulia Pratama"
+                android:text="Profile"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:textColor="@color/colorBlack_1000" />
+                android:textColor="@color/colorBlue_900" />
+
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_trophy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -54,15 +59,15 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/imageView_no_result"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/size_image_large"
+                android:layout_height="@dimen/size_image_large"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="animation/trophy.json"
                 app:lottie_loop="false"
                 app:lottie_progress="1"
-                app:lottie_scale="2" />
+                app:lottie_scale="1" />
             <!--<ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
@@ -73,6 +78,7 @@
                 android:layout_height="@dimen/margin_small" />
 
             <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_bestScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7000 WPM"
@@ -92,48 +98,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_xlarge"
+            android:layout_margin="@dimen/margin_normal"
             android:orientation="vertical"
-            android:padding="@dimen/margin_xlarge">
+            android:padding="@dimen/margin_small">
 
-            <android.support.v4.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_xlarge" />
 
-            <com.app.infideap.stylishwidget.view.ATextView
+            <FrameLayout
                 android:id="@+id/btn_speed_reading_normal"
-                style="@style/Button.Default.Fill"
                 android:layout_width="match_parent"
-                android:background="@color/colorPrimary"
-                android:layout_height="wrap_content"
-                android:text="Play speed reading normal"
-                android:textColor="@color/colorWhite"
-                android:textAppearance="@style/TextStyle.Medium" />
+                android:layout_height="@dimen/size_image_xlarge"
+                android:background="@drawable/layerlist_round_dash">
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Play speed reading normal"
+                    android:textColor="@color/colorBlack_1000"
+                    android:textAppearance="@style/TextStyle.Medium" />
+
+            </FrameLayout>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_xlarge" />
+                android:layout_height="@dimen/margin_normal" />
 
-            <com.app.infideap.stylishwidget.view.ATextView
+            <FrameLayout
                 android:id="@+id/btn_speed_reading_feo"
-                style="@style/Button.Info.Fill"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Speed reading FEO"
-                android:textAppearance="@style/TextStyle.Medium"/>
+                android:layout_height="@dimen/size_image_xlarge"
+                android:background="@drawable/layerlist_round_dash">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Speed reading FEO"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000" />
+
+            </FrameLayout>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_xlarge" />
+                android:layout_height="@dimen/margin_normal" />
 
-            <com.app.infideap.stylishwidget.view.ATextView
+            <FrameLayout
+                android:visibility="invisible"
                 android:id="@+id/btn_speed_reading_memory"
-                style="@style/Button.Info.Fill"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Memory"
-                android:textAppearance="@style/TextStyle.Medium"/>
+                android:layout_height="@dimen/size_image_xlarge"
+                android:background="@drawable/layerlist_round_dash">
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Memory"
+                    android:textColor="@color/colorBlack_1000"
+                    android:textAppearance="@style/TextStyle.Medium" />
+
+
+            </FrameLayout>
+
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

@@ -246,12 +246,12 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
     }
 
     void initView(){
-        if (PreferencesManager.getInstance().isBlack()){
+        /*if (PreferencesManager.getInstance().isBlack()){
             binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
         }else{
             binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
 
-        }
+        }*/
     }
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name

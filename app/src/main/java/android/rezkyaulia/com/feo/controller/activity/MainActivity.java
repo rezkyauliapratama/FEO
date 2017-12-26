@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.ViewSettingDialogFragment;
+import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -47,11 +49,19 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
 
+        binding.contentMain.textViewName.setText(userTbl.getName());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initBestScore();
 
     }
 
@@ -82,6 +92,14 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void initBestScore(){
+        int bestScore = 0;
+        ScoreTbl scoreTbl = Facade.getInstance().getManageScoreTbl().getHighScore();
+        if (scoreTbl != null)
+            bestScore = scoreTbl.getScore();
+
+        binding.contentMain.textViewBestScore.setText(bestScore+" WPM");
+    }
 
     public void showDialogInputText(){
         ViewSettingDialogFragment viewSettingDialogFragment = ViewSettingDialogFragment.newInstance();

@@ -29,6 +29,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.app.infideap.stylishwidget.view.ATextView;
@@ -84,6 +85,12 @@ public class SpeedReadingActivity extends BaseActivity implements
         libraryDetailFragment = LibraryDetailFragment.newInstance();
         displayFragment(binding.navView.getId(),libraryDetailFragment);
 
+        binding.imageViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -339,6 +346,11 @@ public class SpeedReadingActivity extends BaseActivity implements
     public void onDeleteLibraryInteraction(LibraryTbl libraryTbl) {
         showAlertDialogDeleteLibrary(libraryTbl);
 
+    }
+
+    @Override
+    public void onClose() {
+        binding.drawerLayout.closeDrawer(binding.navView);
     }
 
     protected class LfPagerAdapter extends FragmentStatePagerAdapter {

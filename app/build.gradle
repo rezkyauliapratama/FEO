@@ -6,8 +6,8 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    def version_code = 2
-    def version_name = "0.0.0.2"
+    def version_code = 3
+    def version_name = "0.0.0.3"
 
     dataBinding {
         enabled true
@@ -47,6 +47,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+
+greendao {
+    schemaVersion 2
 }
 
 ext.supportLibraryVersion = '25.3.1'

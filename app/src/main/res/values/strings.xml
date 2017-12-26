@@ -65,8 +65,8 @@
     <string name="information">Information</string>
     <string name="already_have_an_account_sign_in_here">Already have an account ? Sign in here</string>
     <string name="school_address">School address</string>
-    <string name="please_fill_in_here">Please fill in here</string>
     <string name="email">Email</string>
     <string name="please_subscribe_to_get_full_access_into_feo">Please subscribe to get full access into FEO</string>
+    <string name="please_fill_in_here">Please fill in here</string>
 
 </resources>

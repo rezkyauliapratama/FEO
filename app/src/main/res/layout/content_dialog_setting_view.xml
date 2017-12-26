@@ -11,6 +11,9 @@
         tools:showIn="@layout/dialog_setting_speed_reading"
         >
 
+        <android.support.v4.widget.Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_image_small" />
         <com.app.infideap.stylishwidget.view.ATextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
