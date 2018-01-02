@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.Facade;
@@ -27,18 +28,22 @@ public class MemoryImageFragment extends BaseFragment {
 
     public final static String ARGS1= "args1";
     public final static String ARGS2= "args2";
+    public final static String ARGS3= "args3";
 
     FragmentImageMemoryBinding binding;
 
 //    private OnListFragmentInteractionListener mListener;
     private int mIndex;
 
+    boolean b;
     Bitmap mBitmap;
-    public static MemoryImageFragment newInstance(int index,byte[] byteArray) {
+    public static MemoryImageFragment newInstance(int index,byte[] byteArray,boolean b) {
         MemoryImageFragment fragment = new MemoryImageFragment();
         Bundle args = new Bundle();
         args.putByteArray(ARGS1, byteArray);
         args.putInt(ARGS2, index);
+        args.putBoolean(ARGS3, b);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,8 +56,11 @@ public class MemoryImageFragment extends BaseFragment {
 
         if (getArguments() != null){
             byte[] byteArray = getArguments().getByteArray(ARGS1);
+            b = getArguments().getBoolean(ARGS3);
             if (byteArray != null) {
                 mBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                if (b)
+                    mBitmap = TrimBitmap(mBitmap);
             }
 
             mIndex = getArguments().getInt(ARGS2);
@@ -93,6 +101,80 @@ public class MemoryImageFragment extends BaseFragment {
 //        mListener.onShowAnswerInteraction(mIndex);
 
 
+
+
+    }
+
+    public static Bitmap TrimBitmap(Bitmap bmp) {
+        int imgHeight = bmp.getHeight();
+        int imgWidth  = bmp.getWidth();
+
+
+        //TRIM WIDTH - LEFT
+        int startWidth = 0;
+        for(int x = 0; x < imgWidth; x++) {
+            if (startWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                        startWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+
+        //TRIM WIDTH - RIGHT
+        int endWidth  = 0;
+        for(int x = imgWidth - 1; x >= 0; x--) {
+            if (endWidth == 0) {
+                for (int y = 0; y < imgHeight; y++) {
+                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                        endWidth = x;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+
+
+        //TRIM HEIGHT - TOP
+        int startHeight = 0;
+        for(int y = 0; y < imgHeight; y++) {
+            if (startHeight == 0) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                        startHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+
+
+        //TRIM HEIGHT - BOTTOM
+        int endHeight = 0;
+        for(int y = imgHeight - 1; y >= 0; y--) {
+            if (endHeight == 0 ) {
+                for (int x = 0; x < imgWidth; x++) {
+                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                        endHeight = y;
+                        break;
+                    }
+                }
+            } else break;
+        }
+
+
+        return Bitmap.createBitmap(
+                bmp,
+                startWidth,
+                startHeight,
+                endWidth - startWidth,
+                endHeight - startHeight
+        );
 
     }
 

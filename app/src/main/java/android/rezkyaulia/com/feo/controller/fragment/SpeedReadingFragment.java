@@ -137,8 +137,8 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             movies = savedInstanceState.getParcelableArrayList(EXTRA2);
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
             mPage = savedInstanceState.getInt(EXTRA3);*/
-           /* int test = savedInstanceState.getInt("tes", 0);
-            Timber.e("savedinstancestate value : "+test);*/
+           /* int item_chat_message = savedInstanceState.getInt("tes", 0);
+            Timber.e("savedinstancestate value : "+item_chat_message);*/
         }
 
 
@@ -780,7 +780,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     public void onGetAnswerDialog(String answer) {
         Timber.e("onGetANswerDialog :"+mIndex+ " | mReadableWords:"+mReadableWords.size());
         if (mIndex > 0 && mIndex < mReadableWords.size()){
-            String correctAns = mReadableWords.get(mIndex-1).getWord().trim();
+            String correctAns = mReadableWords.get(mIndex-1).getWord().replaceAll("[^a-zA-Z ]", "").trim();
             Timber.e("mIndex > 0 && mIndex < mReadableWords.size()");
             if (answer != null){
                 Timber.e("correctAns :"+correctAns.toLowerCase()+" | ans :"+answer.trim().toLowerCase());
@@ -805,10 +805,10 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         scoreTbl.setCreatedDate(Utils.getInstance().time().getDateTimeString());
         if (b){
             scoreTbl.setScore(pref.getWPM());
-            binding.contentSpeedReading.lottieviewCheck.setAnimation("animation/check.json");
+            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_correct_symbol));
         }else{
             scoreTbl.setScore(0);
-            binding.contentSpeedReading.lottieviewCheck.setAnimation("animation/x_pop.json");
+            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_cross_mark));
 
         }
 

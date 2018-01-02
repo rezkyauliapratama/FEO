@@ -74,7 +74,7 @@ public class PushScoreService extends JobService {
                     @Override
                     public void onError(ANError anError) {
                         Timber.e("OnERROR UPLOAD SCORES : "+anError.getErrorBody() +" , "+anError.getErrorDetail());
-//                        jobFinished(jobParameters,true);
+                        jobFinished(jobParameters,false);
                     }
                 });
 

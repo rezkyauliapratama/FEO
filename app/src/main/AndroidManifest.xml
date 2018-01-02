@@ -13,6 +13,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
@@ -50,6 +51,12 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".controller.activity.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+
         android:screenOrientation="portrait"/>
 
         <activity
@@ -61,6 +68,14 @@
         <service
             android:exported="false"
             android:name=".controller.service.PushScoreService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:exported="false"
+            android:name=".controller.service.PushUserService">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>

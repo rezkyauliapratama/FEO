@@ -77,45 +77,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_small" />
 
-            <com.app.infideap.stylishwidget.view.ATextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                android:textAppearance="@style/TextStyle.Medium"
-                />
-
-            <android.support.v4.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_xsmall" />
-
-            <com.app.infideap.stylishwidget.view.AEditText
-                android:id="@+id/editText_password"
+            <LinearLayout
+                android:id="@+id/layout_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditText.RoundBorder"
-                />
+                android:orientation="vertical">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_xsmall" />
+
+                <com.app.infideap.stylishwidget.view.AEditText
+                    android:id="@+id/editText_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/EditText.RoundBorder"
+                    />
+            </LinearLayout>
+
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_small" />
 
-            <com.app.infideap.stylishwidget.view.ATextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retype_password"
-                android:textAppearance="@style/TextStyle.Medium"
-                />
-
-            <android.support.v4.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_xsmall" />
-
-            <com.app.infideap.stylishwidget.view.AEditText
-                android:id="@+id/editText_retypePassword"
+            <LinearLayout
+                android:id="@+id/layout_retypePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditText.RoundBorder"
-                />
+                android:orientation="vertical">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/retype_password"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_xsmall" />
+
+                <com.app.infideap.stylishwidget.view.AEditText
+                    android:id="@+id/editText_retypePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/EditText.RoundBorder"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>

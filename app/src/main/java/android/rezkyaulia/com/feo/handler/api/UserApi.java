@@ -24,18 +24,28 @@ public class UserApi {
     }
 
     public ANRequest login(final UserTbl user){
-        Timber.e("PATH : "+path.concat("/login"));
+        Timber.e("PATH : "+ Constant.getInstance().BASE_URL.concat("/login"));
         Timber.e("USER : "+new Gson().toJson(user));
-        return AndroidNetworking.post(path.concat("/login"))
+        return AndroidNetworking.post( Constant.getInstance().BASE_URL.concat("/login"))
                 .addStringBody(new Gson().toJson(user)) // posting java object
                 .setPriority(Priority.MEDIUM)
                 .build();
     }
 
     public ANRequest post(final UserTbl user){
-        Timber.e("PATH : "+path.concat("/login"));
+        Timber.e("PATH : "+path);
         Timber.e("USER : "+new Gson().toJson(user));
         return AndroidNetworking.post(path)
+                .addStringBody(new Gson().toJson(user)) // posting java object
+                .setPriority(Priority.MEDIUM)
+                .build();
+    }
+
+    public ANRequest update(final UserTbl user){
+        Timber.e("PATH : "+path.concat("/").concat(String.valueOf(user.getUserId())));
+        Timber.e("USER : "+new Gson().toJson(user));
+        return AndroidNetworking.post(path.concat("/").concat(String.valueOf(user.getUserId())))
+                .addHeaders(ApiClient.getInstance().getHeader())
                 .addStringBody(new Gson().toJson(user)) // posting java object
                 .setPriority(Priority.MEDIUM)
                 .build();

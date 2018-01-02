@@ -68,5 +68,12 @@
     <string name="email">Email</string>
     <string name="please_subscribe_to_get_full_access_into_feo">Please subscribe to get full access into FEO</string>
     <string name="please_fill_in_here">Please fill in here</string>
+    <string name="profile">Profile</string>
+    <string name="home_address">Home address</string>
+    <string name="change_password">Change password ?</string>
+    <string name="account">Account</string>
+    <string name="dots">.............</string>
+    <string name="change_password1">Change password</string>
+    <string name="logout">Logout</string>
 
 </resources>

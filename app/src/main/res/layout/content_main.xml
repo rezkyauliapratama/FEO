@@ -143,7 +143,6 @@
                 android:layout_height="@dimen/margin_normal" />
 
             <FrameLayout
-                android:visibility="invisible"
                 android:id="@+id/btn_speed_reading_memory"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_image_xlarge"

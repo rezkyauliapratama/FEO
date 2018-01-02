@@ -20,13 +20,13 @@ public class BaseFragment extends Fragment {
     private static final String TAG = BaseFragment.class.getSimpleName();
 
     protected PreferencesManager pref;
-
+    protected Facade facade;
     protected UserTbl userTbl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        facade = Facade.getInstance();
         pref = PreferencesManager.getInstance();
         userTbl = Facade.getInstance().getManagerUserTbl().get();
 

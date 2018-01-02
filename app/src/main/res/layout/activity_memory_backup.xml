@@ -47,12 +47,18 @@
 
             <include android:id="@+id/layout_content" layout="@layout/contant_memory_backup"/>
 
+
             <FrameLayout
-                android:id="@+id/layout_overlay"
+                android:visibility="gone"
+                android:id="@+id/layout_progress"
+                android:background="@color/colorWhiteTransparent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg_overlay"
-                android:visibility="gone"/>
+                android:layout_height="match_parent">
+                <android.rezkyaulia.com.feo.view.ALoadingView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
 
             <com.app.infideap.stylishwidget.view.MessageBox
                 android:layout_gravity="bottom"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <FrameLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/button_logout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="android.rezkyaulia.com.feo.controller.activity.ProfileActivity"
+            tools:showIn="@layout/activity_profile"/>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/button_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button.Danger.Fill"
+            android:text="@string/logout"
+            android:textAppearance="@style/TextStyle.Medium"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
+</layout>

@@ -50,6 +50,13 @@ public class MainActivity extends BaseActivity {
         });
 
         binding.contentMain.textViewName.setText(userTbl.getName());
+
+        binding.contentMain.buttonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+            }
+        });
     }
 
     @Override

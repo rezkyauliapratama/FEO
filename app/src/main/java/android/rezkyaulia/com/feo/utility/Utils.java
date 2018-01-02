@@ -1,5 +1,6 @@
 package android.rezkyaulia.com.feo.utility;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.rezkyaulia.com.feo.R;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
@@ -23,6 +25,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -41,10 +44,11 @@ import static java.lang.Math.round;
 public class Utils {
     // Static member class member that holds only one instance of the
     // SingletonExample class
-    private static class SingletonHolder{
+    private static class SingletonHolder {
         public static Utils singletonInstance =
                 new Utils();
     }
+
     // SingletonExample prevents any other class from instantiating
     private Utils() {
     }
@@ -55,11 +59,11 @@ public class Utils {
         return SingletonHolder.singletonInstance;
     }
 
-    public TimeUtility time(){
+    public TimeUtility time() {
         return new TimeUtility();
     }
 
-    public  double toMB(long l) {
+    public double toMB(long l) {
         return (((double) l) / (double) 1024.0f) / 1024.0f;
     }
 
@@ -88,7 +92,7 @@ public class Utils {
         return appInfo;
     }
 
-    public  class AppInfo {
+    public class AppInfo {
         public int id;
         public String extra;
         @SerializedName("PackageName")
@@ -120,7 +124,7 @@ public class Utils {
         return round(px);
     }
 
-    public void setStatusBarColor(Activity context){
+    public void setStatusBarColor(Activity context) {
         Window window = context.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -136,7 +140,6 @@ public class Utils {
     }
 
 
-
     public File getFolder(String questionFileFolder) {
         File folder = Environment.getExternalStorageDirectory();
         String[] folderNames = questionFileFolder.split("/");
@@ -150,12 +153,12 @@ public class Utils {
     }
 
 
-    public List<String> convertStringIntoList(String text){
+    public List<String> convertStringIntoList(String text) {
         List<String> words = new ArrayList<>();
         try {
 
-            String[] temp = text.trim().split("\\s+");
-            for (String str : temp){
+            String[] temp = text.replaceAll("\\s+(?=\\p{Punct})", "").trim().split("\\s+");
+            for (String str : temp) {
                 words.add(str);
             }
 
@@ -174,7 +177,7 @@ public class Utils {
                     inputStream));
 
             String line;
-            Timber.e("open text file - content"+"\n");
+            Timber.e("open text file - content" + "\n");
             /*while ((line = reader.readLine()) != null) {
                 String[] temp = line.split("\\s+");
                 for (String str : temp){
@@ -183,7 +186,7 @@ public class Utils {
             }*/
 
             while ((line = reader.readLine()) != null) {
-                words = words+"\n"+line;
+                words = words + "\n" + line;
             }
             reader.close();
             inputStream.close();
@@ -194,42 +197,42 @@ public class Utils {
 
     }
 
-    public long getMilisWPM(int wpm){
+    public long getMilisWPM(int wpm) {
         long minuteMilis = TimeUnit.MINUTES.toMillis(1);
-        long wpmMilis = round(minuteMilis/wpm);
+        long wpmMilis = round(minuteMilis / wpm);
 
         return wpmMilis;
     }
 
-    public String getWords(int mIndex, int pointWord, int mNol, int mGs, List<String> mWords){
+    public String getWords(int mIndex, int pointWord, int mNol, int mGs, List<String> mWords) {
         String tempWord = "";
 
-        if (pointWord == mIndex && mWords != null){
+        if (pointWord == mIndex && mWords != null) {
             Timber.e("pointWord == mIndex");
-            for (int i = 0; i<mNol ; i++){
+            for (int i = 0; i < mNol; i++) {
                 Timber.e("For mNol");
-                for (int j = 0; j<mGs; j++){
+                for (int j = 0; j < mGs; j++) {
                     Timber.e("for mGS");
-                    if (pointWord>=mWords.size()){
+                    if (pointWord >= mWords.size()) {
                         pointWord = 0;
-                        Timber.e("Point Word : "+pointWord+" | break GS");
+                        Timber.e("Point Word : " + pointWord + " | break GS");
                         break;
                     }
 
-                    tempWord = tempWord+" ".concat(mWords.get(pointWord));
-                    Timber.e("tempWord GS:"+tempWord);
+                    tempWord = tempWord + " ".concat(mWords.get(pointWord));
+                    Timber.e("tempWord GS:" + tempWord);
 
                     pointWord++;
 
 
                 }
-                tempWord=tempWord+"\n";
-                Timber.e("tempWord NOL:"+tempWord);
+                tempWord = tempWord + "\n";
+                Timber.e("tempWord NOL:" + tempWord);
 
-                Timber.e("pointwords : "+pointWord);
-                if (pointWord>=mWords.size()){
+                Timber.e("pointwords : " + pointWord);
+                if (pointWord >= mWords.size()) {
                     pointWord = 0;
-                    Timber.e("Point Word : "+pointWord+" | break NOL");
+                    Timber.e("Point Word : " + pointWord + " | break NOL");
                     break;
                 }
 
@@ -250,6 +253,16 @@ public class Utils {
         final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         final String tmDevice, tmSerial, androidId;
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
         tmDevice = "" + tm.getDeviceId();
         tmSerial = "" + tm.getSimSerialNumber();
         androidId = "" + android.provider.Settings.Secure.getString(context.getContentResolver(),
@@ -271,5 +284,7 @@ public class Utils {
         return UUID.nameUUIDFromBytes(deviceId.getBytes()).toString();
 //        return uuid.fromString(String.valueOf(deviceId.hashCode())).toString();
     }
+
+
 
 }

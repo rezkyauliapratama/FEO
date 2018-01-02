@@ -11,6 +11,7 @@ import android.rezkyaulia.com.feo.databinding.ActivitySummarySpeedReadingBinding
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.utility.TimeUtility;
 import android.rezkyaulia.com.feo.utility.Utils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 
 
@@ -66,7 +67,7 @@ public class SummarySpeedReadingActivity extends BaseActivity {
     }
 
     private void initView(){
-
+        binding.content.imageViewNoResult.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_trophy));
         binding.content.textViewNumber.setText(R.string.result);
         binding.content.textViewYourAnswer.setText(R.string.your_answer);
         binding.content.textViewCorrectAnswer.setText(R.string.correct_answer);
@@ -108,7 +109,7 @@ public class SummarySpeedReadingActivity extends BaseActivity {
                 .setService(PushScoreService.class) // the JobService that will be called
                 .setTag("my-unique-tag")
                 .setReplaceCurrent(true)
-                .setRecurring(true)
+
                 // Run between 30 - 60 seconds from now.
                 .setTrigger(Trigger.executionWindow(5, 10))// uniquely identifies the job
                 .build();
