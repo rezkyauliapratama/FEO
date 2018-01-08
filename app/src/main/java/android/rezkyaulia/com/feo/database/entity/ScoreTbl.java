@@ -36,12 +36,16 @@ public class ScoreTbl implements Parcelable{
     @Property(nameInDb = "Answer")
     private String Answer;
 
+    @Property(nameInDb = "FlagAnswer")
+    private int FlagAnswer;
+
     @Property(nameInDb = "CreatedDate")
     private String CreatedDate;
 
-    @Generated(hash = 1774125279)
+    @Generated(hash = 535599262)
     public ScoreTbl(Long id, Long ScoreId, Long UserId, String Guid, int Score,
-            String CorrectAnswer, String Answer, String CreatedDate) {
+            String CorrectAnswer, String Answer, int FlagAnswer,
+            String CreatedDate) {
         this.id = id;
         this.ScoreId = ScoreId;
         this.UserId = UserId;
@@ -49,6 +53,7 @@ public class ScoreTbl implements Parcelable{
         this.Score = Score;
         this.CorrectAnswer = CorrectAnswer;
         this.Answer = Answer;
+        this.FlagAnswer = FlagAnswer;
         this.CreatedDate = CreatedDate;
     }
 
@@ -122,6 +127,7 @@ public class ScoreTbl implements Parcelable{
 
     //parcalable
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -136,7 +142,16 @@ public class ScoreTbl implements Parcelable{
         dest.writeInt(this.Score);
         dest.writeString(this.CorrectAnswer);
         dest.writeString(this.Answer);
+        dest.writeInt(this.FlagAnswer);
         dest.writeString(this.CreatedDate);
+    }
+
+    public int getFlagAnswer() {
+        return this.FlagAnswer;
+    }
+
+    public void setFlagAnswer(int FlagAnswer) {
+        this.FlagAnswer = FlagAnswer;
     }
 
     protected ScoreTbl(Parcel in) {
@@ -147,6 +162,7 @@ public class ScoreTbl implements Parcelable{
         this.Score = in.readInt();
         this.CorrectAnswer = in.readString();
         this.Answer = in.readString();
+        this.FlagAnswer = in.readInt();
         this.CreatedDate = in.readString();
     }
 

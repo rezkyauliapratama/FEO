@@ -44,5 +44,7 @@ public class Constant {
     public final String DOCUMENT_FOLDER = MEDIA_FOLDER + "document/";
     public final String DOCUMENT_BACKUP_FOLDER = MEDIA_FOLDER + "documentBackup/";
 
+    public final int FLAG_ANSWER_TRUE = 1;
+    public final int FLAG_ANSWER_FALSE = 0;
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.NotificationFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.ViewSettingDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
@@ -12,6 +13,7 @@ import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,9 @@ import timber.log.Timber;
 public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
     private Menu menu;
+
+    NotificationFragment notificationFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +36,7 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        binding.contentMain.btnSpeedReadingNormal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SpeedReadingActivity.class));
-            }
-        });
+        binding.contentMain.btnSpeedReadingNormal.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,SpeedReadingActivity.class)));
 
         binding.contentMain.btnSpeedReadingFeo.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,SpeedReadingActivity.class);
@@ -44,19 +44,17 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        binding.contentMain.btnSpeedReadingMemory.setOnClickListener(v->{
+        binding.contentMain.btnSpeedReadingMemory.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,MemoryActivity.class);
             startActivity(intent);
         });
 
         binding.contentMain.textViewName.setText(userTbl.getName());
 
-        binding.contentMain.buttonProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-            }
-        });
+        binding.contentMain.buttonProfile.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,ProfileActivity.class)));
+
+        initNavigation();
+
     }
 
     @Override
@@ -95,8 +93,20 @@ public class MainActivity extends BaseActivity {
         if (id == R.id.action_setting){
             Timber.e("Action Setting");
             showDialogInputText();
+            return true;
+        }else if (id == R.id.action_notification){
+            /*binding..openDrawer(Gravity.END);
+            rightNavFragment.show(1);
+            return true;*/
+            binding.drawerLayout.openDrawer(Gravity.END);
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void initNavigation(){
+        notificationFragment = NotificationFragment.newInstance();
+        displayFragment(R.id.navView_notification, notificationFragment);
     }
 
     void initBestScore(){

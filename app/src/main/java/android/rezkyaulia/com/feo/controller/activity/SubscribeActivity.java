@@ -3,9 +3,7 @@ package android.rezkyaulia.com.feo.controller.activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
-import android.rezkyaulia.com.feo.controller.adapter.ScoreRVAdapter;
-import android.rezkyaulia.com.feo.controller.adapter.SubscribeRBAdapter;
-import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.controller.adapter.SubscribeRVAdapter;
 import android.rezkyaulia.com.feo.database.entity.PlanTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySubscribeBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
@@ -32,7 +30,7 @@ public class SubscribeActivity extends BaseActivity {
 
     List<PlanTbl> planTbls;
     private LinearLayoutManager mLayoutManager;
-    private SubscribeRBAdapter mAdapter;
+    private SubscribeRVAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +70,7 @@ public class SubscribeActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         binding.content.recyclerView.setLayoutManager(mLayoutManager);
         if (planTbls != null){
-            mAdapter = new SubscribeRBAdapter(this,planTbls);
+            mAdapter = new SubscribeRVAdapter(this,planTbls);
             binding.content.recyclerView.setAdapter(mAdapter);
         }
     }

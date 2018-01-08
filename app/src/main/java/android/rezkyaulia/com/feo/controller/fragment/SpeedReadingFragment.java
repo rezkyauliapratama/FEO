@@ -20,6 +20,7 @@ import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentSpeedReadingBinding;
 import android.rezkyaulia.com.feo.model.ReadableObj;
+import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.DimensionConverter;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
@@ -159,7 +160,6 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
         setViewBasedOnSetting();
 
-
     }
 
     @Override
@@ -170,11 +170,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             showDialogInputText(null);
         }
         return super.onOptionsItemSelected(item);
-
     }
-
-
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -333,7 +329,6 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
             mPlaySoundId = 0;
             mSound.release();
             killThread();
-
         }
         binding.contentSpeedReading.lottieviewCheck.setVisibility(View.GONE);
         binding.contentSpeedReading.btnPlay.setImageDrawable(drawable);
@@ -365,13 +360,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 //                            Timber.e("pointer : "+pointer);
                             pointer++;
                             lenght++;
-
                         }
                         temp = temp + "\n";
                         if (pointer >= words.size()) {
                             break;
                         }
-
                     }
                     mReadableWords.add(new ReadableObj(temp,lenght));
 //                    Timber.e("==============================================================");
@@ -805,9 +798,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         scoreTbl.setCreatedDate(Utils.getInstance().time().getDateTimeString());
         if (b){
             scoreTbl.setScore(pref.getWPM());
+            scoreTbl.setFlagAnswer(Constant.getInstance().FLAG_ANSWER_TRUE);
             binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_correct_symbol));
         }else{
-            scoreTbl.setScore(0);
+            scoreTbl.setScore(pref.getWPM());
+            scoreTbl.setFlagAnswer(Constant.getInstance().FLAG_ANSWER_FALSE);
             binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_cross_mark));
 
         }

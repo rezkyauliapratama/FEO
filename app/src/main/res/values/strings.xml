@@ -75,5 +75,9 @@
     <string name="dots">.............</string>
     <string name="change_password1">Change password</string>
     <string name="logout">Logout</string>
+    <string name="body">Body</string>
+    <string name="date">date</string>
+    <string name="no_notification">No notification</string>
+    <string name="please_wait">Please wait</string>
 
 </resources>

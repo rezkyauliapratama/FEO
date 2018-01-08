@@ -66,6 +66,7 @@
 
     <dimen name="btn_square_small">36dp</dimen>
     <dimen name="btn_square_normal">72dp</dimen>
+    <dimen name="size_image_96dp">96dp</dimen>
 
     <!--<dimen name="height_box_normal">140dp</dimen>-->
 

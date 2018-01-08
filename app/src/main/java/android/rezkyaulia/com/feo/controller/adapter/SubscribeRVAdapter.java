@@ -20,27 +20,27 @@ import java.util.List;
  * Created by Rezky Aulia Pratama on 12/23/2017.
  */
 
-public class SubscribeRBAdapter extends RecyclerView.Adapter<SubscribeRBAdapter.ViewHolder> {
+public class SubscribeRVAdapter extends RecyclerView.Adapter<SubscribeRVAdapter.ViewHolder> {
     Context mContext;
     List<PlanTbl> mItems;
 
     private int lastPosition = -1;
     private int animationCount = 0;
 
-    public SubscribeRBAdapter(Context mContext, List<PlanTbl> mItems) {
+    public SubscribeRVAdapter(Context mContext, List<PlanTbl> mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
 
     @Override
-    public SubscribeRBAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SubscribeRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_plan, parent, false);
-        return new SubscribeRBAdapter.ViewHolder(view);
+        return new SubscribeRVAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SubscribeRBAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SubscribeRVAdapter.ViewHolder holder, int position) {
         PlanTbl item = mItems.get(position);
 
         holder.binding.textviewTitle.setText(item.getPlanName());

@@ -20,6 +20,7 @@ import android.rezkyaulia.com.feo.databinding.ActivityMemoryBackupBinding;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.v4.app.DialogFragment;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -99,6 +100,8 @@ public class MemoryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memory_backup);
 
+        setSupportActionBar(binding.toolbar);
+
         mBitmaps = new ArrayList<>();
 
         list1 = new ArrayList<>();
@@ -160,6 +163,17 @@ public class MemoryActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void initData(){
         mWpm = PreferencesManager.getInstance().getWPM();

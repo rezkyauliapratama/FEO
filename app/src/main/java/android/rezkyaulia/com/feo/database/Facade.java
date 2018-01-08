@@ -27,6 +27,7 @@ public class Facade {
     private ManageLibraryTbl manageLibraryTbl;
     private ManageUserTbl manageUserTbl;
     private ManageScoreTbl manageScoreTbl;
+    private ManageNotificationTbl manageNotificationTbl;
 
 
 
@@ -37,6 +38,7 @@ public class Facade {
         manageLibraryTbl = new ManageLibraryTbl(this);
         manageUserTbl = new ManageUserTbl(this);
         manageScoreTbl = new ManageScoreTbl(this);
+        manageNotificationTbl = new ManageNotificationTbl(this);
 
 
     }
@@ -57,4 +59,7 @@ public class Facade {
         return manageScoreTbl;
     }
 
+    public ManageNotificationTbl getManageNotificationTbl() {
+        return manageNotificationTbl;
+    }
 }

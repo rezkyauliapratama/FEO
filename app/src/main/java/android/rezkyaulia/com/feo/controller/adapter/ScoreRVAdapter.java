@@ -4,6 +4,8 @@ import android.content.Context;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ListItemSummaryBinding;
+import android.rezkyaulia.com.feo.utility.Constant;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,11 +48,13 @@ public class ScoreRVAdapter extends RecyclerView.Adapter<ScoreRVAdapter.ViewHold
         ScoreTbl item = mItems.get(position);
 
 //        holder.binding.textViewNumber.setText(String.valueOf(position+1));
-        if (item.getScore() == 0)
-            holder.binding.imageViewResult.setAnimation("animation/x_pop.json");
-        else
-            holder.binding.imageViewResult.setAnimation("animation/check.json");
-
+        if (item.getFlagAnswer() == Constant.getInstance().FLAG_ANSWER_FALSE) {
+//            holder.binding.imageViewResult.setAnimation("animation/x_pop.json");
+            holder.binding.imageViewResult.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_cross_mark));
+        }else {
+            holder.binding.imageViewResult.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_correct_symbol));
+//            holder.binding.imageViewResult.setAnimation("animation/check.json");
+        }
 
         holder.binding.textViewCorrectAnswer.setText(item.getCorrectAnswer());
         holder.binding.textViewYourAnswer.setText(item.getAnswer());

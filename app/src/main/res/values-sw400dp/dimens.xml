@@ -43,5 +43,6 @@
     <dimen name="fab_size">48dp</dimen>
 
     <dimen name="nav_profile_photo_size">72dp</dimen>
+    <dimen name="size_image_96dp">96dp</dimen>
 
 </resources>
