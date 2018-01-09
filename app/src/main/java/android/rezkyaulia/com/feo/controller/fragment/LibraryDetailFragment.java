@@ -136,7 +136,7 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
     }
 
     private void saveIntoLibrary(LibraryTbl libraryTbl){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
@@ -160,9 +160,9 @@ public class LibraryDetailFragment extends BaseFragment implements InputTextDial
 
     void initView(){
      /*   if (PreferencesManager.getInstance().isBlack()){
-            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000));
         }else{
-            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorWhite));
 
         }*/
     }

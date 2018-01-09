@@ -145,7 +145,6 @@ public class MemoryActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 initToggle(!mStart);
-
             }
         });
 

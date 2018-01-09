@@ -92,7 +92,7 @@ public class PasswordDialogFragment extends DialogFragment {
                     mListener.onSave(mUserTbl);
                     dismiss();
                 }else{
-                    Toast.makeText(getContext(),"Password and retype password is not match",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Password and retype password is not match",Toast.LENGTH_LONG).show();
                 }
 
             }

@@ -159,10 +159,10 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
 
 
     private void initRecyclerview(){
-        mLayoutManager = new GridLayoutManager(getContext(),2);
+        mLayoutManager = new GridLayoutManager(getActivity(),2);
         binding.recyclerView.setLayoutManager(mLayoutManager);
         if (mLibraryTbls != null){
-            mAdapter = new LibraryRVAdapter(getContext(),mLibraryTbls,mListener);
+            mAdapter = new LibraryRVAdapter(getActivity(),mLibraryTbls,mListener);
             binding.recyclerView.setAdapter(mAdapter);
         }
 
@@ -223,7 +223,7 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
     }
 
     private void saveIntoLibrary(LibraryTbl libraryTbl){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
@@ -247,9 +247,9 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
 
     void initView(){
         /*if (PreferencesManager.getInstance().isBlack()){
-            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000));
         }else{
-            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+            binding.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorWhite));
 
         }*/
     }

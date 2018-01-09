@@ -131,7 +131,7 @@ public class ProfileFragment extends BaseFragment implements
     }
 
     private void initJobDispatcher(){
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getContext()));
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getActivity()));
         Job myJob = dispatcher.newJobBuilder()
                 .setService(PushUserService.class) // the JobService that will be called
                 .setTag("pushUsersTbl")

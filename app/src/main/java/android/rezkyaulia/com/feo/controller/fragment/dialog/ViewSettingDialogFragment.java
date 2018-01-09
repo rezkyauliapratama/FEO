@@ -91,8 +91,8 @@ public class ViewSettingDialogFragment extends DialogFragment {
         spinnerArray.add(28);
         spinnerArray.add(32);
 
-        adapter = new ArrayAdapter<Integer>(
-                getContext(), R.layout.textview_spinner, spinnerArray);
+        adapter = new ArrayAdapter<>(
+                getActivity(), R.layout.textview_spinner, spinnerArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

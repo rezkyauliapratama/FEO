@@ -94,9 +94,9 @@ public class NotificationFragment extends BaseFragment {
     }
 
     private void initRV(){
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NotificationRVAdapter(getContext(),mNotifcationTbls);
+        mAdapter = new NotificationRVAdapter(getActivity(),mNotifcationTbls);
         binding.recyclerView.setAdapter(mAdapter);
     }
 

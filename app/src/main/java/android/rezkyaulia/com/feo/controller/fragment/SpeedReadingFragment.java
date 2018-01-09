@@ -119,7 +119,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         }
 
         fragmentManager = getFragmentManager();
-        mContext = getContext();
+        mContext = getActivity();
 
         mWords = new ArrayList<>();
         mReadableWords = new ArrayList<>();
@@ -255,7 +255,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     void initSound(){
         mSound = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        mSoundId = mSound.load(getContext(),R.raw.tick,1);
+        mSoundId = mSound.load(getActivity(),R.raw.tick,1);
 
 
     }
@@ -317,7 +317,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         Timber.e("inittoggle");
         mStart = start;
         Drawable drawable = null;
-                mp = MediaPlayer.create(getContext(),R.raw.tick);
+                mp = MediaPlayer.create(getActivity(),R.raw.tick);
 
         if (mStart){
             initSound();
@@ -799,11 +799,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         if (b){
             scoreTbl.setScore(pref.getWPM());
             scoreTbl.setFlagAnswer(Constant.getInstance().FLAG_ANSWER_TRUE);
-            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_correct_symbol));
+            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_correct_symbol));
         }else{
             scoreTbl.setScore(pref.getWPM());
             scoreTbl.setFlagAnswer(Constant.getInstance().FLAG_ANSWER_FALSE);
-            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_cross_mark));
+            binding.contentSpeedReading.lottieviewCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_cross_mark));
 
         }
 
@@ -816,22 +816,22 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
 
     private void setViewBasedOnSetting(){
         if (PreferencesManager.getInstance().isBlack()){
-            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
-            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
+            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000));
+            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorWhite));
 
-            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         }else{
-            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorWhite));
-            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getContext(),R.color.colorBlack_1000));
+            binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorWhite));
+            binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000));
 
-            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
-            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
-            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
+            binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000), PorterDuff.Mode.SRC_ATOP);
         }
 
-        int spFont = DimensionConverter.getInstance().stringToDimensionPixelSize(((int)PreferencesManager.getInstance().getFontSize())+"sp", getContext().getResources().getDisplayMetrics());
+        int spFont = DimensionConverter.getInstance().stringToDimensionPixelSize(((int)PreferencesManager.getInstance().getFontSize())+"sp", getActivity().getResources().getDisplayMetrics());
         Timber.e("PreferencesManager.getInstance().getFontSize() : "+PreferencesManager.getInstance().getFontSize()+" | spFont : "+spFont);
 
         binding.contentSpeedReading.textviewContent.setTextSize(spFont);

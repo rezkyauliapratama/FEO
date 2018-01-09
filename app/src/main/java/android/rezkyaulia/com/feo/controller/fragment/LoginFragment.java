@@ -242,11 +242,11 @@ public class LoginFragment extends BaseFragment {
                 .build();
 
 
-        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
         mAuth = FirebaseAuth.getInstance();
 
 /*
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         updateUi(account);*/
     }
 
@@ -296,7 +296,7 @@ public class LoginFragment extends BaseFragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Timber.e("signInWithCredential:failure : "+ task.getException());
-                            Toast.makeText(getContext(), "Authentication failed.",
+                            Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 //                            updateUi(null);
                         }
