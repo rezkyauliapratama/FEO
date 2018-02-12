@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="android.rezkyaulia.com.feo.controller.activity.MainActivity"
+        tools:showIn="@layout/activity_payment"
+        android:background="@color/colorWhite">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_small"
+            android:layout_above="@+id/button_checkout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:text="@string/checkout"
+                    android:textStyle="bold"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_large" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/date"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/margin_small"
+                    android:layout_height="@dimen/margin_xsmall" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layerlist_round_dash"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_small">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/transaction_date"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_transactionDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_small" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/due_date"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_dueDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_large" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/profile"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/margin_small"
+                    android:layout_height="@dimen/margin_xsmall" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layerlist_round_dash"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_small">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/full_name"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_fullName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_small" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/email"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_email"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_small" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/username"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_username"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_large" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/item"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/margin_small"
+                    android:layout_height="@dimen/margin_xsmall" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layerlist_round_dash"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_small">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/plan_name"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_planName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_small" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="@string/duration"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text=":"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+
+                        <com.app.infideap.stylishwidget.view.ATextView
+                            android:id="@+id/textView_duration"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="dec 2018, 13"
+                            android:textAppearance="@style/TextStyle.Small"
+                            android:textColor="@color/colorBlack_1000" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_large" />
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/total_price"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_totalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Rp. 300.000"
+                    android:textAppearance="@style/TextStyle.Headline"
+                    android:textColor="@color/colorBlue_900"/>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/button_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button.Success.Fill"
+            android:text="@string/checkout"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</layout>

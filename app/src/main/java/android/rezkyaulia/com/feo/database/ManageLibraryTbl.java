@@ -32,6 +32,10 @@ public class ManageLibraryTbl {
     public List<LibraryTbl> getAll() {
         return dao.queryBuilder().list();
     }
+    public List<LibraryTbl> getAllEmptyId() {
+        return dao.queryBuilder().where(LibraryTblDao.Properties.LibraryId.isNull()).list();
+
+    }
 
     public LibraryTbl get(long id) {
         return dao.queryBuilder().where(LibraryTblDao.Properties.Id.eq(id)).unique();

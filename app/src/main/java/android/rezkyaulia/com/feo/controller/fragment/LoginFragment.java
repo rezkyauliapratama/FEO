@@ -7,6 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationResponseTbl;
+import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationTbl;
+import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
+import android.rezkyaulia.com.feo.database.entity.SubscriptionTbl;
 import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentLoginBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
@@ -35,7 +40,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import timber.log.Timber;
@@ -109,7 +117,7 @@ public class LoginFragment extends BaseFragment {
         });
 
 
-        RxBus.getInstance().observable(UserApi.Response.class).subscribe( event ->{
+        RxBus.getInstance().observable(UserApi.ResponseRegistration.class).subscribe( event ->{
             Timber.e("setAccount : "+new Gson().toJson(event));
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -182,6 +190,7 @@ public class LoginFragment extends BaseFragment {
         UserTbl userTbl = new UserTbl();
         userTbl.setUsername(email);
         userTbl.setPassword(password);
+        userTbl.setToken(FirebaseInstanceId.getInstance().getToken());
 
         binding.layoutProgress.setVisibility(View.VISIBLE);
 
@@ -192,9 +201,42 @@ public class LoginFragment extends BaseFragment {
                     public void onResponse(UserApi.Response response) {
                         if (response != null){
                             Timber.e("RESPONSE : "+new Gson().toJson(response));
+                            UserTbl userTbl = response.getApiValue().getUserTbl();
+                            Timber.e("USERTBL : "+new Gson().toJson(userTbl));
+
+                            SubscriptionTbl subscriptionTbl = response.getApiValue().getSubsciptionTbl();
+                            PaymentRegistrationTbl paymentRegistrationTbl = response.getApiValue().getPaymentRegistrationTbl();
+                            PaymentRegistrationResponseTbl paymentRegistrationResponseTbl= response.getApiValue().getPaymentRegistrationResponseTbl();
+                            List<ScoreTbl> scoreTbls = response.getApiValue().getScoreTbls();
+                            List<LibraryTbl> libraryTbls= response.getApiValue().getLibraryTbls();
+
+                            Timber.e("paymentRegistrationTbl : "+new Gson().toJson(paymentRegistrationTbl));
+                            Timber.e("paymentRegistrationResponseTbl : "+new Gson().toJson(paymentRegistrationResponseTbl));
+                            long id = Facade.getInstance().getManagerUserTbl().add(userTbl);
+                            if (subscriptionTbl != null){
+                                Facade.getInstance().getManageSubscriptionTbl().add(subscriptionTbl);
+                            }
+
+                            if (paymentRegistrationTbl != null) {
+                                Facade.getInstance().getManagePaymentRegistrationTbl().removeAll();
+                                Facade.getInstance().getManagePaymentRegistrationTbl().add(paymentRegistrationTbl);
+                            }
+
+                            if (paymentRegistrationResponseTbl != null) {
+                                Facade.getInstance().getManagePaymentRegistrationResponseTbl().removeAll();
+                                Facade.getInstance().getManagePaymentRegistrationResponseTbl().add(paymentRegistrationResponseTbl);
+                            }
+                            if (libraryTbls != null) {
+                                Facade.getInstance().getManageLibraryTbl().removeAll();
+                                Facade.getInstance().getManageLibraryTbl().add(libraryTbls);
+                            }
+
+                            if (scoreTbls!= null) {
+                                Facade.getInstance().getManageScoreTbl().removeAll();
+                                Facade.getInstance().getManageScoreTbl().add(scoreTbls);
+                            }
 
                             if (HttpResponse.getInstance().success(response)){
-                                long id = Facade.getInstance().getManagerUserTbl().add(response.ApiValue);
                                 if (id>0) {
 
                                     Thread thread = new Thread() {
@@ -216,7 +258,7 @@ public class LoginFragment extends BaseFragment {
                                     Snackbar.make(binding.layoutContentMain,"An error expected",Snackbar.LENGTH_LONG).show();
 
                             }else if (response.ApiStatus.equalsIgnoreCase(HttpResponse.getInstance().NOT_FOUND)){
-                                mListener.onSubscribeInteraction(userTbl);
+                                mListener.onSubscribeInteraction(response.getApiValue());
                             }
                             else{
                                 Snackbar.make(binding.layoutContentMain,response.getApiMessage(),Snackbar.LENGTH_LONG).show();
@@ -311,7 +353,7 @@ public class LoginFragment extends BaseFragment {
         // TODO: Update argument type and name
 
         void onLoginSuccessfullInteraction();
-        void onSubscribeInteraction(UserTbl userTbl);
+        void onSubscribeInteraction(UserApi.ModelResponse response);
         void onRegisterInteraction();
     }
 

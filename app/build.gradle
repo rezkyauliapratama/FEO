@@ -6,8 +6,8 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    def version_code = 4
-    def version_name = "0.0.0.4"
+    def version_code = 7
+    def version_name = "0.0.0.7"
 
     dataBinding {
         enabled true
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "rezkyaulia.com.android.feo"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionCode version_code
@@ -76,6 +76,7 @@ dependencies {
     compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile 'org.greenrobot:greendao:3.2.0'
 //    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.jakewharton.timber:timber:4.5.1'

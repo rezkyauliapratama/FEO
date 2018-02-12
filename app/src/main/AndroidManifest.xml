@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".BaseApplication"
@@ -14,7 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
@@ -40,10 +41,17 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".controller.activity.SpeedReadingActivity"
+            android:name=".controller.activity.SummaryScoresActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
+
+
+        <activity
+            android:name=".controller.activity.SpeedReadingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <activity
             android:name=".controller.activity.SummarySpeedReadingActivity"
@@ -57,13 +65,19 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
-        android:screenOrientation="portrait"/>
 
         <activity
             android:name=".controller.activity.SubscribeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".controller.activity.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <service
             android:exported="false"
@@ -72,6 +86,15 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
         </service>
+
+        <service
+            android:exported="false"
+            android:name=".controller.service.PushLibraryService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
 
         <service
             android:exported="false"
@@ -97,6 +120,29 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
+
+        <service
+            android:name=".controller.service.ReminderIntentService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver android:name=".controller.service.ReminderEventReceiver" />
+        <receiver android:name=".controller.service.ReminderServiceStarterReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
+
+
+        <receiver
+            android:name=".controller.service.SampleBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

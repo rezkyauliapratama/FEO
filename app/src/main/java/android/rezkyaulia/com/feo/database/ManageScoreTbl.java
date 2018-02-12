@@ -3,7 +3,11 @@ package android.rezkyaulia.com.feo.database;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTblDao;
 
+import org.greenrobot.greendao.query.WhereCondition;
+
 import java.util.List;
+
+import static android.rezkyaulia.com.feo.database.entity.ScoreTblDao.Properties.CreatedDate;
 
 /**
  * Created by Rezky Aulia Pratama on 11/21/2017.
@@ -39,12 +43,41 @@ public class ManageScoreTbl {
     }
 
 
+    public List<ScoreTbl> getDataForGraph(){
+        /*
+        SELECT ScoreTbl.*
+        FROM
+         ScoreTbl
+        WHERE
+        ScoreTbl.FlagAnswer = 1
+        GROUP BY strftime('%Y-%m-%d', CreatedDate)
+        ORDER BY Score desc
+        Limit 7
+
+         */
+
+        return dao.queryBuilder().where(new WhereCondition.StringCondition("_id in (SELECT a._id\n" +
+                "FROM\n" +
+                " (SELECT b.*, strftime('%Y-%m-%d', b.CreatedDate) dte_normal from ScoreTbl b\n" +
+                "WHERE\n" +
+                " b.FlagAnswer = 1\n" +
+                "GROUP BY b.Score\n" +
+                "ORDER BY dte_normal,b.Score asc) a\n" +
+                "GROUP BY strftime('%Y-%m-%d', a.CreatedDate)\n" +
+                "ORDER BY strftime('%Y-%m-%d', a.CreatedDate) desc\n" +
+                "Limit 7)")).list();
+    }
     public ScoreTbl get(long id) {
         return dao.queryBuilder().where(ScoreTblDao.Properties.Id.eq(id)).unique();
     }
 
     public ScoreTbl getHighScore() {
-        return dao.queryBuilder().where(ScoreTblDao.Properties.UserId.eq(facade.getManagerUserTbl().get().getUserId())).orderDesc(ScoreTblDao.Properties.Score).limit(1).unique();
+        return dao.queryBuilder().where(ScoreTblDao.Properties.UserId.eq(facade.getManagerUserTbl().get().getUserId()),ScoreTblDao.Properties.FlagAnswer.eq(1)).orderDesc(ScoreTblDao.Properties.Score).limit(1).unique();
+    }
+
+
+    public List<ScoreTbl> getAllData() {
+        return dao.queryBuilder().orderDesc(ScoreTblDao.Properties.CreatedDate).list();
     }
 
     public ScoreTbl getHighScore(String guid) {

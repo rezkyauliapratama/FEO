@@ -88,7 +88,7 @@ public class SpeedReadingActivity extends BaseActivity implements
         binding.imageViewHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
     }

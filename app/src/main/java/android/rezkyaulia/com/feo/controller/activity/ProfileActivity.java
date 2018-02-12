@@ -46,9 +46,7 @@ public class ProfileActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
-                facade.getManagerUserTbl().removeAll();
-                startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
-                finish();
+                redirect();
                 dialog.dismiss();
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton

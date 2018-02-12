@@ -47,6 +47,13 @@ public class LoginActivity extends BaseActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey("data")) {
+                Timber.e("ONACTIVITY : "+bundle.get("data"));
+            }
+        }
+
         UserTbl userTbl = Facade.getInstance().getManagerUserTbl().get();
 
         if (userTbl != null)
@@ -57,6 +64,8 @@ public class LoginActivity extends BaseActivity implements
         registerFragment = RegisterFragment.newInstance();
 
         displayFragment(binding.layoutContent.getId(),loginFragment);
+
+
     }
 
 
@@ -70,8 +79,10 @@ public class LoginActivity extends BaseActivity implements
     }
 
     @Override
-    public void onSubscribeInteraction(UserTbl userTbl) {
-        long id = Facade.getInstance().getManagerUserTbl().add(userTbl);
+    public void onSubscribeInteraction(UserApi.ModelResponse response) {
+        long id = Facade.getInstance().getManagerUserTbl().add(response.getUserTbl());
+        if (response.getSubsciptionTbl() != null)
+            Facade.getInstance().getManageSubscriptionTbl().add(response.getSubsciptionTbl());
         if (id>0) {
             redirectToMainActivity();
         }
@@ -89,16 +100,16 @@ public class LoginActivity extends BaseActivity implements
     }
 
     @Override
-    public void onRegisteredSuccesful(UserApi.Response response) {
+    public void onRegisteredSuccesful(UserApi.ResponseRegistration response) {
         showAlertDialog(response);
     }
 
     @Override
-    public void onRegisteredFailed(UserApi.Response response) {
+    public void onRegisteredFailed(UserApi.ResponseRegistration response) {
         Snackbar.make(binding.layoutContent,response.ApiMessage,Snackbar.LENGTH_LONG).show();
     }
 
-    private void showAlertDialog(UserApi.Response response){
+    private void showAlertDialog(UserApi.ResponseRegistration response){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Register"); //Set Alert dialog title here
         alert.setMessage("Thank you, please login with your new account"); //Message here

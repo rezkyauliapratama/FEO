@@ -89,6 +89,7 @@
         android:layout_height="@dimen/margin_xlarge" />
 
     <RelativeLayout
+        android:id="@+id/layout_nol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_small"
@@ -126,14 +127,13 @@
     </RelativeLayout>
 
 
-    <android.support.v4.widget.Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_xlarge" />
 
     <RelativeLayout
+        android:id="@+id/layout_gs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_normal"
         >
         <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
             android:id="@+id/seekbar_groupSize"
@@ -167,9 +167,6 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.Space
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/margin_large" />
 
     <com.app.infideap.stylishwidget.view.AButton
         android:id="@+id/button_save"

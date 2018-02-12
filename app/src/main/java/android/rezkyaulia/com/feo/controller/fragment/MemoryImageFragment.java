@@ -59,8 +59,7 @@ public class MemoryImageFragment extends BaseFragment {
             b = getArguments().getBoolean(ARGS3);
             if (byteArray != null) {
                 mBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                if (b)
-                    mBitmap = TrimBitmap(mBitmap);
+
             }
 
             mIndex = getArguments().getInt(ARGS2);
@@ -95,7 +94,7 @@ public class MemoryImageFragment extends BaseFragment {
             binding.imageView.setImageBitmap(mBitmap);
         else {
             binding.imageView.setVisibility(View.GONE);
-            binding.textViewAnswer.setVisibility(View.VISIBLE);
+            binding.layoutAnswer.setVisibility(View.VISIBLE);
         }
 
 //        mListener.onShowAnswerInteraction(mIndex);

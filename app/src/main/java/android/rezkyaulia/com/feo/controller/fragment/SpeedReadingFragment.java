@@ -678,6 +678,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         }else{
             mNol = 1;
             mGs = 1;
+
+            binding.contentSpeedReading.textViewGs.setVisibility(View.GONE);
+            binding.contentSpeedReading.textViewNol.setVisibility(View.GONE);
         }
 
 
@@ -818,7 +821,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
         if (PreferencesManager.getInstance().isBlack()){
             binding.contentSpeedReading.layoutBody.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorBlack_1000));
             binding.contentSpeedReading.textviewContent.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorWhite));
-
+            binding.contentSpeedReading.layoutLine.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorGrey_700));
             binding.contentSpeedReading.btnPlay.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
             binding.contentSpeedReading.btnPrevious.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
             binding.contentSpeedReading.btnNext.setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);

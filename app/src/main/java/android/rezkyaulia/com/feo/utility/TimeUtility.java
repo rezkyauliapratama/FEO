@@ -257,6 +257,18 @@ public class TimeUtility {
         return simpleDateFormat.format(calendar);
     }
 
+    public String getUserFriendlyDateWithoutYear(Date calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MMM", Locale.getDefault());
+
+        return simpleDateFormat.format(calendar);
+    }
+
+    public String getYear(Date calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+
+        return simpleDateFormat.format(calendar);
+    }
+
     public String getUserFriendlyDuration(Context context, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date.getTime());
@@ -389,14 +401,36 @@ public class TimeUtility {
         return simpleDateFormat.format(date);
     }
 
-    public Date parseDate(String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    public String timeConversion(Context context,long totalSeconds) {
 
-        try {
-            return simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            return new Date();
+        final int MINUTES_IN_AN_HOUR = 60;
+        final int SECONDS_IN_A_MINUTE = 60;
+
+        long seconds = totalSeconds % SECONDS_IN_A_MINUTE;
+        long totalMinutes = totalSeconds / SECONDS_IN_A_MINUTE;
+        long minutes = totalMinutes % MINUTES_IN_AN_HOUR;
+        long hours = totalMinutes / MINUTES_IN_AN_HOUR;
+
+        if (context != null){
+            return hours +" "+ context.getString(R.string.hours)+" "+ minutes +" "+ context.getString(R.string.minutes) +" "+ seconds +" "+context.getString(R.string.Seconds);
+        }else{
+            return "";
         }
+    }
+
+    public Date parseDate(String date) {
+        if (date != null){
+            if (!date.equalsIgnoreCase("0000-00-00 00:00:00")){
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+                try {
+                    return simpleDateFormat.parse(date);
+                } catch (ParseException e) {
+                    return null;
+                }
+            }
+        }
+       return null;
     }
 
     public String getUserFriendlyDateTimeWithBreakString(Date calendar) {

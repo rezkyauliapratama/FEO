@@ -2,11 +2,12 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <FrameLayout
+        <android.support.v7.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layerlist_round_dash">
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/margin_xsmall">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_image_xxlarge"
+                    android:layout_height="@dimen/height_image_plan"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"/>
 
@@ -66,10 +67,10 @@
                     android:id="@+id/buttonSubscribe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Button.Accent.Fill"
-                    android:text="Subscribe"
+                    style="@style/Button.Success.Fill"
+                    android:text="@string/subscribe"
                     android:textAppearance="@style/TextStyle.Medium"/>
             </LinearLayout>
 
-        </FrameLayout>
+        </android.support.v7.widget.CardView>
 </layout>

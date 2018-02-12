@@ -21,12 +21,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.activity.LoginActivity;
 import android.rezkyaulia.com.feo.controller.activity.MainActivity;
+import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.NotificationTbl;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.NotifModel;
+import android.rezkyaulia.com.feo.utility.NotificationUtil;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.security.GeneralSecurityException;
+
+import timber.log.Timber;
 
 public class _FirebaseMessagingService extends FirebaseMessagingService {
 
@@ -52,46 +65,64 @@ public class _FirebaseMessagingService extends FirebaseMessagingService {
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Timber.e("From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
+       /* // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Timber.e("Message data payload: " + remoteMessage.getData());
+            sendNotification(new Gson().toJson(remoteMessage.getData()));
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Timber.e("Message Notification Body: " + remoteMessage.getNotification().getBody());
+//            sendNotification(new Gson().toJson(remoteMessage.getData()));
+
         }
+*/
+        Timber.e("Message data payload: " + remoteMessage.getData());
+
+        if (remoteMessage.getData().size() > 0) {
+            initNotification(remoteMessage);
+        }
+
+//        sendNotification(new Gson().toJson(remoteMessage.getData()));
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
     // [END receive_message]
 
+
+    private void initNotification(RemoteMessage remoteMessage){
+        Timber.e("remote message : "+new Gson().toJson(remoteMessage.getData()));
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson mGson = builder.create();
+
+        NotifModel notifModel = mGson.fromJson(new Gson().toJson(remoteMessage.getData()),NotifModel.class);
+        Timber.e("notifModel : "+new Gson().toJson(notifModel));
+
+        if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS){
+            NotificationUtil.getInstance().defaultNotification(_FirebaseMessagingService.this,getString(R.string.payment_success_message_title),getString(R.string.payment_success_message_body));
+            RxBus.getInstance().post(notifModel);
+
+        }else if (notifModel.getAction() == NotifModel.NOTIF_MESSAGE){
+            NotificationTbl notificationTbl = (NotificationTbl) notifModel;
+            notificationTbl.setUserId(Facade.getInstance().getManagerUserTbl().get().getUserId());
+            long id = Facade.getInstance().getManageNotificationTbl().add(notificationTbl);
+            Timber.e("ID INsert notification : "+id);
+            if (id > 0){
+                NotificationUtil.getInstance().defaultNotification(_FirebaseMessagingService.this,notificationTbl.getTitle(),notificationTbl.getBody());
+                RxBus.getInstance().post(notifModel);
+            }
+        }
+    }
+
     /**
      * Create and show a simple notification containing the received FCM message.
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-//                .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
 }

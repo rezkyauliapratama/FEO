@@ -9,12 +9,9 @@ import org.greenrobot.greendao.annotation.Generated;
 /**
  * Created by Rezky Aulia Pratama on 12/26/2017.
  */
-@Entity(nameInDb = "NotificationTbl",indexes = {@Index(value = "_id,NotificationId", unique = true)})
+@Entity(nameInDb = "NotificationTbl",indexes = {@Index(value = "NotificationId", unique = true)})
 public class NotificationTbl {
     @Id(autoincrement = true)
-    @Property(nameInDb = "_id")
-    private Long _id;
-
     @Property(nameInDb = "NotificationId")
     private Long NotificationId;
 
@@ -33,10 +30,9 @@ public class NotificationTbl {
     @Property(nameInDb = "CreatedDate")
     private String CreatedDate;
 
-    @Generated(hash = 646150182)
-    public NotificationTbl(Long _id, Long NotificationId, Long UserId, String Title, String Body,
-            Long Action, String CreatedDate) {
-        this._id = _id;
+    @Generated(hash = 823840017)
+    public NotificationTbl(Long NotificationId, Long UserId, String Title, String Body, Long Action,
+            String CreatedDate) {
         this.NotificationId = NotificationId;
         this.UserId = UserId;
         this.Title = Title;
@@ -47,14 +43,6 @@ public class NotificationTbl {
 
     @Generated(hash = 673865620)
     public NotificationTbl() {
-    }
-
-    public Long get_id() {
-        return this._id;
-    }
-
-    public void set_id(Long _id) {
-        this._id = _id;
     }
 
     public Long getNotificationId() {
@@ -104,6 +92,7 @@ public class NotificationTbl {
     public void setCreatedDate(String CreatedDate) {
         this.CreatedDate = CreatedDate;
     }
+
 
 
 

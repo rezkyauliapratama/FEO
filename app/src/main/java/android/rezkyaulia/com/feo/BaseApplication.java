@@ -2,6 +2,7 @@ package android.rezkyaulia.com.feo;
 
 import android.app.Application;
 import android.content.Context;
+import android.rezkyaulia.com.feo.controller.service.ReminderEventReceiver;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.DaoMaster;
 import android.rezkyaulia.com.feo.database.entity.DaoSession;
@@ -61,6 +62,11 @@ public class BaseApplication extends Application {
             QueryBuilder.LOG_VALUES = BuildConfig.DEBUG;
             AndroidNetworking.enableLogging();
 
+        }
+
+        if (!PreferencesManager.getInstance().isReminder()){
+            ReminderEventReceiver receiver = new ReminderEventReceiver();
+            receiver.setupAlarm(this);
         }
     }
 

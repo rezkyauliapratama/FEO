@@ -7,29 +7,52 @@
         <FrameLayout
             android:id="@+id/layout_body"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            >
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/margin_normal"
-                android:scaleType="fitCenter"
+                android:padding="-10dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_edit_black_24dp"
 
                 />
 
-            <com.app.infideap.stylishwidget.view.ATextView
-                android:id="@+id/textView_answer"
+            <RelativeLayout
+                android:id="@+id/layout_answer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite"
-                android:gravity="center"
-                android:textStyle="italic"
-                android:textAppearance="@style/TextStyle.Headline"
-                android:text="Your answer is ? "
-                android:visibility="gone"
-                />
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textStyle="italic"
+                    android:textAppearance="@style/TextStyle.Headline"
+                    android:text="@string/your_answer_is"
+                    android:visibility="visible"
+                    />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView_answer"
+                    android:text="@string/tap_here_to_pause"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/margin_xlarge"/>
+
+            </RelativeLayout>
+
         </FrameLayout>
 </layout>
 

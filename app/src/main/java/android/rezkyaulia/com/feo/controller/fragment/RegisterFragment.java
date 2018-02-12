@@ -202,9 +202,9 @@ public class RegisterFragment extends BaseFragment {
 
     void postData(UserTbl userTbl){
         binding.layoutProgress.setVisibility(View.VISIBLE);
-        ApiClient.getInstance().user().post(userTbl).getAsObject(UserApi.Response.class, new ParsedRequestListener<UserApi.Response>() {
+        ApiClient.getInstance().user().post(userTbl).getAsObject(UserApi.ResponseRegistration.class, new ParsedRequestListener<UserApi.ResponseRegistration>() {
             @Override
-            public void onResponse(UserApi.Response response) {
+            public void onResponse(UserApi.ResponseRegistration response) {
                 Timber.e("RESPONSE : "+new Gson().toJson(response));
                 if (response != null){
                     if (HttpResponse.getInstance().success(response))
@@ -232,8 +232,8 @@ public class RegisterFragment extends BaseFragment {
         // TODO: Update argument type and name
 
         void onSignInteraction();
-        void onRegisteredSuccesful(UserApi.Response response);
-        void onRegisteredFailed(UserApi.Response response);
+        void onRegisteredSuccesful(UserApi.ResponseRegistration response);
+        void onRegisteredFailed(UserApi.ResponseRegistration response);
     }
 
 }

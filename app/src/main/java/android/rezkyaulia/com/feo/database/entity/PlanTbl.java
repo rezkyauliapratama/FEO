@@ -1,5 +1,10 @@
 package android.rezkyaulia.com.feo.database.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
@@ -10,11 +15,12 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by Rezky Aulia Pratama on 12/23/2017.
  */
 @Entity(nameInDb = "PlanTbl",indexes = {@Index(value = "PlanId", unique = true)})
-public class PlanTbl {
+public class PlanTbl implements Parcelable{
     @Id
     @Property(nameInDb = "PlanId")
     private Long PlanId;
 
+    @SerializedName("Name")
     @Property(nameInDb = "PlanName")
     private String PlanName;
 
@@ -117,4 +123,44 @@ public class PlanTbl {
         this.CreatedDate = CreatedDate;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.PlanId);
+        dest.writeString(this.PlanName);
+        dest.writeInt(this.Price);
+        dest.writeInt(this.TotalMonth);
+        dest.writeInt(this.ActiveFlag);
+        dest.writeString(this.ImageName);
+        dest.writeString(this.PlanDesc);
+        dest.writeString(this.CreatedDate);
+    }
+
+    protected PlanTbl(Parcel in) {
+        this.PlanId = (Long) in.readValue(Long.class.getClassLoader());
+        this.PlanName = in.readString();
+        this.Price = in.readInt();
+        this.TotalMonth = in.readInt();
+        this.ActiveFlag = in.readInt();
+        this.ImageName = in.readString();
+        this.PlanDesc = in.readString();
+        this.CreatedDate = in.readString();
+    }
+
+    public static final Creator<PlanTbl> CREATOR = new Creator<PlanTbl>() {
+        @Override
+        public PlanTbl createFromParcel(Parcel source) {
+            return new PlanTbl(source);
+        }
+
+        @Override
+        public PlanTbl[] newArray(int size) {
+            return new PlanTbl[size];
+        }
+    };
 }

@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:background="@drawable/layerlist_round_dash">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,8 +22,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/title"
-                    android:padding="@dimen/margin_small"
-                    android:textAppearance="@style/TextStyle.Large"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:textAppearance="@style/TextStyle.Medium"
                     android:textColor="@color/colorBlack_1000"
                     />
 
@@ -31,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/date"
                     android:padding="@dimen/margin_small"
-                    android:textAppearance="@style/TextStyle.Large"
+                    android:textAppearance="@style/TextStyle.Medium"
                     android:textColor="@color/colorBlue_800"
                     />
 
@@ -42,19 +45,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/body"
-                android:padding="@dimen/margin_small"
+                android:paddingLeft="@dimen/margin_small"
+                android:paddingRight="@dimen/margin_small"
                 android:textAppearance="@style/TextStyle.Medium"
-                android:textColor="@color/colorBlack_1000"
                 />
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_xsmall" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorLine"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"

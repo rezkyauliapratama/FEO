@@ -16,11 +16,12 @@
             android:paddingTop="@dimen/margin_xsmall"
             >
             <View
+                android:id="@+id/layout_line"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorBlueGrey_100"
-                android:layout_margin="@dimen/margin_xxlarge"/>
+                android:layout_margin="@dimen/margin_small"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="128dp"
@@ -82,31 +83,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_small"
             android:layout_above="@+id/layout_setting"
             >
 
             <ImageView
                 android:id="@+id/btn_previous"
-                android:layout_width="@dimen/btn_square_small"
-                android:layout_height="@dimen/btn_square_small"
-                android:layout_margin="@dimen/margin_normal"
+                android:layout_width="@dimen/btn_square_xsmall"
+                android:layout_height="@dimen/btn_square_xsmall"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_gravity="bottom"
                 android:src="@drawable/ic_icon_left_arrow"/>
 
             <ImageView
                 android:id="@+id/btn_play"
-                android:layout_width="@dimen/btn_square_normal"
-                android:layout_height="@dimen/btn_square_normal"
-                android:layout_margin="@dimen/margin_xsmall"
+                android:layout_width="@dimen/btn_square_small"
+                android:layout_height="@dimen/btn_square_small"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_gravity="bottom"
                 android:src="@drawable/ic_icon_play"/>
 
             <ImageView
                 android:id="@+id/btn_next"
-                android:layout_width="@dimen/btn_square_small"
-                android:layout_height="@dimen/btn_square_small"
-                android:layout_margin="@dimen/margin_normal"
+                android:layout_width="@dimen/btn_square_xsmall"
+                android:layout_height="@dimen/btn_square_xsmall"
+                android:layout_margin="@dimen/margin_small"
                 android:layout_gravity="bottom"
                 android:src="@drawable/ic_icon_right_arrow"/>
         </LinearLayout>
@@ -116,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/margin_small"
+            android:padding="@dimen/margin_xsmall"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@color/colorPrimaryDark"

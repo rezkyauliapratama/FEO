@@ -28,6 +28,14 @@ public class Facade {
     private ManageUserTbl manageUserTbl;
     private ManageScoreTbl manageScoreTbl;
     private ManageNotificationTbl manageNotificationTbl;
+    private ManagePaymentRegistrationTbl managePaymentRegistrationTbl;
+    private ManagePaymentRegistrationResponseTbl managePaymentRegistrationResponseTbl;
+    private ManagePaymentFlagTbl managePaymentFlagTbl;
+    private ManagePaymentFlagResponseTbl managePaymentFlagResponseTbl;
+    private ManageSubscriptionTbl manageSubscriptionTbl;
+    private ManagePlanTbl managePlanTbl;
+
+//    private ManagePlan manageSubscriptionTbl;
 
 
 
@@ -39,7 +47,12 @@ public class Facade {
         manageUserTbl = new ManageUserTbl(this);
         manageScoreTbl = new ManageScoreTbl(this);
         manageNotificationTbl = new ManageNotificationTbl(this);
-
+        managePaymentRegistrationTbl= new ManagePaymentRegistrationTbl(this);
+        managePaymentFlagTbl = new ManagePaymentFlagTbl(this);
+        managePaymentRegistrationResponseTbl = new ManagePaymentRegistrationResponseTbl(this);
+        managePaymentFlagResponseTbl = new ManagePaymentFlagResponseTbl(this);
+        manageSubscriptionTbl = new ManageSubscriptionTbl(this);
+        managePlanTbl = new ManagePlanTbl(this);
 
     }
 
@@ -61,5 +74,33 @@ public class Facade {
 
     public ManageNotificationTbl getManageNotificationTbl() {
         return manageNotificationTbl;
+    }
+
+    public ManagePaymentRegistrationTbl getManagePaymentRegistrationTbl() {
+        return managePaymentRegistrationTbl;
+    }
+
+    public ManagePaymentRegistrationResponseTbl getManagePaymentRegistrationResponseTbl() {
+        return managePaymentRegistrationResponseTbl;
+    }
+
+    public ManagePaymentFlagTbl getManagePaymentFlagTbl() {
+        return managePaymentFlagTbl;
+    }
+
+    public ManagePaymentFlagResponseTbl getManagePaymentFlagResponseTbl() {
+        return managePaymentFlagResponseTbl;
+    }
+
+    public ManageSubscriptionTbl getManageSubscriptionTbl() {
+        return manageSubscriptionTbl;
+    }
+
+    public ManageUserTbl getManageUserTbl() {
+        return manageUserTbl;
+    }
+
+    public ManagePlanTbl getManagePlanTbl() {
+        return managePlanTbl;
     }
 }

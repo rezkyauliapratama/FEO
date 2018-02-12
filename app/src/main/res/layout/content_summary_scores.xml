@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_summary_speed_reading"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:id="@+id/layout_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                app:lottie_progress="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/imageView_no_result"
+                app:lottie_scale="3"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="animation/trophy.json"
+                app:lottie_loop="false" />
+            <!--<ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_medal" />-->
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_small" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_bestScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlue_900"
+                android:text="Your best score : 7000 WPM" />
+
+
+        </LinearLayout>
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_below="@id/layout_information"
+            android:id="@+id/cardView"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tablerow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimaryDark"
+                >
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_number"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:maxLines="20"
+                    android:textColor="@color/colorWhite"
+                    android:textAppearance="@style/TextStyle.Small" />
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLine" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_correct_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:gravity="center"
+                    android:maxLines="20"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:textColor="@color/colorWhite"
+                    />
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLine" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_your_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:gravity="center"
+                    android:maxLines="20"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:textColor="@color/colorWhite"
+                    />
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLine" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_wpm"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:maxLines="20"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:textColor="@color/colorWhite"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLine" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_date"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:maxLines="20"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:textColor="@color/colorWhite"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cardView"
+            android:layout_above="@+id/button_finish"
+            />
+
+    </RelativeLayout>
+</layout>
+

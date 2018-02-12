@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="android.rezkyaulia.com.feo.controller.activity.MainActivity"
+        tools:showIn="@layout/activity_payment"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_virtual_account"
+            android:padding="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/your_virtual_account"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_xsmall" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_virtualAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/your_virtual_account"
+                android:textAppearance="@style/TextStyle.Large"
+                android:textColor="@color/colorBlue_900"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_normal" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/textView_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_payment_s"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textColor="@color/colorBlack_1000"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_small" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expired_in_s"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/margin_small"
+                    android:layout_height="wrap_content" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/textView_timeExpired"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expired_in_s"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorRed_700"/>
+            </LinearLayout>
+
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_xsmall" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_virtual_account"
+            android:layout_above="@id/button_cancel">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_normal"
+                android:orientation="vertical"
+                android:background="@color/colorBlueGrey_50">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/title_atm_bank_permata"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_small" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/instruction_atm_bank_permata"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/title_atm_prima_bca"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_small" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/instruction_atm_prima_bca"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/title_atm_bersama"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_small" />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextStyle.Small"
+                    android:textColor="@color/colorBlack_1000"
+                    android:text="@string/instruction_atm_bersama"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_normal" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+        <com.app.infideap.stylishwidget.view.ATextView
+            android:id="@+id/button_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button.Danger.Fill"
+            android:text="@string/cancel"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</layout>

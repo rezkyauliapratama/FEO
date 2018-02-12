@@ -8,15 +8,43 @@ import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.NotificationFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.ViewSettingDialogFragment;
+import android.rezkyaulia.com.feo.controller.service.PushLibraryService;
+import android.rezkyaulia.com.feo.controller.service.PushScoreService;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
+import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -55,6 +83,10 @@ public class MainActivity extends BaseActivity {
 
         initNavigation();
 
+
+        binding.contentMain.layoutTrophy.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this,SummaryScoresActivity.class));
+        });
     }
 
     @Override
@@ -67,6 +99,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         initBestScore();
+        initJobDispatcher();
 
     }
 
@@ -116,6 +149,9 @@ public class MainActivity extends BaseActivity {
             bestScore = scoreTbl.getScore();
 
         binding.contentMain.textViewBestScore.setText(bestScore+" WPM");
+
+        initChart();
+
     }
 
     public void showDialogInputText(){
@@ -123,6 +159,121 @@ public class MainActivity extends BaseActivity {
         viewSettingDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog_light );
         viewSettingDialogFragment.show(getFragmentManager().beginTransaction(), ViewSettingDialogFragment.Dialog);
     }
+
+    void initChart(){
+        List<ScoreTbl> scoreTbls= Facade.getInstance().getManageScoreTbl().getDataForGraph();
+
+        if (scoreTbls != null && scoreTbls.size() > 0){
+            Timber.e("scoreTbls.size() : "+new Gson().toJson(scoreTbls));
+
+            binding.contentMain.chart.setVisibility(View.VISIBLE);
+            List<BarEntry> entries = new ArrayList<BarEntry>();
+            Date[] dates = new Date[scoreTbls.size()];
+            int i = 0;
+            for (ScoreTbl data : scoreTbls) {
+                Date date = Utils.getInstance().time().parseDate(data.getCreatedDate());
+                if (date == null)
+                    date = Utils.getInstance().time().parseDateWithT(data.getCreatedDate());
+                // turn your data into Entry objects
+                entries.add(new BarEntry(i, data.getScore()));
+                dates[i] = date;
+                i++;
+
+            }
+
+       /* List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, 30f));
+        entries.add(new BarEntry(1f, 80f));
+        entries.add(new BarEntry(2f, 60f));
+        entries.add(new BarEntry(3f, 50f));
+        // gap of 2f
+        entries.add(new BarEntry(5f, 70f));
+        entries.add(new BarEntry(6f, 60f));
+*/
+            BarDataSet set = new BarDataSet(entries, "Scores");
+            BarData data = new BarData(set);
+            data.setBarWidth(0.9f); // set custom bar width
+
+            IAxisValueFormatter formatter = new IAxisValueFormatter() {
+
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    Date date = dates[(int)value];
+                    String label = Utils.getInstance().time().getUserFriendlyDateWithoutYear(date);
+                    return label;
+                }
+            };
+
+            XAxis xAxis = binding.contentMain.chart.getXAxis();
+            xAxis.setDrawGridLines(false);
+            xAxis.setGranularity(1f);
+            xAxis.setValueFormatter(formatter);
+
+
+            YAxis leftAxis = binding.contentMain.chart.getAxisLeft();
+            leftAxis.setLabelCount(8, false);
+            leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+            leftAxis.setSpaceTop(15f);
+            leftAxis.setGranularity(200f);
+            leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+            YAxis rightAxis = binding.contentMain.chart.getAxisRight();
+            rightAxis.setDrawGridLines(false);
+            rightAxis.setLabelCount(8, false);
+            rightAxis.setSpaceTop(15f);
+            rightAxis.setGranularity(200f);
+            rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+            Legend l = binding.contentMain.chart.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+            l.setDrawInside(false);
+            l.setForm(Legend.LegendForm.SQUARE);
+            l.setFormSize(9f);
+            l.setTextSize(11f);
+            l.setXEntrySpace(4f);
+
+            binding.contentMain.chart.setFitBars(true);
+            binding.contentMain.chart.setDrawBarShadow(false);
+            binding.contentMain.chart.setDrawValueAboveBar(true);
+
+            binding.contentMain.chart.getDescription().setEnabled(false);
+
+            // scaling can now only be done on x- and y-axis separately
+            binding.contentMain.chart.setPinchZoom(false);
+
+            binding.contentMain.chart.setDrawGridBackground(false);
+            binding.contentMain.chart.setData(data);
+            binding.contentMain.chart.invalidate();
+
+
+
+        }else{
+            binding.contentMain.chart.setVisibility(View.GONE);
+        }
+
+        // mChart.setDrawYLabels(false);
+
+
+    }
+
+    private void initJobDispatcher(){
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job myJob = dispatcher.newJobBuilder()
+                .setLifetime(Lifetime.FOREVER)
+                .setService(PushLibraryService.class) // the JobService that will be called
+                .setTag("libraryServices")
+                .setReplaceCurrent(true)
+
+                // Run between 30 - 60 seconds from now.
+                .setTrigger(Trigger.executionWindow(5, 10))// uniquely identifies the job
+                .build();
+
+        Timber.e("initJobDispatcher");
+        dispatcher.mustSchedule(myJob);
+    }
+
 
 /*
     @Subscribe(threadMode = ThreadMode.MAIN)

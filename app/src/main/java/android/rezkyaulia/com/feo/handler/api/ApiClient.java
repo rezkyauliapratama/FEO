@@ -26,6 +26,10 @@ public class ApiClient {
         user = new UserApi(this);
         score = new ScoreApi(this);
         plan = new PlanApi(this);
+        subscription = new SubscriptionApi(this);
+        paymentReg = new PaymentRegApi(this);
+        paymentFlag = new PaymentFlagApi(this);
+        library = new LibraryApi(this);
     }
 
     // Providing Global point of access
@@ -49,6 +53,17 @@ public class ApiClient {
         return plan;
     }
 
+    private final SubscriptionApi subscription;
+    public SubscriptionApi subscription(){return subscription;}
+
+    private final PaymentRegApi paymentReg;
+    public PaymentRegApi paymentReg(){return paymentReg;}
+
+    private final PaymentFlagApi paymentFlag;
+    public PaymentFlagApi paymentFlag(){return paymentFlag;}
+
+    private final LibraryApi library;
+    public LibraryApi library(){return library;}
 
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -34,7 +34,9 @@ public class Constant {
     public final String SHARE_LOCATION = "Share location";
     public final String ADD_SCHEDULE = "Add schedule";
 
-    public final String BASE_URL = "http://156.67.216.158/feo/public/v1";
+//    public final String BASE_URL = "http://www.fokusenergiotak.com/feo/public/v1";
+    public final String BASE_URL = "http://10.0.2.2/feo/public/v1";
+    public final String BASE_IMAGE_URL = "http://156.67.216.158/feo/public/image";
 
     public final String MEDIA_FOLDER = "/media/";
     public final String AUDIO_FOLDER = MEDIA_FOLDER + "audio/";
@@ -46,5 +48,6 @@ public class Constant {
 
     public final int FLAG_ANSWER_TRUE = 1;
     public final int FLAG_ANSWER_FALSE = 0;
+    public final String FLAG_ALARM = "ALARM-EVERYDAU";
 
 }

@@ -22,6 +22,10 @@ public class UserTbl implements Parcelable{
     @Property(nameInDb = "UserId")
     private Long UserId;
 
+    @Property(nameInDb = "UserRoleId")
+    private Long UserRoleId;
+
+
     @Property(nameInDb = "Name")
     private String Name;
 
@@ -59,12 +63,15 @@ public class UserTbl implements Parcelable{
     @Property(nameInDb = "Token")
     private String Token;
 
-    @Generated(hash = 135015433)
-    public UserTbl(Long _id, Long UserId, String Name, String Username, String Email,
-            String Password, String School, String ClassName, String HomeAddress,
-            String SchoolAddress, String CreatedDate, String UserKey, String Token) {
+
+    @Generated(hash = 1915029153)
+    public UserTbl(Long _id, Long UserId, Long UserRoleId, String Name, String Username,
+            String Email, String Password, String School, String ClassName,
+            String HomeAddress, String SchoolAddress, String CreatedDate, String UserKey,
+            String Token) {
         this._id = _id;
         this.UserId = UserId;
+        this.UserRoleId = UserRoleId;
         this.Name = Name;
         this.Username = Username;
         this.Email = Email;
@@ -81,6 +88,7 @@ public class UserTbl implements Parcelable{
     @Generated(hash = 585658511)
     public UserTbl() {
     }
+
 
     public Long get_id() {
         return this._id;
@@ -186,6 +194,14 @@ public class UserTbl implements Parcelable{
         this.Token = Token;
     }
 
+    public Long getUserRoleId() {
+        return this.UserRoleId;
+    }
+
+    public void setUserRoleId(Long UserRoleId) {
+        this.UserRoleId = UserRoleId;
+    }
+
 
     @Override
     public int describeContents() {
@@ -196,6 +212,7 @@ public class UserTbl implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this._id);
         dest.writeValue(this.UserId);
+        dest.writeValue(this.UserRoleId);
         dest.writeString(this.Name);
         dest.writeString(this.Username);
         dest.writeString(this.Email);
@@ -212,6 +229,7 @@ public class UserTbl implements Parcelable{
     protected UserTbl(Parcel in) {
         this._id = (Long) in.readValue(Long.class.getClassLoader());
         this.UserId = (Long) in.readValue(Long.class.getClassLoader());
+        this.UserRoleId = (Long) in.readValue(Long.class.getClassLoader());
         this.Name = in.readString();
         this.Username = in.readString();
         this.Email = in.readString();

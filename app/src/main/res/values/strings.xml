@@ -79,5 +79,67 @@
     <string name="date">date</string>
     <string name="no_notification">No notification</string>
     <string name="please_wait">Please wait</string>
+    <string name="your_answer_is">Your answer is ?</string>
+    <string name="tap_here">Tap here</string>
+    <string name="tap_here_to_pause">Tap here to pause !</string>
+    <string name="check_you_answer_here">Check you answer here</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="price">Price :</string>
+    <string name="check_out">Check out</string>
+    <string name="checkout">Checkout</string>
+
+    <string name="checkout_text">
+        <large><b>FEO Checkout &amp;</b></large>\n
+        Transaction Date&amp;: %s\n
+        Due Date             : %s\n\n
+        Name             : %s\n
+        Email            : %s\n
+        Username         : %s\n\n
+        <b>Item</b>\n
+        Plan name        : %s\n
+        Duration         : %d Month(s)\n\n
+
+        <b>Total Price</b>\n
+        Rp. %d
+    </string>
+    <string name="transaction_date">Transaction date</string>
+    <string name="due_date">Due date</string>
+    <string name="plan_name">Plan name</string>
+    <string name="duration">Duration</string>
+    <string name="item">Item</string>
+    <string name="total_price">Total price</string>
+
+    <string name="title_atm_bersama">
+        Payment via <b>ATM Mandiri / ATM Bersama</b> :
+    </string>
+
+    <string name="instruction_atm_bersama">1. On the main menu, select Other Transactions.\n2. Select Transfer.\n3. Select Another Bank Online.\n4. Enter the number 013 virtual account number (code 013 and the 16 digit virtual account).\n5. Enter the payment amount completely. Your payment will be automatically rejected if the amount does not comply.\n6. Please recheck the amount transaction and the account number transfer destination on the confirmation page. Press "Yes" to continue.\n
+    </string>
+
+    <string name="title_atm_prima_bca">Payment through <b>ATM BCA / ATM PRIMA</b> :</string>
+    <string name="instruction_atm_prima_bca">1. On the main menu, select Other Transactions.\n2. Select Transfer.\n3. Select Another Bank Online.\n4. Enter the bank code 013 then press "yes".\n5. Enter the payment amount completely. Your payment will be automatically rejected if the amount does not comply.\n6. Enter the 16 digit no. Virtual account payment and then press "Correct".\n7. Please recheck the amount transaction and the account number transfer destination on the confirmation page. Press "Yes" to continue.\n
+    </string>
+
+    <string name="title_atm_bank_permata">
+        Payment through <b>ATM Bank Permata / ATM Alto</b> :
+    </string>
+    <string name="instruction_atm_bank_permata">1. On the Main Menu, select Other Transactions.\n2. Choose Payment Transactions.\n3. Select Other.\n4. Select Payment Virtual Account.\n5. Enter your 16 digits no. Virtual Account\n6. On the confirmation page will appear no. virtual account and bill number, then press "yes"\n7. Choose your payment account and press "yes".\n
+    </string>
+    <string name="your_virtual_account">Your Virtual account</string>
+    <string name="your_payment_s">Your payment :&#160;</string>
+    <string name="expired_in_s">Expired in </string>
+    <string name="hours">Hour(s) :</string>
+    <string name="minutes">Minute(s) :</string>
+    <string name="Seconds">Second(s)</string>
+    <string name="cancel_payment">Cancel Payment</string>
+    <string name="doyouwanttocancelthispayment">Do you want cancel this payment?</string>
+    <string name="downloadcomplete">Download complete</string>
+    <string name="uploadcomplete">Upload complete</string>
+    <string name="payment_success_message_body">Thank you for purchasing our plan</string>
+    <string name="payment_success_message_title">Payment Success</string>
+    <string name="unauthorized">Unauthorized</string>
+    <string name="sessionexpiredcaption">Your session is expired</string>
+    <string name="okay">okay</string>
+    <string name="your_best_score">Your best score :</string>
 
 </resources>

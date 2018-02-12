@@ -117,30 +117,19 @@ public class MemoryActivity extends BaseActivity {
 
 
         binding.layoutProgress.setVisibility(View.VISIBLE);
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                Looper.prepare();
-
-                    listAssetFiles("picture");
-                    initListData();
-
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                binding.layoutProgress.setVisibility(View.GONE);
-            }
-        }.execute();
+        new FirstInit().execute();
 
         initData();
         initSeekbar();
 
 
+
+        binding.imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         binding.layoutContent.framelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -391,12 +380,12 @@ public class MemoryActivity extends BaseActivity {
         if (mStart){
             binding.layoutContent.seekbarWpm.setEnabled(false);
             initThread();
-            binding.fab.setVisibility(View.GONE);
+            binding.layoutFab.setVisibility(View.GONE);
         }else{
             binding.layoutContent.seekbarWpm.setEnabled(true);
             killThread();
             if (mIndex > 0)
-                binding.fab.setVisibility(View.VISIBLE);
+                binding.layoutFab.setVisibility(View.VISIBLE);
 
         }
 
@@ -713,4 +702,27 @@ public class MemoryActivity extends BaseActivity {
         }
 
     }
+
+    private class FirstInit extends AsyncTask<Void,Void,Void> {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                Looper.prepare();
+
+                listAssetFiles("picture");
+                initListData();
+
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                binding.layoutProgress.setVisibility(View.GONE);
+            }
+
+    }
+
 }

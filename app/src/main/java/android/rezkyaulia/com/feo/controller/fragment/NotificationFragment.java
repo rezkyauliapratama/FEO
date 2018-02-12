@@ -9,6 +9,7 @@ import android.rezkyaulia.com.feo.database.entity.NotificationTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentNotificationBinding;
 import android.rezkyaulia.com.feo.handler.api.UserApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.NotifModel;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -70,20 +73,52 @@ public class NotificationFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mNotifcationTbls = new ArrayList<>();
-        initData();
         initRV();
         Timber.e("NOTIFICATION FRAGMENT");
-//        if (mNotifcationTbls.size() > 0){
-//            binding.contentNoResult.setVisibility(View.GONE);
-//        }else{
-//            binding.contentNoResult.setVisibility(View.VISIBLE);
-//        }
+
+        RxBus.getInstance().observable(NotifModel.class).subscribe(new Observer<NotifModel>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(NotifModel notifModel) {
+                Timber.e("OnNExt : "+new Gson().toJson(notifModel));
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+
     }
 
     public void initData(){
         List<NotificationTbl> notificationTbls = facade.getManageNotificationTbl().getAll();
         if (mNotifcationTbls != null){
             mNotifcationTbls.clear();
+            binding.contentNoResult.setVisibility(View.GONE);
+        }else{
+            binding.contentNoResult.setVisibility(View.VISIBLE);
         }
 
         mNotifcationTbls.addAll(notificationTbls);

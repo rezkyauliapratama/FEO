@@ -15,6 +15,7 @@ public class PreferencesManager {
     private static final String NOL_KEY = "NOL_KEY";
     private static final String GS_KEY = "GS_KEY";
     private static final String BACKGROUND_KEY = "BACKGROUND_KEY";
+    private static final String REMINDER_KEY = "REMINDER_KEY";
 
 
     private static PreferencesManager instance;
@@ -91,6 +92,16 @@ public class PreferencesManager {
     }
     public boolean isBlack() {
         return preference.getBoolean(BACKGROUND_KEY,true);
+    }
+
+
+    public void setReminder(boolean b) {
+        SecurePreferences.Editor editor = preference.edit();
+        editor.putBoolean(REMINDER_KEY, b);
+        editor.apply();
+    }
+    public boolean isReminder() {
+        return preference.getBoolean(REMINDER_KEY,false);
     }
 
 

@@ -81,6 +81,8 @@ public class SpeedReadingSettingDialogFragment extends DialogFragment {
 
             binding.seekbarGroupSize.setEnabled(false);
             binding.seekbarNumberOfLines.setEnabled(false);
+            binding.layoutNol.setVisibility(View.GONE);
+            binding.layoutGs.setVisibility(View.GONE);
         }
 
 

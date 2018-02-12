@@ -42,6 +42,16 @@ import static java.lang.Math.round;
  * Created by Shiburagi on 09/07/2016.
  */
 public class Utils {
+    public long getWarningAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
+        Timber.e("WARNING ALARM : "+time().getUserFriendlyDateTimeString(calendar.getTimeInMillis()));
+        return calendar.getTimeInMillis();
+    }
+
     // Static member class member that holds only one instance of the
     // SingletonExample class
     private static class SingletonHolder {
