@@ -27,23 +27,29 @@ public class NotificationTbl {
     @Property(nameInDb = "Action")
     private Long Action;
 
+    @Property(nameInDb = "FlagRead")
+    private int FlagRead = 1;
+
     @Property(nameInDb = "CreatedDate")
     private String CreatedDate;
 
-    @Generated(hash = 823840017)
+
+    @Generated(hash = 513918077)
     public NotificationTbl(Long NotificationId, Long UserId, String Title, String Body, Long Action,
-            String CreatedDate) {
+            int FlagRead, String CreatedDate) {
         this.NotificationId = NotificationId;
         this.UserId = UserId;
         this.Title = Title;
         this.Body = Body;
         this.Action = Action;
+        this.FlagRead = FlagRead;
         this.CreatedDate = CreatedDate;
     }
 
     @Generated(hash = 673865620)
     public NotificationTbl() {
     }
+
 
     public Long getNotificationId() {
         return this.NotificationId;
@@ -91,6 +97,14 @@ public class NotificationTbl {
 
     public void setCreatedDate(String CreatedDate) {
         this.CreatedDate = CreatedDate;
+    }
+
+    public int getFlagRead() {
+        return this.FlagRead;
+    }
+
+    public void setFlagRead(int FlagRead) {
+        this.FlagRead = FlagRead;
     }
 
 

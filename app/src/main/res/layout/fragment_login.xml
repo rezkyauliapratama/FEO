@@ -25,13 +25,6 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="@dimen/size_width_logo"
-                        android:scaleType="fitCenter"
-                        android:tint="@color/colorWhite" />
-                    <ImageView
                         android:id="@+id/imageView_dattel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,6 +60,14 @@
                     android:textAppearance="@style/TextStyle.Medium"
                     android:textStyle="bold" />
 
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="@dimen/size_width_logo"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/colorWhite" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"

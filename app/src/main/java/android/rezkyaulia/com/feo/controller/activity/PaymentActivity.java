@@ -76,6 +76,7 @@ public class PaymentActivity extends BaseActivity implements
 
     @Override
     public void onCheckout() {
+        binding.content.layoutProgress.setVisibility(View.VISIBLE);
         SubscriptionTbl subscriptionTbl = new SubscriptionTbl();
         subscriptionTbl.setPlanId(mPlanTbl.getPlanId());
         subscriptionTbl.setUserId(userTbl.getUserId());
@@ -107,12 +108,17 @@ public class PaymentActivity extends BaseActivity implements
                                         displayFragment(binding.content.layoutContent.getId(), PaymentFragment.newInstance(subscriptionTbl));
                                     }
                                 }
+                                binding.content.layoutProgress.setVisibility(View.GONE);
                             }
                             @Override
                             public void onError(ANError anError) {
+                                binding.content.layoutProgress.setVisibility(View.GONE);
                                 Timber.e("Error paymentReg : "+new Gson().toJson(anError));
                             }
                         });
+                    }else{
+                        binding.content.layoutProgress.setVisibility(View.GONE);
+
                     }
                 }
             }
@@ -131,7 +137,7 @@ public class PaymentActivity extends BaseActivity implements
     @Override
     public void onCancelPayment(SubscriptionTbl subscriptionTbl) {
         Timber.e("onCancelPayment : "+new Gson().toJson(subscriptionTbl));
-        mSubsciptionTbl.setActiveFlag(0L);
+        subscriptionTbl.setActiveFlag(0L);
         facade.getManageSubscriptionTbl().add(mSubsciptionTbl);
         finish();
 
@@ -142,4 +148,6 @@ public class PaymentActivity extends BaseActivity implements
     public void onRedirectToActivity() {
         redirectToMainActivity();
     }
+
+
 }

@@ -12,15 +12,28 @@ import android.rezkyaulia.com.feo.controller.service.PushLibraryService;
 import android.rezkyaulia.com.feo.controller.service.PushScoreService;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
+import android.rezkyaulia.com.feo.database.entity.NotificationTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
+import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
+import android.rezkyaulia.com.feo.handler.api.ApiClient;
+import android.rezkyaulia.com.feo.handler.api.LibraryApi;
+import android.rezkyaulia.com.feo.handler.api.NotificationApi;
+import android.rezkyaulia.com.feo.handler.observer.RxBus;
+import android.rezkyaulia.com.feo.model.NotifModel;
+import android.rezkyaulia.com.feo.utility.DimensionConverter;
+import android.rezkyaulia.com.feo.utility.HttpResponse;
+import android.rezkyaulia.com.feo.utility.IconTextDrawable;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -39,17 +52,21 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
+import com.squareup.haha.perflib.Main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NotificationFragment.OnListFragmentInteractionListener {
     ActivityMainBinding binding;
     private Menu menu;
 
@@ -64,17 +81,14 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        binding.contentMain.btnSpeedReadingNormal.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,SpeedReadingActivity.class)));
+        binding.contentMain.btnSpeedReadingNormal.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,GuideFEOActivity.class)));
 
         binding.contentMain.btnSpeedReadingFeo.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,SpeedReadingActivity.class);
-            intent.putExtra(SpeedReadingActivity.ARGS1,true);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this,GuideFEOChampionActivity.class));
         });
 
         binding.contentMain.btnSpeedReadingMemory.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,MemoryActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this,GuideMemoryActivity.class));
         });
 
         binding.contentMain.textViewName.setText(userTbl.getName());
@@ -87,6 +101,40 @@ public class MainActivity extends BaseActivity {
         binding.contentMain.layoutTrophy.setOnClickListener(v->{
             startActivity(new Intent(MainActivity.this,SummaryScoresActivity.class));
         });
+
+        RxBus.getInstance().observable(NotifModel.class).subscribe(new Observer<NotifModel>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(NotifModel notifModel) {
+                Timber.e("OnNExt : "+new Gson().toJson(notifModel));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        if (notificationFragment != null)
+                            notificationFragment.initData();
+
+                        if (menu != null)
+                            onNotificationReceivedIteration();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
     }
 
     @Override
@@ -100,7 +148,6 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         initBestScore();
         initJobDispatcher();
-
     }
 
     @Override
@@ -113,6 +160,8 @@ public class MainActivity extends BaseActivity {
 //        SpannableString s = new SpannableString("more");
 //        s.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s.length(), 0);
 //        item.setTitle(s);
+        onNotificationReceivedIteration();
+
         return true;
     }
 
@@ -132,13 +181,15 @@ public class MainActivity extends BaseActivity {
             rightNavFragment.show(1);
             return true;*/
             binding.drawerLayout.openDrawer(Gravity.END);
-
+            notificationFragment.setRead(1);
+            onNotificationReceivedIteration();
         }
         return super.onOptionsItemSelected(item);
     }
 
     void initNavigation(){
         notificationFragment = NotificationFragment.newInstance();
+
         displayFragment(R.id.navView_notification, notificationFragment);
     }
 
@@ -164,7 +215,8 @@ public class MainActivity extends BaseActivity {
         List<ScoreTbl> scoreTbls= Facade.getInstance().getManageScoreTbl().getDataForGraph();
 
         if (scoreTbls != null && scoreTbls.size() > 0){
-            Timber.e("scoreTbls.size() : "+new Gson().toJson(scoreTbls));
+            Timber.e("scoreTbls.size() : "+scoreTbls.size());
+            Timber.e("scoreTbls : "+new Gson().toJson(scoreTbls));
 
             binding.contentMain.chart.setVisibility(View.VISIBLE);
             List<BarEntry> entries = new ArrayList<BarEntry>();
@@ -181,18 +233,9 @@ public class MainActivity extends BaseActivity {
 
             }
 
-       /* List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 30f));
-        entries.add(new BarEntry(1f, 80f));
-        entries.add(new BarEntry(2f, 60f));
-        entries.add(new BarEntry(3f, 50f));
-        // gap of 2f
-        entries.add(new BarEntry(5f, 70f));
-        entries.add(new BarEntry(6f, 60f));
-*/
             BarDataSet set = new BarDataSet(entries, "Scores");
             BarData data = new BarData(set);
-            data.setBarWidth(0.9f); // set custom bar width
+            /*data.setBarWidth(0.9f);*/ // set custom bar width
 
             IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
@@ -247,8 +290,6 @@ public class MainActivity extends BaseActivity {
             binding.contentMain.chart.setData(data);
             binding.contentMain.chart.invalidate();
 
-
-
         }else{
             binding.contentMain.chart.setVisibility(View.GONE);
         }
@@ -257,6 +298,36 @@ public class MainActivity extends BaseActivity {
 
 
     }
+
+    public void onNotificationReceivedIteration() {
+
+        int size = (int) facade.getManageNotificationTbl().countNotSeen(String.valueOf(userTbl.getUserId()));
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        int dp24 = DimensionConverter.getInstance().stringToDimensionPixelSize(
+                "24dp",
+                getResources().getDisplayMetrics()
+        );
+        if (size == 0)
+            menuItem.setIcon(
+                    new IconTextDrawable(
+                            MainActivity.this, null,
+                            R.drawable.ic_notifications_none_black_24dp,
+                            0, 0
+
+                    )
+            );
+        else {
+            menuItem.setIcon(
+                    new IconTextDrawable(
+                            MainActivity.this, String.valueOf(size),
+                            R.drawable.ic_notifications_black_24dp,
+                            0, 0
+
+                    )
+            );
+        }
+    }
+
 
     private void initJobDispatcher(){
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
@@ -272,6 +343,36 @@ public class MainActivity extends BaseActivity {
 
         Timber.e("initJobDispatcher");
         dispatcher.mustSchedule(myJob);
+    }
+
+    @Override
+    public void onDeleteNotificationInteraction(NotificationTbl notificationTbl) {
+        facade.getManageNotificationTbl().remove(notificationTbl);
+        notificationFragment.initData();
+        /*binding.layoutProgress.setVisibility(View.VISIBLE);
+        ApiClient.getInstance().notification().delete(notificationTbl, new ParsedRequestListener<NotificationApi.Response>() {
+            @Override
+            public void onResponse(NotificationApi.Response response) {
+                Timber.e("Response notification del : " +new Gson().toJson(response));
+                if (HttpResponse.getInstance().success(response)){
+                    facade.getManageNotificationTbl().remove(notificationTbl);
+                    notificationFragment.initData();
+                    Toast.makeText(MainActivity.this,"Delete successful",Toast.LENGTH_LONG);
+
+                }else{
+                    Toast.makeText(MainActivity.this,"Cannot delete this notification, please check your network",Toast.LENGTH_LONG);
+
+                }
+                binding.layoutProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                binding.layoutProgress.setVisibility(View.GONE);
+                Toast.makeText(MainActivity.this,"Cannot delete this notification, please check your network",Toast.LENGTH_LONG);
+            }
+        });
+*/
     }
 
 

@@ -1,6 +1,7 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -12,12 +13,18 @@ import android.rezkyaulia.com.feo.controller.fragment.BaseFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryDetailFragment;
 import android.rezkyaulia.com.feo.controller.fragment.LibraryFragment;
 import android.rezkyaulia.com.feo.controller.fragment.SpeedReadingFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.GuideFeoChampDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.GuideFeoDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.SpeedReadingSettingDialogFragment;
 import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.ScoreTbl;
 import android.rezkyaulia.com.feo.databinding.ActivitySpeedReadingBinding;
+import android.rezkyaulia.com.feo.handler.api.ApiClient;
+import android.rezkyaulia.com.feo.handler.api.LibraryApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.model.Events;
+import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -31,7 +38,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.app.infideap.stylishwidget.view.ATextView;
 import com.google.gson.Gson;
 
@@ -76,6 +86,9 @@ public class SpeedReadingActivity extends BaseActivity implements
 
         }
 
+        if (mIsQuiz){
+            binding.actionbarTitle.setText(R.string.speedreadingfeo);
+        }
         mGuid = Utils.getInstance().getUniqueID(this);
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -91,6 +104,8 @@ public class SpeedReadingActivity extends BaseActivity implements
                 onBackPressed();
             }
         });
+
+        initLibrary();
     }
 
     @Override
@@ -139,6 +154,12 @@ public class SpeedReadingActivity extends BaseActivity implements
                 intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
             }
             startActivityForResult(intent, READ_REQ);
+        }else if (id == R.id.action_help){
+            if (mIsQuiz){
+                showDialogGuideFeoChamp();
+            }else{
+                showDialogGuideFeo();
+            }
         }
 
         //noinspection SimplifiableIfStatement
@@ -310,7 +331,26 @@ public class SpeedReadingActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int whichButton) {
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
-                Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
+                binding.layoutProgress.setVisibility(View.VISIBLE);
+                ApiClient.getInstance().library().delete(libraryTbl, new ParsedRequestListener<LibraryApi.Response>() {
+                    @Override
+                    public void onResponse(LibraryApi.Response response) {
+                        if (HttpResponse.getInstance().success(response)){
+                            Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
+                            Toast.makeText(SpeedReadingActivity.this,"Delete successful",Toast.LENGTH_LONG);
+                        }else{
+                            Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG);
+                        }
+                        binding.layoutProgress.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG);
+                        binding.layoutProgress.setVisibility(View.GONE);
+                    }
+                });
 
                 Timber.e("onDeleteLibraryInteraction");
                 RxBus.getInstance().post(new Events<>(LibraryTbl.class));
@@ -344,7 +384,10 @@ public class SpeedReadingActivity extends BaseActivity implements
 
     @Override
     public void onDeleteLibraryInteraction(LibraryTbl libraryTbl) {
-        showAlertDialogDeleteLibrary(libraryTbl);
+        if (libraryTbl.getUserId() == userTbl.getUserId())
+            showAlertDialogDeleteLibrary(libraryTbl);
+        else
+            Toast.makeText(this, R.string.sorry_cannot_delete_admin_library,Toast.LENGTH_LONG).show();
 
     }
 
@@ -353,6 +396,44 @@ public class SpeedReadingActivity extends BaseActivity implements
         binding.drawerLayout.closeDrawer(binding.navView);
     }
 
+    private void initLibrary(){
+        ApiClient.getInstance().library().getAll(new ParsedRequestListener<LibraryApi.Response>() {
+            @Override
+            public void onResponse(LibraryApi.Response response) {
+                Timber.e("initlib : "+new Gson().toJson(response));
+
+                if (HttpResponse.getInstance().success(response)){
+                    if (response.getApiList() != null){
+                        List <LibraryTbl> temp = facade.getManageLibraryTbl().updateCurrent(response.getApiList());
+                        Timber.e("temp size : "+temp.size());
+                        if (temp.size()>0){
+                            RxBus.getInstance().post(temp.toArray());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Timber.e("Initlib ANError : "+new Gson().toJson(anError));
+            }
+        });
+    }
+
+
+    private void showDialogGuideFeo(){
+        GuideFeoDialogFragment guideFeoDialogFragment = GuideFeoDialogFragment.newInstance();
+        guideFeoDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
+        guideFeoDialogFragment.show(getSupportFragmentManager().beginTransaction(), SpeedReadingSettingDialogFragment.Dialog);
+
+    }
+
+    private void showDialogGuideFeoChamp(){
+        GuideFeoChampDialogFragment guideFeoChampDialogFragment = GuideFeoChampDialogFragment.newInstance();
+        guideFeoChampDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
+        guideFeoChampDialogFragment.show(getSupportFragmentManager().beginTransaction(),SpeedReadingSettingDialogFragment.Dialog);
+
+    }
     protected class LfPagerAdapter extends FragmentStatePagerAdapter {
 
         private static final int NUM_ITEMS = 2;

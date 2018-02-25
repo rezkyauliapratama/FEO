@@ -59,10 +59,10 @@ public class ManageScoreTbl {
         return dao.queryBuilder().where(new WhereCondition.StringCondition("_id in (SELECT a._id\n" +
                 "FROM\n" +
                 " (SELECT b.*, strftime('%Y-%m-%d', b.CreatedDate) dte_normal from ScoreTbl b\n" +
-                "WHERE\n" +
-                " b.FlagAnswer = 1\n" +
-                "GROUP BY b.Score\n" +
-                "ORDER BY dte_normal,b.Score asc) a\n" +
+                "                                                                      WHERE\n" +
+                "                                                                       b.FlagAnswer = 1\n" +
+                "                                                                      GROUP BY dte_normal\n" +
+                "                                                                      ORDER BY b.Score asc) a\n" +
                 "GROUP BY strftime('%Y-%m-%d', a.CreatedDate)\n" +
                 "ORDER BY strftime('%Y-%m-%d', a.CreatedDate) desc\n" +
                 "Limit 7)")).list();

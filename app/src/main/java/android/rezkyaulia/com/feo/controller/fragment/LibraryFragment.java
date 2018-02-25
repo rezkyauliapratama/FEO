@@ -31,6 +31,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -180,6 +182,30 @@ public class LibraryFragment extends BaseFragment implements InputTextDialogFrag
                 initData();
             }
         });
+
+
+        RxBus.getInstance().observable(LibraryTbl[].class).subscribe(new Observer<LibraryTbl[]>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(LibraryTbl[] libraryTbls) {
+                Timber.e("LibraryTbl[] libraryTbls : "+new Gson().toJson(libraryTbls));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
 
 
     }

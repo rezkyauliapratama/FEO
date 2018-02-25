@@ -110,6 +110,7 @@ public class _FirebaseMessagingService extends FirebaseMessagingService {
         }else if (notifModel.getAction() == NotifModel.NOTIF_MESSAGE){
             NotificationTbl notificationTbl = (NotificationTbl) notifModel;
             notificationTbl.setUserId(Facade.getInstance().getManagerUserTbl().get().getUserId());
+            notificationTbl.setFlagRead(0);
             long id = Facade.getInstance().getManageNotificationTbl().add(notificationTbl);
             Timber.e("ID INsert notification : "+id);
             if (id > 0){

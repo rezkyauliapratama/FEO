@@ -61,8 +61,13 @@ public class ScoreSummaryRVAdapter extends RecyclerView.Adapter<ScoreSummaryRVAd
         holder.binding.textViewWpm.setText(String.valueOf(item.getScore()));
 
         Date date = Utils.getInstance().time().parseDate(item.getCreatedDate());
-        String datestr = Utils.getInstance().time().getUserFriendlyDateWithoutYear(date);
-        String time = Utils.getInstance().time().getTimeString(date);
+        String datestr = "";
+        String time = "";
+        if (date != null){
+            datestr = Utils.getInstance().time().getUserFriendlyDateWithoutYear(date);
+            time = Utils.getInstance().time().getTimeString(date);
+        }
+
 
         holder.binding.textViewDate.setText(datestr +"\n" + time);
         setAnimation(holder.binding.getRoot(),position);

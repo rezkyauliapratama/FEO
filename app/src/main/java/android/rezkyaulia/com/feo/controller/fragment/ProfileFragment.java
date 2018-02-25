@@ -1,10 +1,12 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
 import android.accounts.Account;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.activity.BaseActivity;
+import android.rezkyaulia.com.feo.controller.activity.LanguageActivity;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.AccountDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InformationDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.PasswordDialogFragment;
@@ -116,6 +118,12 @@ public class ProfileFragment extends BaseFragment implements
             }
         });
 
+        binding.buttonChangeLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), LanguageActivity.class));
+            }
+        });
 
     }
 

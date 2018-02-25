@@ -30,11 +30,14 @@ public class ManageNotificationTbl {
     }
 
     public List<NotificationTbl> getAll() {
-        return dao.queryBuilder().list();
+        return dao.queryBuilder().orderDesc(NotificationTblDao.Properties.CreatedDate).list();
     }
 
     public NotificationTbl get(long id) {
         return dao.queryBuilder().where(NotificationTblDao.Properties.NotificationId.eq(id)).unique();
+    }
+    public long countNotSeen(String UserId) {
+        return dao.queryBuilder().where(NotificationTblDao.Properties.UserId.eq(UserId), NotificationTblDao.Properties.FlagRead.eq(0)).count();
     }
 
     public void removeAll() {

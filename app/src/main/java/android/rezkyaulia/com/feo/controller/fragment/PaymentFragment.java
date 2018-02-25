@@ -17,6 +17,7 @@ import android.rezkyaulia.com.feo.handler.api.PaymentFlagApi;
 import android.rezkyaulia.com.feo.handler.api.SubscriptionApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.model.NotifModel;
+import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.TextStyleBuilder;
 import android.rezkyaulia.com.feo.utility.Utils;
@@ -103,7 +104,13 @@ public class PaymentFragment extends BaseFragment {
             @Override
             public void onNext(NotifModel notifModel) {
                 Timber.e("OnNExt : "+new Gson().toJson(notifModel));
-                checkPayment();
+                if (getActivity() != null) {
+                    Timber.e("getactivity != null");
+                    // update views
+                    if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS)
+                        checkPayment();
+
+                }
             }
 
             @Override

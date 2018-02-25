@@ -119,14 +119,10 @@ public class LoginFragment extends BaseFragment {
 
         RxBus.getInstance().observable(UserApi.ResponseRegistration.class).subscribe( event ->{
             Timber.e("setAccount : "+new Gson().toJson(event));
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+
                     binding.edittextUsername.setText(event.getApiValue().getUsername());
                     binding.edittextPin.setText(event.getApiValue().getPassword());
 
-                }
-            });
 
         });
     }
@@ -210,6 +206,8 @@ public class LoginFragment extends BaseFragment {
                             List<ScoreTbl> scoreTbls = response.getApiValue().getScoreTbls();
                             List<LibraryTbl> libraryTbls= response.getApiValue().getLibraryTbls();
 
+                            Timber.e("LIBRARIES : "+new Gson().toJson(libraryTbls));
+
                             Timber.e("paymentRegistrationTbl : "+new Gson().toJson(paymentRegistrationTbl));
                             Timber.e("paymentRegistrationResponseTbl : "+new Gson().toJson(paymentRegistrationResponseTbl));
                             long id = Facade.getInstance().getManagerUserTbl().add(userTbl);
@@ -229,6 +227,7 @@ public class LoginFragment extends BaseFragment {
                             if (libraryTbls != null) {
                                 Facade.getInstance().getManageLibraryTbl().removeAll();
                                 Facade.getInstance().getManageLibraryTbl().add(libraryTbls);
+
                             }
 
                             if (scoreTbls!= null) {

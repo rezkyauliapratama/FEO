@@ -16,6 +16,7 @@ public class PreferencesManager {
     private static final String GS_KEY = "GS_KEY";
     private static final String BACKGROUND_KEY = "BACKGROUND_KEY";
     private static final String REMINDER_KEY = "REMINDER_KEY";
+    private static final String LANGUAGE_LOCALE = "LANGUAGE_LOCALE";
 
 
     private static PreferencesManager instance;
@@ -104,7 +105,16 @@ public class PreferencesManager {
         return preference.getBoolean(REMINDER_KEY,false);
     }
 
+    public void setLocale(String code) {
+        SecurePreferences.Editor editor = preference.edit();
+        editor.putString(LANGUAGE_LOCALE, code);
+        editor.apply();
+    }
 
+
+    public String getLocale() {
+        return preference.getString(LANGUAGE_LOCALE, null);
+    }
 
 
 }

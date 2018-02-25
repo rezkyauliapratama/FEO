@@ -1,10 +1,13 @@
 package android.rezkyaulia.com.feo.controller.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.adapter.LibraryRVAdapter;
 import android.rezkyaulia.com.feo.controller.adapter.NotificationRVAdapter;
+import android.rezkyaulia.com.feo.database.Facade;
+import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.NotificationTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentNotificationBinding;
 import android.rezkyaulia.com.feo.handler.api.UserApi;
@@ -41,6 +44,9 @@ public class NotificationFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
     private NotificationRVAdapter mAdapter;
 
+    private OnListFragmentInteractionListener mListener;
+
+
     public static NotificationFragment newInstance() {
         NotificationFragment fragment = new NotificationFragment();
         Bundle args = new Bundle();
@@ -76,7 +82,7 @@ public class NotificationFragment extends BaseFragment {
         initRV();
         Timber.e("NOTIFICATION FRAGMENT");
 
-        RxBus.getInstance().observable(NotifModel.class).subscribe(new Observer<NotifModel>() {
+       /* RxBus.getInstance().observable(NotifModel.class).subscribe(new Observer<NotifModel>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -87,8 +93,11 @@ public class NotificationFragment extends BaseFragment {
                 Timber.e("OnNExt : "+new Gson().toJson(notifModel));
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        initData();
+                    public void run()
+                    {
+                        if(getActivity() != null)
+                            if (notifModel.getAction().equals(NotifModel.NOTIF_MESSAGE))
+                                initData();
                     }
                 });
             }
@@ -102,7 +111,7 @@ public class NotificationFragment extends BaseFragment {
             public void onComplete() {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -116,23 +125,58 @@ public class NotificationFragment extends BaseFragment {
         List<NotificationTbl> notificationTbls = facade.getManageNotificationTbl().getAll();
         if (mNotifcationTbls != null){
             mNotifcationTbls.clear();
+        }
+        mNotifcationTbls.addAll(notificationTbls);
+
+        if (mNotifcationTbls.size()>0){
             binding.contentNoResult.setVisibility(View.GONE);
         }else{
             binding.contentNoResult.setVisibility(View.VISIBLE);
         }
-
-        mNotifcationTbls.addAll(notificationTbls);
-        Timber.e("mLibraryTbls : "+new Gson().toJson(mNotifcationTbls));
+        Timber.e("notificationTbls : "+new Gson().toJson(mNotifcationTbls));
 
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
     }
 
+    public void setRead(int flag){
+        List<NotificationTbl> notificationTbls = facade.getManageNotificationTbl().getAll();
+        for (NotificationTbl notificationTbl :notificationTbls){
+            notificationTbl.setFlagRead(flag);
+            Facade.getInstance().getManageNotificationTbl().add(notificationTbl);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
     private void initRV(){
         mLayoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NotificationRVAdapter(getActivity(),mNotifcationTbls);
+        mAdapter = new NotificationRVAdapter(getActivity(),mNotifcationTbls, mListener);
         binding.recyclerView.setAdapter(mAdapter);
+    }
+
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+
+        void onDeleteNotificationInteraction(NotificationTbl notificationTbl);
     }
 
 }

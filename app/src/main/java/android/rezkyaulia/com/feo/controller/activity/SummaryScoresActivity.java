@@ -71,6 +71,9 @@ public class SummaryScoresActivity extends BaseActivity {
 
         binding.content.textViewBestScore.setText(getString(R.string.your_best_score)+bestScore+" "+getString(R.string.wpm));
 
+        binding.imageViewBack.setOnClickListener(v->{
+            finish();
+        });
     }
 
     private void initRecyclerview(){

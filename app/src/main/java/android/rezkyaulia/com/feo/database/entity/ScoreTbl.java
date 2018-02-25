@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Generated;
 /**
  * Created by Rezky Aulia Pratama on 11/21/2017.
  */
-@Entity(nameInDb = "ScoreTbl",indexes = {})
+@Entity(nameInDb = "ScoreTbl",indexes = {@Index(value = "id", unique = true)})
 public class ScoreTbl implements Parcelable{
     @Id(autoincrement = true)
     private Long id;

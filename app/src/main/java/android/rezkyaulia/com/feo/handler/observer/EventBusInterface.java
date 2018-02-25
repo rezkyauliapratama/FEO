@@ -11,6 +11,7 @@ import io.reactivex.Observable;
 
 public interface EventBusInterface {
     void post(@NonNull Object event);
+    void complete();
 
     <T> Observable<T> observable(@NonNull Class<T> eventClass);
 }

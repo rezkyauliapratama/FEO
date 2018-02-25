@@ -51,7 +51,7 @@ public class PushLibraryService extends JobService {
         if (libraryTbls != null){
             if (libraryTbls.size() > 0){
                 Timber.e("library.size()"+libraryTbls.size());
-                ApiClient.getInstance().library().bulk(libraryTbls).getAsObject(ScoreApi.Response.class, new ParsedRequestListener<LibraryApi.Response>() {
+                ApiClient.getInstance().library().bulk(libraryTbls).getAsObject(LibraryApi.Response.class, new ParsedRequestListener<LibraryApi.Response>() {
 
                     @Override
                     public void onResponse(LibraryApi.Response response) {
@@ -64,6 +64,9 @@ public class PushLibraryService extends JobService {
                                 if (tempLibaries.size() > 0){
                                     Timber.e("tempLibary.size : "+tempLibaries.size());
                                     Facade.getInstance().getManageLibraryTbl().add(tempLibaries);
+                                    for (LibraryTbl item : libraryTbls){
+                                        Facade.getInstance().getManageLibraryTbl().remove(item);
+                                    }
                                 }
                             }
                         }

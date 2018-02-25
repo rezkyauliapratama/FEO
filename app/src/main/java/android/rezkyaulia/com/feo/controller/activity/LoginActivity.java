@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity implements
 
                 displayFragment(binding.layoutContent.getId(),loginFragment);
                 if (loginFragment != null)
-                RxBus.getInstance().post(response);
+                 RxBus.getInstance().post(response);
 
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton

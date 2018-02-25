@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.database.Facade;
@@ -15,10 +18,12 @@ import android.rezkyaulia.com.feo.handler.api.UserApi;
 import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
+import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 
 
 import com.androidnetworking.error.ANError;
@@ -28,6 +33,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -59,7 +65,10 @@ public class BaseActivity extends AppCompatActivity {
         facade = Facade.getInstance();
         userTbl = facade.getManagerUserTbl().get();
 
-
+        currentLocale = Utils.getInstance().setLocale(
+                this,
+                pref.getLocale()
+        ).getLanguage();
     }
 
     @Override
@@ -111,6 +120,46 @@ public class BaseActivity extends AppCompatActivity {
     private boolean isExcludeActivityChecking() {
         return this instanceof LoginActivity || this instanceof PaymentActivity || this instanceof SubscribeActivity;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String locale = getLocale(pref.getLocale()).getLanguage();
+        Timber.e(locale + " |=| " + currentLocale);
+        if (!currentLocale.equals(locale)) {
+            currentLocale = Utils.getInstance().setLocale(
+                    this,
+                    pref.getLocale()
+            ).getLanguage();
+//            startActivity(getIntent());
+//            finish();
+//            getWindow().getDecorView().invalidate();
+            recreate();
+        }
+
+    }
+
+    private Locale getLocale(String localeStr) {
+        final Resources resources = getResources();
+        final DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        final Configuration configuration = resources.getConfiguration();
+
+
+        Locale currentLocale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            currentLocale = configuration.getLocales().get(0);
+        } else {
+            currentLocale = configuration.locale;
+        }
+        Locale locale;
+        if (pref.getLocale() != null) {
+            locale = new Locale(localeStr, currentLocale.getCountry());
+        } else {
+            locale = Constant.getInstance().LOCALE;
+        }
+        return locale;
+    }
+
 
     void checkAuth(){
         ApiClient.getInstance().user().checkAuth(new ParsedRequestListener<UserApi.Response>() {

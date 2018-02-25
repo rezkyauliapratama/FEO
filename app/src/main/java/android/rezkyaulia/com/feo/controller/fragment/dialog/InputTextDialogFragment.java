@@ -3,6 +3,7 @@ package android.rezkyaulia.com.feo.controller.fragment.dialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.database.Facade;
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.databinding.DialogInputTextBinding;
 import android.support.v4.app.DialogFragment;
@@ -108,11 +109,11 @@ public class InputTextDialogFragment extends DialogFragment {
 
                     }
 
+                    mLibraryTbl.setUserId(Facade.getInstance().getManagerUserTbl().get().getUserId());
                     mLibraryTbl.setContent(words);
                     mLibraryTbl.setTitle(title);
                     mLibraryTbl.setGenre(genre);
                     mLibraryTbl.setAuthor(author);
-
                     mListener.onGetTextDialog(mLibraryTbl, isSave);
                     dismiss();
                 }

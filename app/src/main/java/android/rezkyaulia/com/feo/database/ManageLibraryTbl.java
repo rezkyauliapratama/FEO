@@ -2,6 +2,7 @@ package android.rezkyaulia.com.feo.database;
 
 import android.rezkyaulia.com.feo.database.entity.LibraryTbl;
 import android.rezkyaulia.com.feo.database.entity.LibraryTblDao;
+import android.rezkyaulia.com.feo.database.entity.ScoreTblDao;
 
 import java.util.List;
 
@@ -32,6 +33,23 @@ public class ManageLibraryTbl {
     public List<LibraryTbl> getAll() {
         return dao.queryBuilder().list();
     }
+
+    public List<LibraryTbl> updateCurrent(List<LibraryTbl> libraryTbls){
+        for (LibraryTbl libraryTbl : libraryTbls){
+            LibraryTbl temp = dao.queryBuilder().where(LibraryTblDao.Properties.LibraryId.eq(libraryTbl.getLibraryId())).limit(1).unique();
+            if (temp != null)
+                libraryTbl.setId(temp.getId());
+
+            dao.insertOrReplace(temp);
+        }
+
+        return getAll();
+    }
+
+    public List<LibraryTbl> getAllByUserId(long id) {
+        return dao.queryBuilder().where(LibraryTblDao.Properties.UserId.eq(id)).list();
+    }
+
     public List<LibraryTbl> getAllEmptyId() {
         return dao.queryBuilder().where(LibraryTblDao.Properties.LibraryId.isNull()).list();
 

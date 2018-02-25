@@ -79,6 +79,33 @@
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
+
+        <activity
+            android:name=".controller.activity.LanguageActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+         <activity
+            android:name=".controller.activity.GuideFEOActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".controller.activity.GuideFEOChampionActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+         <activity
+            android:name=".controller.activity.GuideMemoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
         <service
             android:exported="false"
             android:name=".controller.service.PushScoreService">

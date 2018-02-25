@@ -2,6 +2,8 @@ package android.rezkyaulia.com.feo.utility;
 
 import org.jetbrains.annotations.Contract;
 
+import java.util.Locale;
+
 /**
  * Created by Rezky Aulia Pratama on 9/3/2017.
  */
@@ -24,6 +26,7 @@ public class Constant {
         return SingletonHolder.singletonInstance;
     }
 
+    public final Locale LOCALE = Locale.getDefault();
 
     public final int PERMISSION_REQUEST = 10000;
 
@@ -34,8 +37,8 @@ public class Constant {
     public final String SHARE_LOCATION = "Share location";
     public final String ADD_SCHEDULE = "Add schedule";
 
-//    public final String BASE_URL = "http://www.fokusenergiotak.com/feo/public/v1";
-    public final String BASE_URL = "http://10.0.2.2/feo/public/v1";
+    public final String BASE_URL = "http://www.fokusenergiotak.com/feo/public/v1";
+//    public final String BASE_URL = "http://10.0.2.2/feo/public/v1";
     public final String BASE_IMAGE_URL = "http://156.67.216.158/feo/public/image";
 
     public final String MEDIA_FOLDER = "/media/";

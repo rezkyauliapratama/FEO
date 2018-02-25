@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">FEO</string>
+    <string name="action_settings">Pengaturan</string>
+
+    <string name="close">Tutup</string>
+    <string name="asecondago" formatted="false">Beberapa detik lalu</string>
+    <string name="aminuteago" formatted="false">Beberapa menit lalu</string>
+    <string name="anhourago" formatted="false">Beberapa jam lalu</string>
+    <string name="minutesago" formatted="false">%d menit lalu</string>
+    <string name="hoursago" formatted="false">%d jam lalu</string>
+    <string name="secondsago" formatted="false">%d detik lalu</string>
+    <string name="yesterday" formatted="false">Kemarin</string>
+    <string name="daysago" formatted="false">%d hari lalu</string>
+    <string name="notification">Notifikasi</string>
+    <string name="help">Bantuan</string>
+    <string name="add">Tambah</string>
+    <string name="pastetext">Tempel tulisan</string>
+    <string name="file">File TXT</string>
+    <string name="setting">Peraturan</string>
+    <string name="reading_speed_wpm">Reading speed (WPM)</string>
+    <string name="number_of_lines">Jumlah baris</string>
+    <string name="group_size">Ukuran grup</string>
+    <string name="save">Simpan</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Ya</string>
+    <string name="doyouwanttosaveitintolibrary">Apakah kamu mau menyimpan library ?</string>
+    <string name="sorrythereisnowordsthatcanplay">Maaf , tidak ada tulisan yang dapat dimainkan</string>
+    <string name="sorryyoucannotaddnewlibrary">Maaf, kamu tidak dapat menyimpan libary karena sudah penuh</string>
+    <string name="pleaseinputyourtextinhere">Silahkan masukkan tulisan kamu disini</string>
+    <string name="pleaseinputthetitleforthislibrary">Silahkan masukkan judul library</string>
+    <string name="speedreading">Speed Reading</string>
+    <string name="speedreadingfeo">Speed Reading FEO</string>
+    <string name="library">Library</string>
+    <string name="please_input_the_title_in_here">Silahkan masukkan judul disini</string>
+    <string name="title">Judul</string>
+    <string name="content">Isian</string>
+    <string name="cancel">Batal</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgetpassword">Lupa password ?</string>
+    <string name="finish">Selesai</string>
+    <string name="got_it">Mengerti</string>
+    <string name="permissionrequestmessage" formatted="false">Mohon aktifkan beberapa permisi untuk aplikasi ini</string>
+    <string name="no">Tidak</string>
+    <string name="your_answer">Jawaban kamu</string>
+    <string name="correct_answer">Jawaban yang benar</string>
+    <string name="wpm">WPM</string>
+    <string name="highscore">Skor tertinggi : % WPM</string>
+    <string name="result">Hasil</string>
+    <string name="author">Penulis</string>
+    <string name="genre">Aliran</string>
+    <string name="memory">Memory</string>
+    <string name="image_speed_images_minute">Kecepatan (Gambar / menit)</string>
+    <string name="font_size">Ukuran font</string>
+    <string name="background">Background</string>
+    <string name="black">Hitam</string>
+    <string name="white">Putih</string>
+    <string name="don_t_have_an_account_sign_up_here">Tidak memiliki account ? daftar disini</string>
+    <string name="welcome">Selamat datang</string>
+    <string name="full_name">Nama</string>
+    <string name="retype_password">Ulang password</string>
+    <string name="register">Daftar</string>
+    <string name="school_name">Nama sekolah</string>
+    <string name="class_name">Nama kelas</string>
+    <string name="information">Informasi</string>
+    <string name="already_have_an_account_sign_in_here">Sudah memiliki account ? Login disini</string>
+    <string name="school_address">Alamat sekolah</string>
+    <string name="email">Email</string>
+    <string name="please_subscribe_to_get_full_access_into_feo">Mohon subscribe untuk mendapatkan akses penuh</string>
+    <string name="please_fill_in_here">Mohon diisi</string>
+    <string name="profile">Profil</string>
+    <string name="home_address">Alamat rumah</string>
+    <string name="change_password">Ubah password ?</string>
+    <string name="account">Akun</string>
+    <string name="dots">.............</string>
+    <string name="change_password1">Ubah password</string>
+    <string name="logout">Keluar</string>
+    <string name="body">Body</string>
+    <string name="date">Tanggal</string>
+    <string name="no_notification">Tidak ada notifikasi</string>
+    <string name="please_wait">Mohon tunggu</string>
+    <string name="your_answer_is">Jawaban kamu adalah </string>
+    <string name="tap_here">Tap disini</string>
+    <string name="tap_here_to_pause">Tap disini untuk pause !</string>
+    <string name="check_you_answer_here">Cek jawaban kamu disini</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="price">Harga :</string>
+    <string name="check_out">Check out</string>
+    <string name="checkout">Checkout</string>
+
+    <string name="checkout_text">
+        <large><b>FEO Checkout &amp;</b></large>\n
+        Transaction Date&amp;: %s\n
+        Due Date             : %s\n\n
+        Name             : %s\n
+        Email            : %s\n
+        Username         : %s\n\n
+        <b>Item</b>\n
+        Plan name        : %s\n
+        Duration         : %d Month(s)\n\n
+
+        <b>Total Price</b>\n
+        Rp. %d
+    </string>
+    <string name="transaction_date">Tanggal transaksi</string>
+    <string name="due_date">Tanggal kadaluarsa</string>
+    <string name="plan_name">Nama plan</string>
+    <string name="duration">Durasi</string>
+    <string name="item">Item</string>
+    <string name="total_price">Total harga</string>
+
+    <string name="title_atm_bersama">
+        Pembayaran via <b>ATM Mandiri / ATM Bersama</b> :
+    </string>
+
+    <string name="instruction_atm_bersama">
+        1. Pada menu utama, Pilih \'Other Transactions\'.\n2. Pilih \'Transfer\'.\n3. Pilih \'Another Bank Online\'.\n4. Masukkan no 013 dan no virtual account (kode 013 dan 16 digit virtual account).\n5. Masukkan jumlah pembayaran .\n6. Tolong cek kembali jumlah transaksi dan nomor akun tujuan transfer. Tekan \'Yes\' untuk melanjutkan.\n
+    </string>
+
+    <string name="title_atm_prima_bca">Pembayaran <b>ATM BCA / ATM PRIMA</b> :</string>
+    <string name="instruction_atm_prima_bca">1. Pada Main Menu, pilih \'Other Transactions\'.\n2. Pilih Transfer.\n3. Pilih \'Another Bank Online\'.\n4. Masukkan kode 013 lalu tekan "yes".\n5. Masukkan nilai transaksi yang ingin Anda bayar.\n6. Masikkan 16 digit nomor Virtual account payment dan tekan "Correct".\n7. Please recheck the amount transaction and the account number transfer destination on the confirmation page. Press "Yes" untuk melanjutkan.\n
+    </string>
+
+    <string name="title_atm_bank_permata">
+        Pembayaran melalui <b>ATM Bank Permata / ATM Alto</b> :
+    </string>
+    <string name="instruction_atm_bank_permata">1. Pada Main Menu, pilih Other Transactions.\n2. Pilih Payment Transactions.\n3. Pilih Other.\n4. Pilih Payment Virtual Account.\n5. Masukkan 16 digit nomor Virtual Account\n6. Pada halaman konfirmasi akan muncul no virtual account dan total uang yang harus dibayar, lalu tekan "yes"\n7. pilih akun pembayaran anda dan tekan "yes".\n
+    </string>
+    <string name="your_virtual_account">Virtual account kamu</string>
+    <string name="your_payment_s">Pembayaran kamu :&#160;</string>
+    <string name="expired_in_s">Kadaluarsa dalam </string>
+    <string name="hours">Jam :</string>
+    <string name="minutes">Menit :</string>
+    <string name="Seconds">Detik</string>
+    <string name="cancel_payment">Batalkan pembayaran</string>
+    <string name="doyouwanttocancelthispayment">Apakah kamu ingin membatalkan pembayaran ?</string>
+    <string name="downloadcomplete">Download selesai</string>
+    <string name="uploadcomplete">Upload selesai</string>
+    <string name="payment_success_message_body">Terimakasih telah mensubscribe</string>
+    <string name="payment_success_message_title">Pembayaran sukses</string>
+    <string name="unauthorized">Tidak diizinkan, silahkan login</string>
+    <string name="sessionexpiredcaption">Sesi kamu telah habis</string>
+    <string name="okay">Oke</string>
+    <string name="your_best_score">Skor terbaik kamu :</string>
+    <string name="sorry_cannot_delete_admin_library">Maaf tidak bisa hapus library dari Admin</string>
+    <string name="delete">Hapus</string>
+    <string name="change_language">Ganti bahasa</string>
+
+    <string name="guide_feo_1">Aturlah ukuran tulisan dan background melalui setting di menu depan terlebih dahulu dan lanjut mengatur speed di wpm, number of lines, atau group size dibawah lambang play.</string>
+    <string name="guide_feo_2">Buka library dan pilih salah satu judul yang sudah kami siapkan, atau yang sudah anda tambah sendiri.</string>
+    <string name="guide_feo_3">Jika sudah siap bermain silahkan Klik play, fokuskan mata di garis tengah dan bacalah dengan bersuara terlebih dahulu untuk mengetahui sebaik apakah lisan anda dalam membaca. Kami sarankan agar memakai number of lines 1 dan group size 1, dan jika sudah mampu dengan speed yang cepat, maka silahkan lanjutkan ke tahap membaca dengan cara dilihat saja, tambahlah speed wpm nya secara bertahap.</string>
+    <string name="guide_feo4">Untuk anak PAUD atau INKLUSI agar memakai judul PAUD yang sudah kami sediakan, pakailah speed rendah terlebih dahulu dan lanjutkan dengan menambah 10 wpm disetiap speednya, berilah bahasa motivasi terhadap anak anda.</string>
+    <string name="guide_feo_5">Latihlah mata dan otak anda setiap hari selama 15 hingga 30 menit,</string>
+    <string name="guide_feo_6">SELAMAT BERLATIH.</string>
+    <string name="guide_feo_champ_1">Buka library dan pilih salah satu judul yang sudah kami siapkan atau yang sudah anda tambah sendiri.</string>
+    <string name="guide_feo_champion_2">Atur wpm secara bertahap, anda hanya bisa mengatur ukuran tulisan dan background serta mengatur wpm sesuai dengan kemampuan anda.</string>
+    <string name="guide_feo_champion_3">Klik pause, dan jawablah pertanyaan dari FEO,\'SEBUTKAN SATU KATA DIBALIK KATA YANG BERHENTI\'. INGAT...! KETIKLAH JAWABAN DENGAN \'TANPA TANDA BACA\'.</string>
+    <string name="guide_memory_1">Aturlah image speed terlebih dahulu.</string>
+    <string name="guide_memory_2">Klik layar, dan hapalkan gambarnya.</string>
+    <string name="guide_memory_3">Anda bisa mem-pause untuk melihat kembali gambar sebelumnya.</string>
+    <string name="guide_memory_4">Gunakan speed yang sesuai dengan kecepatan mata dan otak anda.</string>
+    <string name="guide_memory_5">Lakukan latihan otak ini tiap hari untuk membantu daya ingat anda.</string>
+    <string name="guide_memory">Tuntunan memory</string>
+    <string name="guide_feo_champion">Tuntunan FEO champion</string>
+    <string name="guide_feo">Tuntunan FEO</string>
+    <string name="agree">Setuju</string>
+</resources>

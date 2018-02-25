@@ -13,13 +13,16 @@ import org.greenrobot.greendao.annotation.Transient;
 /**
  * Created by Rezky Aulia Pratama on 11/9/2017.
  */
-@Entity(nameInDb = "LibraryTbl",indexes = {})
+@Entity(nameInDb = "LibraryTbl",indexes = {@Index(value = "id", unique = true)})
 public class LibraryTbl implements Parcelable {
     @Id(autoincrement = true)
     private Long id;
 
     @Property(nameInDb = "LibraryId")
     private Long LibraryId;
+
+    @Property(nameInDb = "UserId")
+    private Long UserId;
 
     @Property(nameInDb = "Title")
     private String Title;
@@ -30,18 +33,18 @@ public class LibraryTbl implements Parcelable {
     @Property(nameInDb = "Genre")
     private String Genre;
 
-
     @Property(nameInDb = "Content")
     private String Content;
 
     @Transient
     private int ReadFlag;
 
-    @Generated(hash = 2035319310)
-    public LibraryTbl(Long id, Long LibraryId, String Title, String Author,
-            String Genre, String Content) {
+    @Generated(hash = 1066134611)
+    public LibraryTbl(Long id, Long LibraryId, Long UserId, String Title,
+                      String Author, String Genre, String Content) {
         this.id = id;
         this.LibraryId = LibraryId;
+        this.UserId = UserId;
         this.Title = Title;
         this.Author = Author;
         this.Genre = Genre;
@@ -52,13 +55,7 @@ public class LibraryTbl implements Parcelable {
     public LibraryTbl() {
     }
 
-    public Long getId() {
-        return this.id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getLibraryId() {
         return this.LibraryId;
@@ -74,6 +71,15 @@ public class LibraryTbl implements Parcelable {
 
     public void setTitle(String Title) {
         this.Title = Title;
+    }
+
+
+    public Long getUserId() {
+        return this.UserId;
+    }
+
+    public void setUserId(Long UserId) {
+        this.UserId = UserId;
     }
 
     public String getAuthor() {
@@ -108,6 +114,14 @@ public class LibraryTbl implements Parcelable {
         Genre = genre;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     @Override
     public int describeContents() {
@@ -118,6 +132,7 @@ public class LibraryTbl implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeValue(this.LibraryId);
+        dest.writeValue(this.UserId);
         dest.writeString(this.Title);
         dest.writeString(this.Author);
         dest.writeString(this.Genre);
@@ -128,6 +143,7 @@ public class LibraryTbl implements Parcelable {
     protected LibraryTbl(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.LibraryId = (Long) in.readValue(Long.class.getClassLoader());
+        this.UserId = (Long) in.readValue(Long.class.getClassLoader());
         this.Title = in.readString();
         this.Author = in.readString();
         this.Genre = in.readString();

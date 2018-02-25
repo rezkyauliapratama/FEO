@@ -30,6 +30,7 @@ public class ApiClient {
         paymentReg = new PaymentRegApi(this);
         paymentFlag = new PaymentFlagApi(this);
         library = new LibraryApi(this);
+        notification = new NotificationApi(this);
     }
 
     // Providing Global point of access
@@ -64,6 +65,9 @@ public class ApiClient {
 
     private final LibraryApi library;
     public LibraryApi library(){return library;}
+
+    private final NotificationApi notification;
+    public NotificationApi notification(){return notification;}
 
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

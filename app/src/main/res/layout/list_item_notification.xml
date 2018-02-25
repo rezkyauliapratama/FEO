@@ -57,6 +57,13 @@
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_small" />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Button.Danger.Fill"
+                android:text="@string/delete"/>
         </LinearLayout>
 
     </RelativeLayout>

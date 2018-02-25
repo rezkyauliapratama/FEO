@@ -92,6 +92,7 @@ public class ManageSubscriptionTbl {
             Date nowTime = calendar.getTime();
 
             if (startTime != null && endTime != null){
+                Timber.e("nowTime : "+Utils.getInstance().time().getUserFriendlyDateTimeString(nowTime));
                 Timber.e("startTime != null && endTime != null");
                 if (startTime.getTime() <= nowTime.getTime() && endTime.getTime() >= nowTime.getTime()){
                     isTrue = true;

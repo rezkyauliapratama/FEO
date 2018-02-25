@@ -93,7 +93,7 @@ public class CheckoutFragment extends BaseFragment {
 
     void initData(){
         Calendar dueDateCal = Calendar.getInstance();
-        dueDateCal.add(Calendar.DAY_OF_MONTH,2);
+        dueDateCal.add(Calendar.DAY_OF_MONTH,1);
         String transactionDate = Utils.getInstance().time().getUserFriendlyDateTimeString();
         String dueDate = Utils.getInstance().time().getUserFriendlyDateTimeString(dueDateCal.getTimeInMillis());
 

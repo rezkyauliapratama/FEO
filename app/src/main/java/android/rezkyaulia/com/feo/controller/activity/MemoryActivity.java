@@ -1,21 +1,18 @@
 package android.rezkyaulia.com.feo.controller.activity;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.renderscript.ScriptGroup;
 import android.rezkyaulia.com.feo.R;
 import android.rezkyaulia.com.feo.controller.fragment.MemoryImageFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.AnswerMemoryDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.GuideMemoryDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.SpeedReadingSettingDialogFragment;
 import android.rezkyaulia.com.feo.databinding.ActivityMemoryBackupBinding;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
 import android.rezkyaulia.com.feo.utility.Utils;
@@ -24,29 +21,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.StreamBitmapDecoder;
-import com.bumptech.glide.request.target.Target;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import timber.log.Timber;
 
@@ -148,6 +134,13 @@ public class MemoryActivity extends BaseActivity {
 
                     showDialogInputText(byteArray);
                 }
+            }
+        });
+
+        binding.imageViewHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogGuideMemory();
             }
         });
     }
@@ -371,6 +364,14 @@ public class MemoryActivity extends BaseActivity {
             }
 
         }
+    }
+
+
+    private void showDialogGuideMemory(){
+        GuideMemoryDialogFragment guideMemoryDialogFragment = GuideMemoryDialogFragment.newInstance();
+        guideMemoryDialogFragment.setStyle( android.app.DialogFragment.STYLE_NORMAL, R.style.dialog );
+        guideMemoryDialogFragment.show(getSupportFragmentManager().beginTransaction(), SpeedReadingSettingDialogFragment.Dialog);
+
     }
 
     private void initToggle(boolean start){

@@ -184,6 +184,7 @@ public class RegisterFragment extends BaseFragment {
        
         if (b){
             UserTbl userTbl = new UserTbl();
+            userTbl.setUserRoleId(3L);
             userTbl.setName(fullname);
             userTbl.setUsername(username);
             userTbl.setPassword(password);

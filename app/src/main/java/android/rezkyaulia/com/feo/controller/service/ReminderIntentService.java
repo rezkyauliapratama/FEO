@@ -79,8 +79,8 @@ public class ReminderIntentService extends IntentService {
         String message = "";
 
         if (notification_type == NOTIFICATION_DAILY) {
-            title = "Daily Activites";
-            message = "Dear panellist, please be reminded to submit your daily activities. You will be rewarded with extra points upon completion.";
+            title = "Speed reading activity";
+            message = "Hi Friends, let's play speed reading !";
         } /*else {
             title = "Daily Activites";
             message = "Dear panellist, please be reminded to submit your weekly purchases. You will be rewarded with extra points upon completion.";

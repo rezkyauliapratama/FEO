@@ -11,6 +11,8 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.GuideFeoChampDialogFragment;
+import android.rezkyaulia.com.feo.controller.fragment.dialog.GuideFeoDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputAnswerDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.InputTextDialogFragment;
 import android.rezkyaulia.com.feo.controller.fragment.dialog.SpeedReadingSettingDialogFragment;
@@ -647,6 +649,7 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     }
 
 
+
     private void showDialogSetting(){
         SpeedReadingSettingDialogFragment settingDialogFragment = SpeedReadingSettingDialogFragment.newInstance(mIsQuiz);
         settingDialogFragment.setStyle( DialogFragment.STYLE_NORMAL, R.style.dialog );
@@ -694,9 +697,9 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
                 .setMessage(R.string.doyouwanttosaveitintolibrary)
 
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    ManageLibraryTbl manageLibraryTbl = Facade.getInstance().getManageLibraryTbl();
+                    List<LibraryTbl> currentLibrary = Facade.getInstance().getManageLibraryTbl().getAllByUserId(userTbl.getUserId());
 
-                    if (manageLibraryTbl.size()  <= 20){
+                    if (currentLibrary.size()  <= 20){
                         Timber.e("manageLibraryTbl.size()  <= 20");
                         Facade.getInstance().getManageLibraryTbl().add(libraryTbl);
 
@@ -776,11 +779,11 @@ public class SpeedReadingFragment extends BaseFragment implements SpeedReadingSe
     public void onGetAnswerDialog(String answer) {
         Timber.e("onGetANswerDialog :"+mIndex+ " | mReadableWords:"+mReadableWords.size());
         if (mIndex > 0 && mIndex < mReadableWords.size()){
-            String correctAns = mReadableWords.get(mIndex-1).getWord().replaceAll("[^a-zA-Z ]", "").trim();
+            String correctAns = mReadableWords.get(mIndex-1).getWord().replaceAll("[^a-zA-Z0-9 ]", "").trim();
             Timber.e("mIndex > 0 && mIndex < mReadableWords.size()");
             if (answer != null){
                 Timber.e("correctAns :"+correctAns.toLowerCase()+" | ans :"+answer.trim().toLowerCase());
-                if (answer.trim().toLowerCase().equals(correctAns.toLowerCase())){
+                if (answer.trim().toLowerCase().equals(correctAns.trim().toLowerCase())){
                     checkAnswer(true,correctAns,answer);
                 }else{
                     checkAnswer(false,correctAns,answer);

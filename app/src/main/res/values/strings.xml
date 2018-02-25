@@ -29,6 +29,7 @@
     <string name="pleaseinputyourtextinhere">Please input your text in here</string>
     <string name="pleaseinputthetitleforthislibrary">Please input the title for this library</string>
     <string name="speedreading">Speed Reading</string>
+    <string name="speedreadingfeo">Speed Reading FEO</string>
     <string name="library">Library</string>
     <string name="please_input_the_title_in_here">Please input the title in here</string>
     <string name="title">Title</string>
@@ -141,5 +142,36 @@
     <string name="sessionexpiredcaption">Your session is expired</string>
     <string name="okay">okay</string>
     <string name="your_best_score">Your best score :</string>
+    <string name="sorry_cannot_delete_admin_library">Sorry cannot delete admin library</string>
+    <string name="delete">Delete</string>
+    <string name="change_language">Change language</string>
+    <string name="guide">Guide</string>
+
+    <string name="feo_guide" >
+        1. Aturlah ukuran tulisan dan background melalui setting di menu depan terlebih dahulu dan lanjut mengatur speed di wpm, number of lines, atau group size dibawah lambang play.\n
+        2. Buka library dan pilih salah satu judul yang sudah kami siapkan, atau yang sudah anda tambah sendiri.\n
+        3. Jika sudah siap bermain silahkan Klik play, fokuskan mata di garis tengah dan bacalah dengan bersuara terlebih dahulu untuk mengetahui sebaik apakah lisan anda dalam membaca. Kami sarankan agar memakai number of lines 1 dan group size 1, dan jika sudah mampu dengan speed yang cepat, maka silahkan lanjutkan ke tahap membaca dengan cara dilihat saja, tambahlah speed wpm nya secara bertahap.\n
+        4. Untuk anak PAUD atau INKLUSI agar memakai judul PAUD yang sudah kami sediakan, pakailah speed rendah terlebih dahulu dan lanjutkan dengan menambah 10 wpm disetiap speednya, berilah bahasa motivasi terhadap anak anda.\n
+        5. Latihlah mata dan otak anda setiap hari selama 15 hingga 30 menit,\n
+        6. <b>SELAMAT BERLATIH.</b>
+    </string>
+    <string name="guide_feo_1">Aturlah ukuran tulisan dan background melalui setting di menu depan terlebih dahulu dan lanjut mengatur speed di wpm, number of lines, atau group size dibawah lambang play.</string>
+    <string name="guide_feo_2">Buka library dan pilih salah satu judul yang sudah kami siapkan, atau yang sudah anda tambah sendiri.</string>
+    <string name="guide_feo_3">Jika sudah siap bermain silahkan Klik play, fokuskan mata di garis tengah dan bacalah dengan bersuara terlebih dahulu untuk mengetahui sebaik apakah lisan anda dalam membaca. Kami sarankan agar memakai number of lines 1 dan group size 1, dan jika sudah mampu dengan speed yang cepat, maka silahkan lanjutkan ke tahap membaca dengan cara dilihat saja, tambahlah speed wpm nya secara bertahap.</string>
+    <string name="guide_feo4">Untuk anak PAUD atau INKLUSI agar memakai judul PAUD yang sudah kami sediakan, pakailah speed rendah terlebih dahulu dan lanjutkan dengan menambah 10 wpm disetiap speednya, berilah bahasa motivasi terhadap anak anda.</string>
+    <string name="guide_feo_5">Latihlah mata dan otak anda setiap hari selama 15 hingga 30 menit,</string>
+    <string name="guide_feo_6">SELAMAT BERLATIH.</string>
+    <string name="guide_feo_champ_1">Buka library dan pilih salah satu judul yang sudah kami siapkan atau yang sudah anda tambah sendiri.</string>
+    <string name="guide_feo_champion_2">Atur wpm secara bertahap, anda hanya bisa mengatur ukuran tulisan dan background serta mengatur wpm sesuai dengan kemampuan anda.</string>
+    <string name="guide_feo_champion_3">Klik pause, dan jawablah pertanyaan dari FEO,\'SEBUTKAN SATU KATA DIBALIK KATA YANG BERHENTI\'. INGAT...! KETIKLAH JAWABAN DENGAN \'TANPA TANDA BACA\'.</string>
+    <string name="guide_memory_1">Aturlah image speed terlebih dahulu.</string>
+    <string name="guide_memory_2">Klik layar, dan hapalkan gambarnya.</string>
+    <string name="guide_memory_3">Anda bisa mem-pause untuk melihat kembali gambar sebelumnya.</string>
+    <string name="guide_memory_4">Gunakan speed yang sesuai dengan kecepatan mata dan otak anda.</string>
+    <string name="guide_memory_5">Lakukan latihan otak ini tiap hari untuk membantu daya ingat anda.</string>
+    <string name="guide_memory">Guide memory</string>
+    <string name="guide_feo_champion">Guide FEO champion</string>
+    <string name="guide_feo">Guide FEO</string>
+    <string name="agree">Agree</string>
 
 </resources>

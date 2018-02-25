@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="languages_text" translatable="false">
+        <item>@string/_default</item>
+        <item>@string/english</item>
+        <item>@string/indonesian</item>
+    </string-array>
+    <string-array name="languages_locale" translatable="false">
+        <item>@null</item>
+        <item>en</item>
+        <item>in</item>
+    </string-array>
+
+
+
+    <string name="malay" translatable="false">Malay</string>
+    <string name="chinese" translatable="false">Chinese</string>
+    <string name="indonesian" translatable="false">Indonesian</string>
+    <string name="english" translatable="false">English</string>
+    <string name="thailand" translatable="false">Thailand</string>
+    <string name="_default" translatable="false">Default</string>
+    <string name="all">All</string>
+    <string name="pointredeem">Point redeem</string>
+    <string name="pointgain">Point gain</string>
+    <string name="accounts">Accounts</string>
+    <string name="languages">Languages</string>
+
+</resources>

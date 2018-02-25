@@ -2,14 +2,17 @@ package android.rezkyaulia.com.feo.controller.adapter;
 
 import android.content.Context;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.fragment.NotificationFragment;
 import android.rezkyaulia.com.feo.database.entity.NotificationTbl;
 import android.rezkyaulia.com.feo.databinding.ListItemNotificationBinding;
+import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +22,12 @@ import java.util.List;
 public class NotificationRVAdapter extends RecyclerView.Adapter<NotificationRVAdapter.ViewHolder> {
     Context mContext;
     List<NotificationTbl> mItems;
+    NotificationFragment.OnListFragmentInteractionListener mListener;
 
-    public NotificationRVAdapter(Context mContext, List<NotificationTbl> mItems) {
+    public NotificationRVAdapter(Context mContext, List<NotificationTbl> mItems, NotificationFragment.OnListFragmentInteractionListener mListener) {
         this.mContext = mContext;
         this.mItems = mItems;
+        this.mListener = mListener;
     }
 
     @Override
@@ -38,8 +43,15 @@ public class NotificationRVAdapter extends RecyclerView.Adapter<NotificationRVAd
 
         holder.binding.textViewTitle.setText(item.getTitle());
         holder.binding.textViewBody.setText(item.getBody());
-        holder.binding.textViewDate.setText(item.getCreatedDate());
+        Date date = Utils.getInstance().time().parseDate(item.getCreatedDate());
+        holder.binding.textViewDate.setText(Utils.getInstance().time().getUserFriendlyDuration(mContext,date));
 
+        holder.binding.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onDeleteNotificationInteraction(item);
+            }
+        });
     }
 
     @Override

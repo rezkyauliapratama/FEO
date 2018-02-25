@@ -2,16 +2,20 @@ package android.rezkyaulia.com.feo.utility;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.service.ReminderEventReceiver;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -31,6 +35,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -258,7 +263,6 @@ public class Utils {
 //        return uuid.fromString(String.valueOf(deviceId.hashCode())).toString();
     }
 
-
     public String getUniqueID(Context context, String i) {
         final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -295,6 +299,39 @@ public class Utils {
 //        return uuid.fromString(String.valueOf(deviceId.hashCode())).toString();
     }
 
+
+    public Locale createLocale(String locale) {
+        if (locale == null)
+            return Constant.getInstance().LOCALE;
+        else
+            return new Locale(locale, Constant.getInstance().LOCALE.getCountry());
+    }
+
+
+    public Locale setLocale(Context context, String code) {
+        Locale locale;
+
+
+        if (code != null)
+            locale = new Locale(code, Constant.getInstance().LOCALE.getCountry());
+        else
+            locale = Constant.getInstance().LOCALE;
+
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(locale);
+        } else
+            configuration.locale = locale;
+
+        context.getResources().updateConfiguration(
+                configuration,
+                context.getResources().getDisplayMetrics()
+        );
+
+        return locale;
+    }
 
 
 }
