@@ -7,6 +7,7 @@ import android.rezkyaulia.com.feo.utility.Constant;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -36,6 +37,16 @@ public class ScoreApi {
                 .build();
     }
 
+    public void getAll(ParsedRequestListener<Response> callback){
+        Timber.e("PATH : "+path);
+        Timber.e("HEADER : "+new Gson().toJson(ApiClient.getInstance().getHeader()));
+
+        AndroidNetworking.get(path)
+                .addHeaders(ApiClient.getInstance().getHeader())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsObject(Response.class, callback);
+    }
     public class Response extends ApiResponse<ScoreTbl> {
     }
 }

@@ -165,4 +165,15 @@
     <string name="guide_feo_champion">Tuntunan FEO champion</string>
     <string name="guide_feo">Tuntunan FEO</string>
     <string name="agree">Setuju</string>
+    <string name="languages">Bahasa</string>
+    <string name="guide">Guide</string>
+
+    <string name="feo_guide" >
+        1. Aturlah ukuran tulisan dan background melalui setting di menu depan terlebih dahulu dan lanjut mengatur speed di wpm, number of lines, atau group size dibawah lambang play.\n
+        2. Buka library dan pilih salah satu judul yang sudah kami siapkan, atau yang sudah anda tambah sendiri.\n
+        3. Jika sudah siap bermain silahkan Klik play, fokuskan mata di garis tengah dan bacalah dengan bersuara terlebih dahulu untuk mengetahui sebaik apakah lisan anda dalam membaca. Kami sarankan agar memakai number of lines 1 dan group size 1, dan jika sudah mampu dengan speed yang cepat, maka silahkan lanjutkan ke tahap membaca dengan cara dilihat saja, tambahlah speed wpm nya secara bertahap.\n
+        4. Untuk anak PAUD atau INKLUSI agar memakai judul PAUD yang sudah kami sediakan, pakailah speed rendah terlebih dahulu dan lanjutkan dengan menambah 10 wpm disetiap speednya, berilah bahasa motivasi terhadap anak anda.\n
+        5. Latihlah mata dan otak anda setiap hari selama 15 hingga 30 menit,\n
+        6. <b>SELAMAT BERLATIH.</b>
+    </string>
 </resources>

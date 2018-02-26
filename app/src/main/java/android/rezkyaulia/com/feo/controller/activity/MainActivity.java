@@ -19,6 +19,7 @@ import android.rezkyaulia.com.feo.databinding.ActivityMainBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
 import android.rezkyaulia.com.feo.handler.api.LibraryApi;
 import android.rezkyaulia.com.feo.handler.api.NotificationApi;
+import android.rezkyaulia.com.feo.handler.api.ScoreApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.model.NotifModel;
 import android.rezkyaulia.com.feo.utility.DimensionConverter;
@@ -46,15 +47,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
-import com.squareup.haha.perflib.Main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -148,6 +142,7 @@ public class MainActivity extends BaseActivity implements NotificationFragment.O
         super.onResume();
         initBestScore();
         initJobDispatcher();
+        getScoresFromServer();
     }
 
     @Override
@@ -185,6 +180,35 @@ public class MainActivity extends BaseActivity implements NotificationFragment.O
             onNotificationReceivedIteration();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void getScoresFromServer(){
+        ApiClient.getInstance().score().getAll(new ParsedRequestListener<ScoreApi.Response>() {
+            @Override
+            public void onResponse(ScoreApi.Response response) {
+                List<ScoreTbl> scoreTbls = response.ApiList;
+                Timber.e("getSCores : "+new Gson().toJson(response));
+                if (scoreTbls != null){
+                    int count = facade.getManageScoreTbl().update(scoreTbls);
+                    Timber.e("Count : "+count);
+                    if (count > 0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initBestScore();
+                                initChart();
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Timber.e("ERROR GET SCORES  : "+new Gson().toJson(anError));
+            }
+        });
     }
 
     void initNavigation(){

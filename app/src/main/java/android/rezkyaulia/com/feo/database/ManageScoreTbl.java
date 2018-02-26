@@ -71,6 +71,18 @@ public class ManageScoreTbl {
         return dao.queryBuilder().where(ScoreTblDao.Properties.Id.eq(id)).unique();
     }
 
+    public int update(List<ScoreTbl> scoreTbls) {
+        int ret = 0;
+        for (ScoreTbl scoreTbl : scoreTbls){
+            ScoreTbl scoreTbl1 = dao.queryBuilder().where(ScoreTblDao.Properties.ScoreId.eq(scoreTbl.getScoreId())).unique();
+            if (scoreTbl1 == null){
+                facade.getManageScoreTbl().add(scoreTbl);
+                ret++;
+            }
+        }
+        return ret;
+    }
+
     public ScoreTbl getHighScore() {
         return dao.queryBuilder().where(ScoreTblDao.Properties.UserId.eq(facade.getManagerUserTbl().get().getUserId()),ScoreTblDao.Properties.FlagAnswer.eq(1)).orderDesc(ScoreTblDao.Properties.Score).limit(1).unique();
     }

@@ -332,28 +332,37 @@ public class SpeedReadingActivity extends BaseActivity implements
                 //You will get as string input data in this variable.
                 // here we convert the input to a string and show in a toast.
                 binding.layoutProgress.setVisibility(View.VISIBLE);
-                ApiClient.getInstance().library().delete(libraryTbl, new ParsedRequestListener<LibraryApi.Response>() {
-                    @Override
-                    public void onResponse(LibraryApi.Response response) {
-                        if (HttpResponse.getInstance().success(response)){
-                            Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
-                            Toast.makeText(SpeedReadingActivity.this,"Delete successful",Toast.LENGTH_LONG);
-                        }else{
-                            Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG);
+                if (libraryTbl.getLibraryId() != null){
+                    ApiClient.getInstance().library().delete(libraryTbl, new ParsedRequestListener<LibraryApi.Response>() {
+                        @Override
+                        public void onResponse(LibraryApi.Response response) {
+                            if (HttpResponse.getInstance().success(response)){
+                                Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
+                                Toast.makeText(SpeedReadingActivity.this,"Delete successful",Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG).show();
+                            }
+                            binding.layoutProgress.setVisibility(View.GONE);
+                            RxBus.getInstance().post(new Events<>(LibraryTbl.class));
                         }
-                        binding.layoutProgress.setVisibility(View.GONE);
 
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG);
-                        binding.layoutProgress.setVisibility(View.GONE);
-                    }
-                });
+                        @Override
+                        public void onError(ANError anError) {
+                            Timber.e("ONERROR LIB DEL: "+new Gson().toJson(anError));
+                            RxBus.getInstance().post(new Events<>(LibraryTbl.class));
+                            Toast.makeText(SpeedReadingActivity.this,"Cannot delete this library, please check your network",Toast.LENGTH_LONG).show();
+                            binding.layoutProgress.setVisibility(View.GONE);
+                        }
+                    });
+                }else{
+                    Facade.getInstance().getManageLibraryTbl().remove(libraryTbl);
+                    RxBus.getInstance().post(new Events<>(LibraryTbl.class));
+                    binding.layoutProgress.setVisibility(View.GONE);
+                    Toast.makeText(SpeedReadingActivity.this,"Delete successful",Toast.LENGTH_LONG).show();
+                }
 
                 Timber.e("onDeleteLibraryInteraction");
-                RxBus.getInstance().post(new Events<>(LibraryTbl.class));
+
                 binding.drawerLayout.closeDrawer(binding.navView);
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton
