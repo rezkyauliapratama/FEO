@@ -11,6 +11,7 @@ import android.rezkyaulia.com.feo.handler.api.UserApi;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.Utils;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.androidnetworking.internal.InternalNetworking;
 import com.google.gson.Gson;
 
 import timber.log.Timber;
@@ -203,6 +205,7 @@ public class RegisterFragment extends BaseFragment {
 
     void postData(UserTbl userTbl){
         binding.layoutProgress.setVisibility(View.VISIBLE);
+
         ApiClient.getInstance().user().post(userTbl).getAsObject(UserApi.ResponseRegistration.class, new ParsedRequestListener<UserApi.ResponseRegistration>() {
             @Override
             public void onResponse(UserApi.ResponseRegistration response) {
@@ -223,6 +226,8 @@ public class RegisterFragment extends BaseFragment {
             public void onError(ANError anError) {
                 Timber.e("ERROR : "+new Gson().toJson(anError));
                 binding.layoutProgress.setVisibility(View.GONE);
+                Snackbar.make(binding.getRoot(),anError.getErrorDetail(),Snackbar.LENGTH_LONG).show();
+
 
             }
         });

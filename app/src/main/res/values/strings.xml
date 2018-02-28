@@ -137,7 +137,9 @@
     <string name="downloadcomplete">Download complete</string>
     <string name="uploadcomplete">Upload complete</string>
     <string name="payment_success_message_body">Thank you for purchasing our plan</string>
+    <string name="payment_failed_message_body">Sorry transaction failed, please subscribe again.</string>
     <string name="payment_success_message_title">Payment Success</string>
+    <string name="payment_failed_message_title">Payment Failed</string>
     <string name="unauthorized">Unauthorized</string>
     <string name="sessionexpiredcaption">Your session is expired</string>
     <string name="okay">okay</string>

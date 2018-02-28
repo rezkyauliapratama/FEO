@@ -34,8 +34,8 @@ public class ManageSubscriptionTbl {
         dao.insertOrReplaceInTx(object);
     }
 
-    public long updateBySubId(SubscriptionTbl subscriptionTbl){
-        SubscriptionTbl oriSubsTbl = dao.queryBuilder().where(SubscriptionTblDao.Properties.SubscriptionId.eq(subscriptionTbl.getSubscriptionId())).limit(1).unique();
+    public long updateBySubId(SubscriptionTbl oriSubsTbl, SubscriptionTbl subscriptionTbl){
+//        SubscriptionTbl oriSubsTbl = dao.queryBuilder().where(SubscriptionTblDao.Properties.SubscriptionId.eq(subscriptionTbl.getSubscriptionId())).limit(1).unique();
 
         subscriptionTbl.setId(oriSubsTbl.getId());
         return dao.insertOrReplace(subscriptionTbl);
@@ -114,7 +114,7 @@ public class ManageSubscriptionTbl {
     public boolean checkPaymentSubscription(SubscriptionTbl subscriptionTbl){
         boolean isTrue = false;
 
-        if (subscriptionTbl.getPaymentFlag() == 1){
+        if (subscriptionTbl.getPaymentFlag() == 1 && subscriptionTbl.getActiveFlag() == 1){
             Date startTime = Utils.getInstance().time().parseDate(subscriptionTbl.getSubscriptionStartTimestamp());
             Date endTime = Utils.getInstance().time().parseDate(subscriptionTbl.getSubscriptionEndTimestamp());
 

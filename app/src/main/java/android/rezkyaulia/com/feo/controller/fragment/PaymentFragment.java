@@ -9,15 +9,12 @@ import android.rezkyaulia.com.feo.database.entity.PaymentFlagResponseTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentFlagTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationResponseTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationTbl;
-import android.rezkyaulia.com.feo.database.entity.PlanTbl;
 import android.rezkyaulia.com.feo.database.entity.SubscriptionTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentPaymentBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
 import android.rezkyaulia.com.feo.handler.api.PaymentFlagApi;
-import android.rezkyaulia.com.feo.handler.api.SubscriptionApi;
 import android.rezkyaulia.com.feo.handler.observer.RxBus;
 import android.rezkyaulia.com.feo.model.NotifModel;
-import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.TextStyleBuilder;
 import android.rezkyaulia.com.feo.utility.Utils;
@@ -29,7 +26,6 @@ import android.view.ViewGroup;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -107,7 +103,7 @@ public class PaymentFragment extends BaseFragment {
                 if (getActivity() != null) {
                     Timber.e("getactivity != null");
                     // update views
-                    if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS)
+                    if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS || notifModel.getAction() == NotifModel.NOTIF_PAYMENT_FAILED)
                         checkPayment();
 
                 }
@@ -149,28 +145,29 @@ public class PaymentFragment extends BaseFragment {
                 Timber.e("PaymentFlagApi.Response : "+new Gson().toJson(response));
                 if(HttpResponse.getInstance().success(response)){
                     PaymentFlagTbl paymentFlagTbl = response.getApiValue().getPaymentFlagTbl();
-                    PaymentFlagResponseTbl paymentFlagResponseTbl= response.getApiValue().getPaymentRegistrationResponseTbl();
+                    PaymentFlagResponseTbl paymentFlagResponseTbl= response.getApiValue().getPaymentFlagResponse();
+                    SubscriptionTbl subscriptionTbl= response.getApiValue().getSubscriptionTbl();
+
                     Timber.e("paymentFlagTbl : "+new Gson().toJson(paymentFlagTbl));
                     Timber.e("paymentFlagResponseTbl : "+new Gson().toJson(paymentFlagResponseTbl));
-                    if (paymentFlagTbl != null && paymentFlagResponseTbl != null){
+                    Timber.e("subscriptionTbl : "+new Gson().toJson(subscriptionTbl));
+                    Timber.e("mSubscriptionTbl : "+new Gson().toJson(mSubscriptionTbl));
+                    if (paymentFlagTbl != null && paymentFlagResponseTbl != null && subscriptionTbl != null){
 
                         facade.getManagePaymentFlagTbl().add(paymentFlagTbl);
                         facade.getManagePaymentFlagResponseTbl().add(paymentFlagResponseTbl);
+//                        facade.getManageSubscriptionTbl().updateBySubId(mSubscriptionTbl);
+                        long id = facade.getManageSubscriptionTbl().updateBySubId(mSubscriptionTbl,subscriptionTbl);
+                        if (id > 0){
 
-                        mSubscriptionTbl.setPaymentFlag(1L);
-                        mSubscriptionTbl.setActiveFlag(1L);
+                            mListener.onRedirectToActivity();
+                        }
 
-                        ApiClient.getInstance().subscription().updateTime(mSubscriptionTbl, new ParsedRequestListener<SubscriptionApi.Response>() {
+                      /*  ApiClient.getInstance().subscription().updateTime(mSubscriptionTbl, new ParsedRequestListener<SubscriptionApi.Response>() {
                             @Override
                             public void onResponse(SubscriptionApi.Response response) {
                                 Timber.e("SubscriptionApi.Response : "+new Gson().toJson(response));
                                 if (HttpResponse.getInstance().success(response)){
-                                    mSubscriptionTbl = response.getApiValue();
-                                    long id = facade.getManageSubscriptionTbl().updateBySubId(mSubscriptionTbl);
-                                    if (id > 0){
-
-                                        mListener.onRedirectToActivity();
-                                    }
 
                                 }
                             }
@@ -180,7 +177,7 @@ public class PaymentFragment extends BaseFragment {
                                 Timber.e("onError : "+new Gson().toJson(anError));
                             }
                         });
-
+*/
                     }
                 }
             }

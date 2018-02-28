@@ -30,7 +30,7 @@ public class ManagePlanTbl {
     }
 
     public List<PlanTbl> getAll() {
-        return dao.queryBuilder().list();
+        return dao.queryBuilder().where(PlanTblDao.Properties.ActiveFlag.eq(1)).list();
     }
 
     public PlanTbl get(long id) {

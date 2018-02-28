@@ -103,11 +103,16 @@ public class _FirebaseMessagingService extends FirebaseMessagingService {
         NotifModel notifModel = mGson.fromJson(new Gson().toJson(remoteMessage.getData()),NotifModel.class);
         Timber.e("notifModel : "+new Gson().toJson(notifModel));
 
-        if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS){
+        if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_SUCCESS ){
             NotificationUtil.getInstance().defaultNotification(_FirebaseMessagingService.this,getString(R.string.payment_success_message_title),getString(R.string.payment_success_message_body));
             RxBus.getInstance().post(notifModel);
 
-        }else if (notifModel.getAction() == NotifModel.NOTIF_MESSAGE){
+        }else if (notifModel.getAction() == NotifModel.NOTIF_PAYMENT_FAILED ){
+            NotificationUtil.getInstance().defaultNotification(_FirebaseMessagingService.this,getString(R.string.payment_failed_message_title),getString(R.string.payment_failed_message_body));
+            RxBus.getInstance().post(notifModel);
+
+        }
+        else if (notifModel.getAction() == NotifModel.NOTIF_MESSAGE){
             NotificationTbl notificationTbl = (NotificationTbl) notifModel;
             notificationTbl.setUserId(Facade.getInstance().getManagerUserTbl().get().getUserId());
             notificationTbl.setFlagRead(0);

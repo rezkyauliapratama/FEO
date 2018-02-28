@@ -4,6 +4,7 @@ import android.rezkyaulia.com.feo.database.entity.PaymentFlagResponseTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentFlagTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationResponseTbl;
 import android.rezkyaulia.com.feo.database.entity.PaymentRegistrationTbl;
+import android.rezkyaulia.com.feo.database.entity.SubscriptionTbl;
 import android.rezkyaulia.com.feo.model.api.ApiResponse;
 import android.rezkyaulia.com.feo.utility.Constant;
 import android.view.Display;
@@ -49,6 +50,9 @@ public class PaymentFlagApi {
         @SerializedName("PaymentFlagResponseTbl")
         PaymentFlagResponseTbl paymentFlagResponseTbl;
 
+        @SerializedName("SubscriptionTbl")
+        SubscriptionTbl SubscriptionTbl;
+
         public PaymentFlagTbl getPaymentFlagTbl() {
             return paymentFlagTbl;
         }
@@ -57,12 +61,20 @@ public class PaymentFlagApi {
             this.paymentFlagTbl = paymentFlagTbl;
         }
 
-        public PaymentFlagResponseTbl getPaymentRegistrationResponseTbl() {
+        public PaymentFlagResponseTbl getPaymentFlagResponse() {
             return paymentFlagResponseTbl;
         }
 
-        public void setPaymentRegistrationResponseTbl(PaymentFlagResponseTbl paymentFlagResponseTbl) {
+        public void setPaymentFlagResponse(PaymentFlagResponseTbl paymentFlagResponseTbl) {
             this.paymentFlagResponseTbl = paymentFlagResponseTbl;
+        }
+
+        public SubscriptionTbl getSubscriptionTbl() {
+            return SubscriptionTbl;
+        }
+
+        public void setSubscriptionTbl(SubscriptionTbl subscriptionTbl) {
+            SubscriptionTbl = subscriptionTbl;
         }
     }
 }

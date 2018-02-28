@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class NotifModel extends NotificationTbl {
 
+    public static final int NOTIF_PAYMENT_FAILED = 1000;
     public static final int NOTIF_PAYMENT_SUCCESS = 1001;
     public static final int NOTIF_MESSAGE = 1002;
 

@@ -138,7 +138,9 @@
     <string name="downloadcomplete">Download selesai</string>
     <string name="uploadcomplete">Upload selesai</string>
     <string name="payment_success_message_body">Terimakasih telah mensubscribe</string>
+    <string name="payment_failed_message_body">Maaf pembayaran gagal, silahkan subscribe kembali</string>
     <string name="payment_success_message_title">Pembayaran sukses</string>
+    <string name="payment_failed_message_title">Pembayaran gagal</string>
     <string name="unauthorized">Tidak diizinkan, silahkan login</string>
     <string name="sessionexpiredcaption">Sesi kamu telah habis</string>
     <string name="okay">Oke</string>
