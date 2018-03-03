@@ -12,6 +12,7 @@ import android.rezkyaulia.com.feo.controller.fragment.dialog.InformationDialogFr
 import android.rezkyaulia.com.feo.controller.fragment.dialog.PasswordDialogFragment;
 import android.rezkyaulia.com.feo.controller.service.PushScoreService;
 import android.rezkyaulia.com.feo.controller.service.PushUserService;
+import android.rezkyaulia.com.feo.database.entity.SubscriptionTbl;
 import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentProfileBinding;
 import android.rezkyaulia.com.feo.databinding.FragmentRegisterBinding;
@@ -28,6 +29,8 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
+
+import java.util.Date;
 
 import timber.log.Timber;
 
@@ -93,6 +96,13 @@ public class ProfileFragment extends BaseFragment implements
         binding.textViewSchoolAddress.setText(userTbl.getSchoolAddress());
         binding.textViewHomeAddress.setText(userTbl.getHomeAddress());
         binding.textViewFullname.setText(userTbl.getName());
+
+        SubscriptionTbl subscriptionTbl = facade.getManageSubscriptionTbl().getNewest();
+        if (subscriptionTbl.getSubscriptionEndTimestamp() != null){
+            Date date = Utils.getInstance().time().parseDate(subscriptionTbl.getSubscriptionEndTimestamp());
+            binding.textViewTimeExpired.setText(Utils.getInstance().time().getUserFriendlyDateTimeString(date));
+        }
+
 
     }
 

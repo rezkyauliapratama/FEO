@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "851111297033",
+    "firebase_url": "https://feoproject-83e7d.firebaseio.com",
+    "project_id": "feoproject-83e7d",
+    "storage_bucket": "feoproject-83e7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851111297033:android:aa13a2c094fa6553",
+        "android_client_info": {
+          "package_name": "rezkyaulia.com.android.feo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851111297033-s9v0up70sfqvvb95c1gevhnvuqc77d9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rezkyaulia.com.android.feo",
+            "certificate_hash": "dc7d8c3ca53d32b0143eba877988c14a6dcb851d"
+          }
+        },
+        {
+          "client_id": "851111297033-bvavn4dfffpomv2tai9tbfu30ornibh5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt4jQ8hmR4k_Tna83X_xvfMdUOP9c88xk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851111297033-bvavn4dfffpomv2tai9tbfu30ornibh5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
