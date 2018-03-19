@@ -19,20 +19,11 @@ import timber.log.Timber;
 
 public class PaymentRegApi {
     private final ApiClient api;
-    final String path = Constant.getInstance().BASE_URL.concat("/paymentreg");
+    final String path = Constant.getInstance().BASE_URL.concat("/paymentreglive");
 
     protected PaymentRegApi(ApiClient api) {
         this.api = api;
     }
-
-    public void getAll(ParsedRequestListener<Response> callback){
-        Timber.e("PATH : "+path);
-        AndroidNetworking.get(path)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsObject(Response.class, callback);
-    }
-
 
     public void postReg(PaymentRegistrationTbl paymentRegistrationTbl, ParsedRequestListener<ResponsePost> callback){
         Timber.e("PATH : "+path);

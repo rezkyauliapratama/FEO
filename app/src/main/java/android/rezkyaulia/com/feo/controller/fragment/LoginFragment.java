@@ -21,6 +21,7 @@ import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,8 @@ public class LoginFragment extends BaseFragment {
     GoogleSignInClient mGoogleSignInClient;
 
     OnFragmentInteractionListener mListener;
+
+    boolean showPassword = false;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -124,6 +127,21 @@ public class LoginFragment extends BaseFragment {
                     binding.edittextPin.setText(event.getApiValue().getPassword());
 
 
+        });
+
+        binding.imageviewEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showPassword){
+                    showPassword = !showPassword;
+                    binding.imageviewEye.setImageResource(R.drawable.ic_eye);
+                    binding.edittextPin.setTransformationMethod(new PasswordTransformationMethod());
+                }else{
+                    showPassword = !showPassword;
+                    binding.imageviewEye.setImageResource(R.drawable.ic_eye_with_a_diagonal_line_interface_symbol_for_invisibility);
+                    binding.edittextPin.setTransformationMethod(null);
+                }
+            }
         });
     }
 

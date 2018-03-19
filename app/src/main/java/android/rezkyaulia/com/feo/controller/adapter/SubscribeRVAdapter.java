@@ -89,7 +89,6 @@ public class SubscribeRVAdapter extends RecyclerView.Adapter<SubscribeRVAdapter.
         public ViewHolder(View itemView) {
             super(itemView);
             binding = ListItemPlanBinding.bind(itemView);
-
         }
     }
 

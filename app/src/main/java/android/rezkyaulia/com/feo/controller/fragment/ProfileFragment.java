@@ -97,7 +97,7 @@ public class ProfileFragment extends BaseFragment implements
         binding.textViewHomeAddress.setText(userTbl.getHomeAddress());
         binding.textViewFullname.setText(userTbl.getName());
 
-        SubscriptionTbl subscriptionTbl = facade.getManageSubscriptionTbl().getNewest();
+        SubscriptionTbl subscriptionTbl = facade.getManageSubscriptionTbl().getNewest(userTbl.getUserId());
         if (subscriptionTbl.getSubscriptionEndTimestamp() != null){
             Date date = Utils.getInstance().time().parseDate(subscriptionTbl.getSubscriptionEndTimestamp());
             binding.textViewTimeExpired.setText(Utils.getInstance().time().getUserFriendlyDateTimeString(date));

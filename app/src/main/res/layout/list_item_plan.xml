@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Button.Success.Fill"
-                    android:text="@string/subscribe"
+                    android:text="@string/buy_now"
                     android:textAppearance="@style/TextStyle.Medium"/>
             </LinearLayout>
 

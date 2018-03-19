@@ -55,7 +55,7 @@ public class SubscribeActivity extends BaseActivity implements SubscribeRVAdapte
 
     void initData(){
         binding.content.textViewUsername.setText(userTbl.getUsername());
-        SubscriptionTbl subscriptionTbl = Facade.getInstance().getManageSubscriptionTbl().getNewest();
+        SubscriptionTbl subscriptionTbl = Facade.getInstance().getManageSubscriptionTbl().getNewest(userTbl.getUserId());
 
         if (subscriptionTbl != null){
             Date endDate = Utils.getInstance().time().parseDate(subscriptionTbl.getSubscriptionEndTimestamp());

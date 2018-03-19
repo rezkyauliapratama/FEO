@@ -4,11 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.rezkyaulia.com.feo.model.api.ApiResponse;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by Rezky Aulia Pratama on 11/19/2017.
@@ -38,7 +41,6 @@ public class UserTbl implements Parcelable{
     @Property(nameInDb = "Password")
     private String Password;
 
-
     @Property(nameInDb = "School")
     private String School;
 
@@ -62,6 +64,10 @@ public class UserTbl implements Parcelable{
 
     @Property(nameInDb = "Token")
     private String Token;
+
+    @SerializedName(value = "UserRole")
+    @Transient
+    private String setUserRoleStr;
 
 
     @Generated(hash = 1915029153)
@@ -196,6 +202,14 @@ public class UserTbl implements Parcelable{
 
     public Long getUserRoleId() {
         return this.UserRoleId;
+    }
+
+    public String getSetUserRoleStr() {
+        return setUserRoleStr;
+    }
+
+    public void setSetUserRoleStr(String setUserRoleStr) {
+        this.setUserRoleStr = setUserRoleStr;
     }
 
     public void setUserRoleId(Long UserRoleId) {

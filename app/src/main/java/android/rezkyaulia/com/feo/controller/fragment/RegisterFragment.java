@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.rezkyaulia.com.feo.R;
+import android.rezkyaulia.com.feo.controller.adapter.SpinnerArrayAdapter;
 import android.rezkyaulia.com.feo.database.entity.UserTbl;
 import android.rezkyaulia.com.feo.databinding.FragmentRegisterBinding;
 import android.rezkyaulia.com.feo.handler.api.ApiClient;
@@ -21,6 +22,9 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.internal.InternalNetworking;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -106,6 +110,15 @@ public class RegisterFragment extends BaseFragment {
                 registerData();
             }
         });
+
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add(getString(R.string.select_your_status));
+        userRoles.add("Guru");
+        userRoles.add("Murid");
+        SpinnerArrayAdapter categorySpAdapter =
+                new SpinnerArrayAdapter<String>(getContext(), userRoles);
+        binding.containerAccount.spinnerRole.setAdapter(categorySpAdapter);
+
     }
 
     boolean registerData(){
@@ -183,10 +196,15 @@ public class RegisterFragment extends BaseFragment {
             b = false;
         }
 
+        if (binding.containerAccount.spinnerRole.getSelectedItemPosition() == 0){
+            Snackbar.make(binding.getRoot(), R.string.please_select_your_status,Snackbar.LENGTH_LONG).show();
+            b = false;
+        }
+
        
         if (b){
             UserTbl userTbl = new UserTbl();
-            userTbl.setUserRoleId(3L);
+            userTbl.setSetUserRoleStr((String)binding.containerAccount.spinnerRole.getSelectedItem());
             userTbl.setName(fullname);
             userTbl.setUsername(username);
             userTbl.setPassword(password);

@@ -56,7 +56,7 @@
     <string name="background">Background</string>
     <string name="black">Hitam</string>
     <string name="white">Putih</string>
-    <string name="don_t_have_an_account_sign_up_here">Tidak memiliki account ? daftar disini</string>
+    <string name="don_t_have_an_account_sign_up_here">Tidak memiliki account ? Klik daftar disini</string>
     <string name="welcome">Selamat datang</string>
     <string name="full_name">Nama</string>
     <string name="retype_password">Ulang password</string>
@@ -178,4 +178,9 @@
         5. Latihlah mata dan otak anda setiap hari selama 15 hingga 30 menit,\n
         6. <b>SELAMAT BERLATIH.</b>
     </string>
+    <string name="buy_now">Beli Sekarang</string>
+    <string name="description">description</string>
+    <string name="yourStatus">Kamu mendaftar sebagai </string>
+    <string name="please_select_your_status">Tolong pilih kamu mendaftar sebagai siapa ?</string>
+    <string name="select_your_status">- Daftar sebagai -</string>
 </resources>

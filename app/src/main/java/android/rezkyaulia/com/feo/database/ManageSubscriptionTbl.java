@@ -139,8 +139,8 @@ public class ManageSubscriptionTbl {
         return dao.queryBuilder().where(SubscriptionTblDao.Properties.SubscriptionId.eq(id)).unique();
     }
 
-    public SubscriptionTbl getNewest(){
-        return  dao.queryBuilder().where(SubscriptionTblDao.Properties.PaymentFlag.eq(1)).orderDesc(SubscriptionTblDao.Properties.Id).limit(1).unique();
+    public SubscriptionTbl getNewest(long userId){
+        return  dao.queryBuilder().where(SubscriptionTblDao.Properties.PaymentFlag.eq(1),SubscriptionTblDao.Properties.UserId.eq(userId)).orderDesc(SubscriptionTblDao.Properties.Id).limit(1).unique();
     }
     public void removeAll() {
         dao.deleteAll();

@@ -176,5 +176,10 @@
     <string name="guide_feo">Guide FEO</string>
     <string name="agree">Agree</string>
     <string name="languages">Languages</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="description">description</string>
+    <string name="yourStatus">Your status</string>
+    <string name="please_select_your_status">Please select your status</string>
+    <string name="select_your_status">- Select your status -</string>
 
 </resources>
