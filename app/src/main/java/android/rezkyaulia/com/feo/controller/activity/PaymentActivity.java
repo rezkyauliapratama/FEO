@@ -138,7 +138,7 @@ public class PaymentActivity extends BaseActivity implements
     public void onCancelPayment(SubscriptionTbl subscriptionTbl) {
         Timber.e("onCancelPayment : "+new Gson().toJson(subscriptionTbl));
         subscriptionTbl.setActiveFlag(0L);
-        facade.getManageSubscriptionTbl().add(mSubsciptionTbl);
+        Facade.getInstance().getManageSubscriptionTbl().add(subscriptionTbl);
         finish();
 
         startActivity(new Intent(this,SubscribeActivity.class));

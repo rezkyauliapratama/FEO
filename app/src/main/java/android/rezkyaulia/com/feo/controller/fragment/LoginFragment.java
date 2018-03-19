@@ -213,7 +213,7 @@ public class LoginFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(UserApi.Response response) {
-                        if (response != null){
+                        if (response.getApiValue() != null){
                             Timber.e("RESPONSE : "+new Gson().toJson(response));
                             UserTbl userTbl = response.getApiValue().getUserTbl();
                             Timber.e("USERTBL : "+new Gson().toJson(userTbl));
@@ -282,6 +282,9 @@ public class LoginFragment extends BaseFragment {
                                 binding.layoutProgress.setVisibility(View.GONE);
 
                             }
+                        }else{
+                            Snackbar.make(binding.layoutContentMain,response.getApiMessage(),Snackbar.LENGTH_LONG).show();
+                            binding.layoutProgress.setVisibility(View.GONE);
                         }
 
                     }

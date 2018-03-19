@@ -19,7 +19,8 @@ import timber.log.Timber;
 
 public class PaymentRegApi {
     private final ApiClient api;
-    final String path = Constant.getInstance().BASE_URL.concat("/paymentreglive");
+//    final String path = Constant.getInstance().BASE_URL.concat("/paymentreglive");
+    final String path = Constant.getInstance().BASE_URL.concat("/paymentreg");
 
     protected PaymentRegApi(ApiClient api) {
         this.api = api;
