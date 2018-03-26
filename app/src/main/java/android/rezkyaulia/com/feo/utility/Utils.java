@@ -10,6 +10,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Build;
@@ -333,5 +335,19 @@ public class Utils {
         return locale;
     }
 
+    public boolean hasInternetConnection(final Context context) {
+
+        try {
+            ConnectivityManager cm = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = cm.getActiveNetworkInfo();
+            if (ni == null) {
+                return false;
+            } else
+                return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

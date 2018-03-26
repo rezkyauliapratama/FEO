@@ -45,11 +45,11 @@ public class SubscriptionApi {
                 .getAsObject(Response.class,callback);
     }
 
-    public void updateTime(SubscriptionTbl subscriptionTbl, ParsedRequestListener<Response> callback){
-        Timber.e("PATH : "+path+"/update");
+    public void update(SubscriptionTbl subscriptionTbl, ParsedRequestListener<Response> callback){
+        Timber.e("PATH : "+path+"/update/mobile");
         Timber.e("subscriptionTbl : "+new Gson().toJson(subscriptionTbl));
 
-        AndroidNetworking.post(path+"/update")
+        AndroidNetworking.post(path+"/update/mobile")
                 .addStringBody(new Gson().toJson(subscriptionTbl)) // posting java object
                 .addHeaders(ApiClient.getInstance().getHeader())
                 .setPriority(Priority.HIGH)

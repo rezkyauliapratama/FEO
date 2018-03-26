@@ -38,7 +38,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="forgetpassword">Lupa password ?</string>
+    <string name="forgetpassword">Lupa password ? Silahkan kirim kan username/email anda ke feodeveloper@gmail.com, kami akan mengirimkan password anda ke email</string>
     <string name="finish">Selesai</string>
     <string name="got_it">Mengerti</string>
     <string name="permissionrequestmessage" formatted="false">Mohon aktifkan beberapa permisi untuk aplikasi ini</string>
@@ -183,4 +183,10 @@
     <string name="yourStatus">Kamu mendaftar sebagai </string>
     <string name="please_select_your_status">Tolong pilih kamu mendaftar sebagai siapa ?</string>
     <string name="select_your_status">- Daftar sebagai -</string>
+    <string name="internet_connection_error">Maaf anda tidak terhubung ke internet</string>
+    <string name="passwordandretypepasswordnotmatch">Password and retype password not match</string>
+    <string name="invalidemail">Email Salah</string>
+    <string name="invalidurl">Invalid URL</string>
+    <string name="invalidvalue">Masukkan angka saja</string>
+    <string name="pleaseinputemailaddress">Tolong masukkan alamat email</string>
 </resources>

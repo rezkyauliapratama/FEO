@@ -20,11 +20,13 @@ import android.rezkyaulia.com.feo.handler.api.PlanApi;
 import android.rezkyaulia.com.feo.handler.api.SubscriptionApi;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.Utils;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -76,59 +78,69 @@ public class PaymentActivity extends BaseActivity implements
 
     @Override
     public void onCheckout() {
-        binding.content.layoutProgress.setVisibility(View.VISIBLE);
-        SubscriptionTbl subscriptionTbl = new SubscriptionTbl();
-        subscriptionTbl.setPlanId(mPlanTbl.getPlanId());
-        subscriptionTbl.setUserId(userTbl.getUserId());
-        ApiClient.getInstance().subscription().post(subscriptionTbl, new ParsedRequestListener<SubscriptionApi.Response>() {
-            @Override
-            public void onResponse(SubscriptionApi.Response response) {
-                Timber.e("subc api : "+new Gson().toJson(response));
-                if (HttpResponse.getInstance().success(response)){
-                    SubscriptionTbl subscriptionTbl = response.getApiValue();
-                    Long id = facade.getManageSubscriptionTbl().add(subscriptionTbl);
-                    if (id > 0){
-                        PaymentRegistrationTbl paymentRegistrationTbl = new PaymentRegistrationTbl();
-                        paymentRegistrationTbl.setSubscriptionId(subscriptionTbl.getSubscriptionId());
-                        paymentRegistrationTbl.setCustomerName(userTbl.getName());
-                        paymentRegistrationTbl.setTransactionAmount((long)mPlanTbl.getPrice());
+        if (Utils.getInstance().hasInternetConnection(this)){
+            binding.content.layoutProgress.setVisibility(View.VISIBLE);
+            SubscriptionTbl subscriptionTbl = new SubscriptionTbl();
+            subscriptionTbl.setPlanId(mPlanTbl.getPlanId());
+            subscriptionTbl.setUserId(userTbl.getUserId());
+            ApiClient.getInstance().subscription().post(subscriptionTbl, new ParsedRequestListener<SubscriptionApi.Response>() {
+                @Override
+                public void onResponse(SubscriptionApi.Response response) {
+                    Timber.e("subc api : "+new Gson().toJson(response));
+                    if (HttpResponse.getInstance().success(response)){
+                        SubscriptionTbl subscriptionTbl = response.getApiValue();
+                        Long id = facade.getManageSubscriptionTbl().add(subscriptionTbl);
+                        if (id > 0){
+                            PaymentRegistrationTbl paymentRegistrationTbl = new PaymentRegistrationTbl();
+                            paymentRegistrationTbl.setSubscriptionId(subscriptionTbl.getSubscriptionId());
+                            paymentRegistrationTbl.setCustomerName(userTbl.getName());
+                            paymentRegistrationTbl.setTransactionAmount((long)mPlanTbl.getPrice());
 
-                        ApiClient.getInstance().paymentReg().postReg(paymentRegistrationTbl, new ParsedRequestListener<PaymentRegApi.ResponsePost>() {
-                            @Override
-                            public void onResponse(PaymentRegApi.ResponsePost response) {
-                                Timber.e("payment reg api : "+new Gson().toJson(response));
-                                if (HttpResponse.getInstance().success(response)){
-                                    PaymentRegistrationTbl paymentRegistrationTbl = response.ApiValue.getPaymentRegistrationTbl();
-                                    PaymentRegistrationResponseTbl paymentRegistrationResponseTbl= response.ApiValue.getPaymentRegistrationResponseTbl();
+                            ApiClient.getInstance().paymentReg().postReg(paymentRegistrationTbl, new ParsedRequestListener<PaymentRegApi.ResponsePost>() {
+                                @Override
+                                public void onResponse(PaymentRegApi.ResponsePost response) {
+                                    Timber.e("payment reg api : "+new Gson().toJson(response));
+                                    if (HttpResponse.getInstance().success(response)){
+                                        PaymentRegistrationTbl paymentRegistrationTbl = response.ApiValue.getPaymentRegistrationTbl();
+                                        PaymentRegistrationResponseTbl paymentRegistrationResponseTbl= response.ApiValue.getPaymentRegistrationResponseTbl();
 
-                                    if (paymentRegistrationTbl!= null && paymentRegistrationResponseTbl != null){
-                                        Timber.e("paymentRegistrationResponseTbl: "+new Gson().toJson(paymentRegistrationResponseTbl    ));
-                                        Facade.getInstance().getManagePaymentRegistrationTbl().add(paymentRegistrationTbl);
-                                        Facade.getInstance().getManagePaymentRegistrationResponseTbl().add(paymentRegistrationResponseTbl);
-                                        displayFragment(binding.content.layoutContent.getId(), PaymentFragment.newInstance(subscriptionTbl));
+                                        if (paymentRegistrationTbl!= null && paymentRegistrationResponseTbl != null){
+                                            Timber.e("paymentRegistrationResponseTbl: "+new Gson().toJson(paymentRegistrationResponseTbl    ));
+                                            Facade.getInstance().getManagePaymentRegistrationTbl().add(paymentRegistrationTbl);
+                                            Facade.getInstance().getManagePaymentRegistrationResponseTbl().add(paymentRegistrationResponseTbl);
+                                            displayFragment(binding.content.layoutContent.getId(), PaymentFragment.newInstance(subscriptionTbl));
+                                        }
                                     }
+                                    binding.content.layoutProgress.setVisibility(View.GONE);
                                 }
-                                binding.content.layoutProgress.setVisibility(View.GONE);
-                            }
-                            @Override
-                            public void onError(ANError anError) {
-                                binding.content.layoutProgress.setVisibility(View.GONE);
-                                Timber.e("Error paymentReg : "+new Gson().toJson(anError));
-                            }
-                        });
-                    }else{
-                        binding.content.layoutProgress.setVisibility(View.GONE);
+                                @Override
+                                public void onError(ANError anError) {
+                                    binding.content.layoutProgress.setVisibility(View.GONE);
+                                    Timber.e("Error paymentReg : "+new Gson().toJson(anError));
+                                }
+                            });
+                        }else{
+                            binding.content.layoutProgress.setVisibility(View.GONE);
 
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onError(ANError anError) {
-                Timber.e("Error subs: "+new Gson().toJson(anError));
+                @Override
+                public void onError(ANError anError) {
+                    Timber.e("Error subs: "+new Gson().toJson(anError));
+                    binding.content.layoutProgress.setVisibility(View.GONE);
+                    Snackbar.make(binding.getRoot(), anError.getErrorDetail(),Snackbar.LENGTH_LONG).show();
 
-            }
-        });
+
+                }
+            });
+
+        }else{
+            binding.content.layoutProgress.setVisibility(View.GONE);
+            Snackbar.make(binding.getRoot(), R.string.internet_connection_error,Snackbar.LENGTH_LONG).show();
+
+        }
 
 
 
@@ -138,10 +150,35 @@ public class PaymentActivity extends BaseActivity implements
     public void onCancelPayment(SubscriptionTbl subscriptionTbl) {
         Timber.e("onCancelPayment : "+new Gson().toJson(subscriptionTbl));
         subscriptionTbl.setActiveFlag(0L);
-        Facade.getInstance().getManageSubscriptionTbl().add(subscriptionTbl);
-        finish();
 
-        startActivity(new Intent(this,SubscribeActivity.class));
+        if (Utils.getInstance().hasInternetConnection(this)){
+            ApiClient.getInstance().subscription().update(subscriptionTbl, new ParsedRequestListener<SubscriptionApi.Response>() {
+                @Override
+                public void onResponse(SubscriptionApi.Response response) {
+                    Timber.e("onResponse : "+new Gson().toJson(response));
+                    if (response.getApiValue() != null){
+                        facade.getManageSubscriptionTbl().add(response.getApiValue());
+
+                        startActivity(new Intent(PaymentActivity.this,SubscribeActivity.class));
+                        finish();
+                    }
+
+                    Snackbar.make(binding.getRoot(),response.getApiMessage(),Snackbar.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    Timber.e("OnCancelPayment Err : "+new Gson().toJson(anError));
+
+                }
+            });
+
+        }else{
+            Snackbar.make(binding.getRoot(), R.string.internet_connection_error,Snackbar.LENGTH_LONG).show();
+
+        }
+
+
     }
 
     @Override

@@ -101,6 +101,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small"
                     android:text="@string/forgetpassword"
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextStyle.Small"
                     android:textColor="@color/colorWhite" />
 

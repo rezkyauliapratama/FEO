@@ -38,7 +38,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="forgetpassword">Forget password ?</string>
+    <string name="forgetpassword">Forget password ? Please send an email to feodeveloper@gmail.com by including your username, we wil reset your password and send to your email</string>
     <string name="finish">Finish</string>
     <string name="got_it">Got it</string>
     <string name="permissionrequestmessage" formatted="false">Need to activate several permission in order to use this app</string>
@@ -181,5 +181,11 @@
     <string name="yourStatus">Your status</string>
     <string name="please_select_your_status">Please select your status</string>
     <string name="select_your_status">- Select your status -</string>
+    <string name="internet_connection_error">You not connected to internet</string>
+    <string name="invalidemail">Invalid email</string>
+    <string name="invalidurl">Invalid URL</string>
+    <string name="invalidvalue">Invalid number value</string>
+    <string name="passwordandretypepasswordnotmatch">Password and retype password not match</string>
+    <string name="pleaseinputemailaddress">Please input email address</string>
 
 </resources>

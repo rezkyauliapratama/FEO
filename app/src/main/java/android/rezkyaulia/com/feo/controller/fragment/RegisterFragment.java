@@ -11,6 +11,7 @@ import android.rezkyaulia.com.feo.handler.api.ApiClient;
 import android.rezkyaulia.com.feo.handler.api.UserApi;
 import android.rezkyaulia.com.feo.utility.HttpResponse;
 import android.rezkyaulia.com.feo.utility.Utils;
+import android.rezkyaulia.com.feo.utility.Validation;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -135,7 +136,8 @@ public class RegisterFragment extends BaseFragment {
         String homeAdrress = binding.containerInformation.editTextHomeAddress.getText().toString();
 
         if (!password.equals(retypePassword)) {
-            return false;
+            Snackbar.make(binding.getRoot(),getString(R.string.passwordandretypepasswordnotmatch),Snackbar.LENGTH_LONG).show();
+            b = false;
         }
 
         if (fullname.isEmpty()){
@@ -150,8 +152,9 @@ public class RegisterFragment extends BaseFragment {
             b = false;
         }
 
-        if (email.isEmpty()){
+        if (!new Validation().validate(getContext(),email,Validation.EMAIL,0,0).valid){
             binding.containerAccount.editTextEmail.setError(getString(R.string.please_fill_in_here));
+            Snackbar.make(binding.getRoot(), R.string.pleaseinputemailaddress,Snackbar.LENGTH_LONG).show();
 
             b = false;
         }
@@ -216,7 +219,6 @@ public class RegisterFragment extends BaseFragment {
             userTbl.setCreatedDate(Utils.getInstance().time().getDateTimeString());
             postData(userTbl);
         }
-
 
         return b;
     }

@@ -6,8 +6,8 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    def version_code = 12
-    def version_name = "0.0.0.12"
+    def version_code = 13
+    def version_name = "0.0.0.13"
 
     dataBinding {
         enabled true
