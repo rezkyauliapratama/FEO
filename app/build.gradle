@@ -6,8 +6,8 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    def version_code = 13
-    def version_name = "0.0.0.13"
+    def version_code = 16
+    def version_name = "0.0.0.16"
 
     dataBinding {
         enabled true
@@ -94,6 +94,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:11.6.2'
     compile 'com.google.firebase:firebase-auth:11.6.2'
     compile 'com.google.android.gms:play-services-auth:11.6.2'
+    compile 'com.android.support:multidex:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

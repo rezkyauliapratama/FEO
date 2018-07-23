@@ -74,7 +74,10 @@ public class SubscribeActivity extends BaseActivity implements SubscribeRVAdapte
                 if (HttpResponse.getInstance().success(response)){
                     if (response.getApiList().size() > 0){
                         planTbls.clear();
-                        planTbls.addAll(response.getApiList());
+                        for (PlanTbl item : response.getApiList()){
+                            if (item.getActiveFlag() == 1)
+                                planTbls.add(item);
+                        }
 
                         initRecyclerView();
 

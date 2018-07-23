@@ -8,6 +8,7 @@ import android.rezkyaulia.com.feo.database.entity.DaoMaster;
 import android.rezkyaulia.com.feo.database.entity.DaoSession;
 import android.rezkyaulia.com.feo.utility.Constant;
 import android.rezkyaulia.com.feo.utility.PreferencesManager;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import timber.log.Timber;
  * Created by Rezky Aulia Pratama on 8/31/2017.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     private RefWatcher refWatcher;
 
     @Override
