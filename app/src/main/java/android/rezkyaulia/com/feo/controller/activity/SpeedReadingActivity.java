@@ -89,6 +89,7 @@ public class SpeedReadingActivity extends BaseActivity implements
         if (mIsQuiz){
             binding.actionbarTitle.setText(R.string.speedreadingfeo);
         }
+
         mGuid = Utils.getInstance().getUniqueID(this);
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
